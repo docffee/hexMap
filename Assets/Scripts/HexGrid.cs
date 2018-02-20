@@ -32,11 +32,11 @@ public class HexGrid : MonoBehaviour
         hexMesh.Triangulate(cells);
 
         PathFinder pathfinder = new PathFinder();
-        List<INode> path = pathfinder.GetPath(test[0], test[test.Count - 1], new Heuristic());
+        List<INode> path = pathfinder.GetPath(test[10], test[test.Count - 1], new Heuristic());
 
         foreach(INode node in path) {
             int[] pos = node.GetPos();
-            Debug.Log(pos[0] + ", " + pos[1] + ", " + pos[2]);
+            Debug.Log("Position: " + pos[0] + ", " + pos[1] + ", " + pos[2]);
         }
     }
 
@@ -84,7 +84,7 @@ public class HexGrid : MonoBehaviour
             }
         }
 
-        test.Add(cells[i].hex);
+        test.Add(cells[i]);
     }
 
     private Color GetRandomColor()
