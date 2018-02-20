@@ -52,10 +52,10 @@ public class HexGrid : MonoBehaviour
         cells[i].transform.localPosition = position;
 
         // Straighten out label axis //
-        int xLabel = x - z / 2;
+        //int xLabel = x - z / 2;
 
         cells[i].Initialize(x, z, test);
-        cells[i].GetComponentInChildren<TextMesh>().text = xLabel + ", " + z;
+        cells[i].GetComponentInChildren<TextMesh>().text = x + ", " + z;
         cells[i].color = GetRandomColor();
 
         cells[i].Elevation = Random.Range(0, 4);

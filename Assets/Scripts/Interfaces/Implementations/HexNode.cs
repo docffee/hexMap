@@ -31,7 +31,7 @@ public class HexNode : INode {
     }
 
     public override int GetHashCode() {
-        return x * 37 + z * 37;
+        return x * 37 + z * 36;
     }
 
     public List<INode> GetNeighbors() {
