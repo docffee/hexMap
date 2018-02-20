@@ -68,6 +68,17 @@ public class HexNode : INode {
         }
         //Debug.Log(this.GetPos () + " + " + nodes[index].getPos());
 
+        index = map.FindIndex(a => a.GetPos()[0] == this.GetPos()[0] + 1 && a.GetPos()[1] == this.GetPos()[1] + 1);
+        if (index >= 0)
+        {
+            tempEdges.Add(map[index]);
+        }
+
+        index = map.FindIndex(a => a.GetPos()[0] == this.GetPos()[0] - 1 && a.GetPos()[1] == this.GetPos()[1] - 1);
+        if (index >= 0)
+        {
+            tempEdges.Add(map[index]);
+        }
 
         return tempEdges;
     }
