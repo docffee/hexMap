@@ -34,7 +34,7 @@ public class PathFinder : IPathFinder {
             current = cameFrom[current];
             path.Add(current);
         }
-
+        path.Reverse(0, path.Count);
         return path;
     }
 }
