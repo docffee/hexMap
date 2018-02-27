@@ -1,8 +1,9 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.HexImpl;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HexGrid : MonoBehaviour
+public class HexGrid : MonoBehaviour, IMapGenerator<HexNode>
 {
     [SerializeField] private int width;
     [SerializeField] private int height;
@@ -41,11 +42,8 @@ public class HexGrid : MonoBehaviour
         cells[i].transform.SetParent(transform, false);
         cells[i].transform.localPosition = position;
 
-        // Straighten out label axis //
-        int xLabel = x - z / 2;
-
         cells[i].Initialize(x, z);
-        cells[i].GetComponentInChildren<TextMesh>().text = xLabel + ", " + z;
+        cells[i].GetComponentInChildren<TextMesh>().text = x + ", " + z;
         cells[i].color = GetRandomColor();
 
         cells[i].Elevation = Random.Range(0, 4);
@@ -90,5 +88,10 @@ public class HexGrid : MonoBehaviour
             default:
                 return Color.green;
         }
+    }
+
+    public ITile<HexNode>[] GenerateTiles(int sizeX, int sizeY)
+    {
+        return cells;
     }
 }

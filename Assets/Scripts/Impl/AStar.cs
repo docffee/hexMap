@@ -16,7 +16,7 @@ namespace GraphAlgorithms
             nodeDictionary.Add(start, curNode);
             while (true)
             {
-                foreach(IEdge<N> edge in curNode.node)
+                foreach(IEdge<N> edge in curNode.Node)
                 {
                     N other = edge.GetEnd();
                     if (!closedSet.Contains(other))
@@ -50,9 +50,9 @@ namespace GraphAlgorithms
                 {
                     return null;
                 }
-                closedSet.Add(curNode.node);
+                closedSet.Add(curNode.Node);
                 curNode = openSet.DeleteMin();
-                if (curNode.node.Equals(goal))
+                if (curNode.Node.Equals(goal))
                 {
                     C5.ArrayList<IPathNode<N>> res = new C5.ArrayList<IPathNode<N>>();
                     do
@@ -68,7 +68,7 @@ namespace GraphAlgorithms
 
         private class PathNode<N> : IPathNode<N>, IEquatable<PathNode<N>> where N : INode<N>
         {
-            public N node { get; }
+            private N node;
             public PathNode<N> prev { get; set; }
             public C5.IPriorityQueueHandle<PathNode<N>> queueHandle { get; set; }
             public float g { get; set; }
@@ -111,6 +111,11 @@ namespace GraphAlgorithms
             public override int GetHashCode()
             {
                 return node.GetHashCode();
+            }
+
+            public N Node
+            {
+                get { return node; }
             }
         }
 

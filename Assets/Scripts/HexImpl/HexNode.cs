@@ -7,12 +7,12 @@ using GraphAlgorithms;
 
 namespace Assets.Scripts.HexImpl
 {
-    class HexNode : INode<HexNode>
+    public class HexNode : INode<HexNode>
     {
-        public int direction;
-        private HexCell tile;
+        private HexDirection direction;
+        private ITile<HexNode> tile;
 
-        public HexNode(int direction, HexCell tile)
+        public HexNode(HexDirection direction, ITile<HexNode> tile)
         {
             this.direction = direction;
             this.tile = tile;
@@ -21,15 +21,35 @@ namespace Assets.Scripts.HexImpl
         public IEnumerator<IEdge<HexNode>> GetEnumerator()
         {
             List<IEdge<HexNode>> edges = new List<IEdge<HexNode>>();
-            HexEdge turnLeft = new HexEdge(1, new HexNode(direction - 1, tile));
-            HexEdge turnRight = new HexEdge(1, new HexNode(direction + 1, tile));
+            HexEdge turnLeft = new HexEdge(0.2f, new HexNode(GetValidDirection(direction, -1), tile));
+            HexEdge turnRight = new HexEdge(0.2f, new HexNode(GetValidDirection(direction, 1), tile));
 
+            HexEngine engine = HexEngine.Singleton;
+            HexNode back = engine.GetNodeBehind(this);
+            HexNode forward = engine.GetNodeInFront(this);
+
+            edges.Add(turnLeft);
+            edges.Add(turnRight);
+            if (back != null)
+                edges.Add(new HexEdge(1.3f, back));
+            if (forward != null)
+                edges.Add(new HexEdge(1, forward));
             return edges.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
             throw new NotImplementedException();
+        }
+
+        public HexDirection GetValidDirection(HexDirection direction, int increment)
+        {
+            if ((int)direction + increment > 5)
+                return HexDirection.NE;
+            if ((int)direction + increment < 0)
+                return HexDirection.NW;
+
+            return direction + increment;
         }
 
         public override bool Equals(object obj)
@@ -45,23 +65,33 @@ namespace Assets.Scripts.HexImpl
         {
             var hashCode = -300798877;
             hashCode = hashCode * -1521134295 + Direction.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<HexCell>.Default.GetHashCode(tile);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ITile<HexNode>>.Default.GetHashCode(tile);
             return hashCode;
         }
 
-        private int getValidDirection(int increment)
+        public override string ToString()
         {
-            if (Direction + increment > 5)
-                return 0;
-            if (Direction + increment < 0)
-                return 5;
-
-            return Direction + increment;
+            return X + ", " + Z + " | Direction = " + direction.ToString();
         }
 
-        public int Direction
+        public HexDirection Direction
         {
             get { return direction; }
+        }
+
+        public ITile<HexNode> Tile
+        {
+            get { return tile; }
+        }
+
+        public int X
+        {
+            get { return tile.X; }
+        }
+
+        public int Z
+        {
+            get { return tile.Z; }
         }
     }
 }
