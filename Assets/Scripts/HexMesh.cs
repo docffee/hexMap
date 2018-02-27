@@ -83,7 +83,6 @@ public class HexMesh : MonoBehaviour
         triangles.Add(vertexIndex + 3);
     }
 
-
     private void TriangulateConnection(HexDirection direction, HexCell cell, Vector3 v1, Vector3 v2)
     {
         HexCell neighbor = cell.GetNeighbour(direction);
@@ -105,8 +104,48 @@ public class HexMesh : MonoBehaviour
             AddTriangleColor(cell.color, neighbor.color, nextNeighbor.color);
         }
 
-        AddQuad(v1, v2, v3, v4);
-        AddQuadColor(cell.color, neighbor.color);
+        if (cell.GetNeighbourSlopeType(direction) == HexSlopeType.Slope)
+        {
+            TriangulateTerraces(v1, v2, v3, v4, cell, neighbor);
+        }
+        else
+        {
+            AddQuad(v1, v2, v3, v4);
+            AddQuadColor(cell.color, neighbor.color);
+        }
+    }
+
+    private void TriangulateTerraces(Vector3 beginLeft, Vector3 beginRight, Vector3 endLeft, 
+        Vector3 endRight, HexCell beginCell, HexCell endCell)
+    {
+        Vector3 v3 = HexMetrics.TerraceLerp(beginLeft, endLeft, 1);
+        Vector3 v4 = HexMetrics.TerraceLerp(beginRight, endRight, 1);
+        Color c2 = HexMetrics.TerraceColorLerp(beginCell.color, endCell.color, 1);
+
+        AddQuad(beginLeft, beginRight, v3, v4);
+        AddQuadColor(beginCell.color, c2);
+
+        for (int i = 2; i < HexMetrics.terraceSteps; i++)
+        {
+            Vector3 v1 = v3;
+            Vector3 v2 = v4;
+            Color c1 = c2;
+            v3 = HexMetrics.TerraceLerp(beginLeft, endLeft, i);
+            v4 = HexMetrics.TerraceLerp(beginRight, endRight, i);
+            c2 = HexMetrics.TerraceColorLerp(beginCell.color, endCell.color, i);
+            AddQuad(v1, v2, v3, v4);
+            AddQuadColor(c1, c2);
+        }
+
+        AddQuad(v3, v4, endLeft, endRight);
+        AddQuadColor(c2, endCell.color);
+    }
+
+    private void TriangulateCorner(Vector3 bottom, Vector3 left, 
+        Vector3 right, HexCell bottomCell, HexCell leftCell, HexCell rightCell)
+    {
+        AddTriangle(bottom, left, right);
+        AddTriangleColor(bottomCell.color, leftCell.color, rightCell.color);
     }
 
     private void AddTriangleColor(Color color)

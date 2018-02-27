@@ -2,12 +2,36 @@
 
 public static class HexMetrics
 {
-    public static readonly float outerRadius = 10f;
-    public static readonly float innerRadius = outerRadius * 0.866025404f;
-    public static readonly float elevationStep = 3f;
+    public const float outerRadius = 10f;
+    public const float innerRadius = outerRadius * 0.866025404f;
+    public const float elevationStep = 3f;
+    
+    public const float solidFactor = 0.75f;
+    public const float blendFactor = 1f - solidFactor;
 
-    public static readonly float solidFactor = 0.75f;
-    public static readonly float blendFactor = 1f - solidFactor;
+    public const int terracesPerSlope = 2;
+    public const int terraceSteps = terracesPerSlope * 2 + 1;
+
+    public const float horizontalTerraceStepSize = 1f / terraceSteps;
+    public const float verticalTerraceStepSize = 1f / (terracesPerSlope + 1);
+
+    public const int elevationBelowIsSlope = 2;
+
+    public static Vector3 TerraceLerp(Vector3 a, Vector3 b, int step)
+    {
+        float h = step * horizontalTerraceStepSize;
+        a.x += (b.x - a.x) * h;
+        a.z += (b.z - a.z) * h;
+        float v = ((step + 1) / 2) * verticalTerraceStepSize;
+        a.y += (b.y - a.y) * v;
+        return a;
+    }
+
+    public static Color TerraceColorLerp(Color a, Color b, int step)
+    {
+        float h = step * horizontalTerraceStepSize;
+        return Color.Lerp(a, b, h);
+    }
 
     private static Vector3[] corners = {
         new Vector3(0f, 0f, outerRadius),
@@ -42,5 +66,15 @@ public static class HexMetrics
     public static Vector3 GetBridge(HexDirection direction)
     {
         return (corners[(int)direction] + corners[(int)direction + 1]) * blendFactor;
+    }
+
+    public static HexSlopeType GetHexSlopeType(int elevationA, int elevationB)
+    {
+        if (elevationA == elevationB)
+            return HexSlopeType.Flat;
+        if (Mathf.Abs(elevationA - elevationB) <= elevationBelowIsSlope)
+            return HexSlopeType.Slope;
+
+        return HexSlopeType.Cliff;
     }
 }

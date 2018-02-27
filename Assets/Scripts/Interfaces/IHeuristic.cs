@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
-
-public interface IHeuristic {
-    int CalcDistance(INode source, INode dest);
+﻿namespace GraphAlgorithms
+{
+    public interface IHeuristic<N> where N : INode<N>
+    {
+        float MinDist(N a, N b);
+    }
 }

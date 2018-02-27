@@ -11,8 +11,6 @@ public class HexGrid : MonoBehaviour
     private HexCell[] cells;
     private HexMesh hexMesh;
 
-    private List<INode> test = new List<INode>();
-
     private void Start()
     {
         hexMesh = GetComponentInChildren<HexMesh>();
@@ -30,14 +28,6 @@ public class HexGrid : MonoBehaviour
 
         hexMesh.Initialize();
         hexMesh.Triangulate(cells);
-
-        PathFinder pathfinder = new PathFinder();
-        List<INode> path = pathfinder.GetPath(test[10], test[test.Count - 1], new Heuristic());
-
-        foreach(INode node in path) {
-            int[] pos = node.GetPos();
-            Debug.Log("Position: " + pos[0] + ", " + pos[1] + ", " + pos[2]);
-        }
     }
 
     private void CreateCell(int x, int z, int i)
@@ -52,10 +42,10 @@ public class HexGrid : MonoBehaviour
         cells[i].transform.localPosition = position;
 
         // Straighten out label axis //
-        //int xLabel = x - z / 2;
+        int xLabel = x - z / 2;
 
-        cells[i].Initialize(x, z, test);
-        cells[i].GetComponentInChildren<TextMesh>().text = x + ", " + z;
+        cells[i].Initialize(x, z);
+        cells[i].GetComponentInChildren<TextMesh>().text = xLabel + ", " + z;
         cells[i].color = GetRandomColor();
 
         cells[i].Elevation = Random.Range(0, 4);
@@ -83,8 +73,6 @@ public class HexGrid : MonoBehaviour
                 }
             }
         }
-
-        test.Add(cells[i]);
     }
 
     private Color GetRandomColor()

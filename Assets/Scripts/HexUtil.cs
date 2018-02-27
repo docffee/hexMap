@@ -38,3 +38,10 @@ public enum HexDirection
     W,
     NW
 }
+
+public enum HexSlopeType
+{
+    Flat,
+    Slope,
+    Cliff
+}
