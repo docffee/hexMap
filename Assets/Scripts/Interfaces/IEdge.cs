@@ -1,4 +1,5 @@
-﻿namespace GraphAlgorithms
+
+namespace GraphAlgorithms
 {
     public interface IEdge<N> where N : INode<N>
     {
