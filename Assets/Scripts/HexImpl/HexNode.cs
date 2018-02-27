@@ -9,18 +9,21 @@ namespace Assets.Scripts.HexImpl
 {
     class HexNode : INode<HexNode>
     {
-        public int Direction { get; }
+        public int direction;
         private HexCell tile;
 
         public HexNode(int direction, HexCell tile)
         {
-            this.Direction = direction;
+            this.direction = direction;
             this.tile = tile;
         }
 
         public IEnumerator<IEdge<HexNode>> GetEnumerator()
         {
             List<IEdge<HexNode>> edges = new List<IEdge<HexNode>>();
+            HexEdge turnLeft = new HexEdge(1, new HexNode(direction - 1, tile));
+            HexEdge turnRight = new HexEdge(1, new HexNode(direction + 1, tile));
+
             return edges.GetEnumerator();
         }
 
@@ -54,6 +57,11 @@ namespace Assets.Scripts.HexImpl
                 return 5;
 
             return Direction + increment;
+        }
+
+        public int Direction
+        {
+            get { return direction; }
         }
     }
 }
