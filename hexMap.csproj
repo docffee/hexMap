@@ -227,6 +227,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CameraController.cs" />
     <Compile Include="Assets\Scripts\Hex.cs" />
     <Compile Include="Assets\Scripts\HexCell.cs" />
     <Compile Include="Assets\Scripts\HexGrid.cs" />
@@ -238,7 +239,6 @@
     <Compile Include="Assets\Scripts\HexImpl\ITerrain.cs" />
     <Compile Include="Assets\Scripts\HexImpl\ITile.cs" />
     <Compile Include="Assets\Scripts\HexImpl\IUnit.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\DummyUnit.cs" />
     <Compile Include="Assets\Scripts\HexMesh.cs" />
     <Compile Include="Assets\Scripts\HexMetrics.cs" />
     <Compile Include="Assets\Scripts\HexUtil.cs" />
@@ -252,6 +252,8 @@
     <Compile Include="Assets\Scripts\Interfaces\IPathNode.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ITileEngine.cs" />
     <Compile Include="Assets\Tester.cs" />
+    <Compile Include="Assets\TestUnit.cs" />
+    <Compile Include="Assets\UnitController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Shaders\HexMeshShader.shader" />

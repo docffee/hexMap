@@ -11,5 +11,5 @@ public interface ITile<N> where N : INode<N>
     float WorldPosZ { get; }
 
     ITerrain Terrain { get; }
-    IUnit<N> UnitOnTile { get; }
+    IUnit<N> UnitOnTile { get; set; }
 }

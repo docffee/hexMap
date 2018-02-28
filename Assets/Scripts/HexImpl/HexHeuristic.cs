@@ -12,9 +12,7 @@ namespace Assets.Scripts.HexImpl
             int z = Mathf.Abs(a.Z) - Math.Abs(b.Z);
             int y = Mathf.Abs(-(a.X + a.Z)) - Math.Abs(-(b.X + b.Z));
 
-            float turn = Mathf.Abs((int)a.Direction - (int)b.Direction);
-
-            return Mathf.Max(x, z, y) + turn;
+            return Mathf.Max(x, z, y);
         }
     }
 }

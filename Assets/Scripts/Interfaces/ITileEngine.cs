@@ -14,5 +14,6 @@ namespace Assets.Scripts.Interfaces
         ITile<N>[] GetAllTiles();
         IEnumerable<IPathNode<N>> MoveUnit(IUnit<N> unit, ITile<N> startTile, ITile<N> endTile);
         IEnumerable<IPathNode<N>> GetReachable(IUnit<N> unit, ITile<N> startTile);
+        bool PlaceUnit(IUnit<N> unit, int x, int z);
     }
 }

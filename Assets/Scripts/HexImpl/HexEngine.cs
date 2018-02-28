@@ -59,7 +59,25 @@ namespace Assets.Scripts.HexImpl
             HexNode end = new HexNode(0, endTile);
             IEnumerable<IPathNode<HexNode>> path = pathfinder.GetShortestPath(start, end, new HexHeuristic());
 
+            if (path != null)
+            {
+                unit.Tile = endTile;
+                startTile.UnitOnTile = null;
+                endTile.UnitOnTile = unit;
+            }
+
             return path;
+        }
+
+        public bool PlaceUnit(IUnit<HexNode> unit, int x, int z)
+        {
+            ITile<HexNode> tile = GetTile(x, z);
+            if (tile.UnitOnTile != null)
+                return false;
+
+            unit.Tile = tile;
+            tile.UnitOnTile = unit;
+            return true;
         }
 
         public HexNode GetNodeBehind(HexNode cur)
@@ -82,14 +100,14 @@ namespace Assets.Scripts.HexImpl
                     if ((cur.Z & 1) != 0 && cur.Z < BoardSizeZ - 1)
                         return CreateNode(cur.X, cur.Z + 1, cur.Direction.OppositeDirection());
                     else if (cur.Z < BoardSizeZ - 1 && cur.X > 0)
-                        return CreateNode(cur.X + 1, cur.Z + 1, cur.Direction.OppositeDirection());
+                        return CreateNode(cur.X - 1, cur.Z + 1, cur.Direction.OppositeDirection());
 
                     return null;
                 case 3:
                     if ((cur.Z & 1) == 0 && cur.Z < BoardSizeZ - 1)
-                        return CreateNode(cur.X + 1, cur.Z + 1, cur.Direction.OppositeDirection());
-                    else if (cur.Z < BoardSizeZ - 1)
                         return CreateNode(cur.X, cur.Z + 1, cur.Direction.OppositeDirection());
+                    else if (cur.Z < BoardSizeZ - 1)
+                        return CreateNode(cur.X + 1, cur.Z + 1, cur.Direction.OppositeDirection());
 
                     return null;
                 case 4:
@@ -99,9 +117,9 @@ namespace Assets.Scripts.HexImpl
                     return null;
                 case 5:
                     if ((cur.Z & 1) == 0 && cur.Z > 0)
-                        CreateNode(cur.X, cur.Z - 1, cur.Direction.OppositeDirection());
+                        return CreateNode(cur.X, cur.Z - 1, cur.Direction.OppositeDirection());
                     else if (cur.X < BoardSizeX - 1 && cur.Z > 0)
-                        CreateNode(cur.X + 1, cur.Z - 1, cur.Direction.OppositeDirection());
+                        return CreateNode(cur.X + 1, cur.Z - 1, cur.Direction.OppositeDirection());
 
                     return null;
                 default:
@@ -146,9 +164,9 @@ namespace Assets.Scripts.HexImpl
                     return null;
                 case 5:
                     if ((cur.Z & 1) != 0 && cur.Z < BoardSizeZ - 1)
-                        CreateNode(cur.X, cur.Z + 1, cur.Direction);
+                        return CreateNode(cur.X, cur.Z + 1, cur.Direction);
                     else if (cur.X > 0 && cur.Z < BoardSizeZ - 1)
-                        CreateNode(cur.X - 1, cur.Z + 1, cur.Direction);
+                        return CreateNode(cur.X - 1, cur.Z + 1, cur.Direction);
 
                     return null;
                 default:

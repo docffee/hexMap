@@ -58,7 +58,7 @@ namespace Assets.Scripts.HexImpl
             if (node == null)
                 return false;
 
-            return tile.X == node.tile.X && tile.Z == node.tile.Z && Direction == node.Direction;
+            return tile.X == node.tile.X && tile.Z == node.tile.Z;
         }
 
         public override int GetHashCode()

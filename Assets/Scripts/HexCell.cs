@@ -101,4 +101,17 @@ public class HexCell : MonoBehaviour, ITile<HexNode>
     {
         get { return transform.position.z; }
     }
+
+    IUnit<HexNode> ITile<HexNode>.UnitOnTile
+    {
+        get
+        {
+            return unit;
+        }
+
+        set
+        {
+            unit = value;
+        }
+    }
 }

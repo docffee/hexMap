@@ -27,6 +27,17 @@ public static class HexUtil
         else
             return direction + 1;
     }
+
+    public static int DirectionRotation(this HexDirection direction)
+    {
+        return (int)direction * 60 + 30;
+    }
+
+    public static int StepRotation(this HexDirection direction, HexDirection other)
+    {
+        int side = (int)Mathf.Sign((int)direction - (int)other);
+        return side * 60;
+    }
 }
 
 public enum HexDirection

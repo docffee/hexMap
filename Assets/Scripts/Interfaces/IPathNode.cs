@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GraphAlgorithms
 {
-    interface IPathNode<N> where N : INode<N>
+    public interface IPathNode<N> where N : INode<N>
     {
         N GetNode();
         float GetCost();
