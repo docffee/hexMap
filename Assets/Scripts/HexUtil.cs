@@ -35,8 +35,18 @@ public static class HexUtil
 
     public static int StepRotation(this HexDirection direction, HexDirection other)
     {
-        int side = (int)Mathf.Sign((int)direction - (int)other);
-        return side * 60;
+        if (direction == other)
+            return 0;
+
+        if (direction == HexDirection.NE && other == HexDirection.NW)
+            return -60;
+        if (direction == HexDirection.NW && other == HexDirection.NE)
+            return 60;
+
+        if (other < direction)
+            return -60;
+
+        return 60;
     }
 }
 
@@ -47,7 +57,8 @@ public enum HexDirection
     SE,
     SW,
     W,
-    NW
+    NW,
+    Any
 }
 
 public enum HexSlopeType

@@ -22,6 +22,12 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
 
     private IEnumerator MoveWaiter(IEnumerable<IPathNode<HexNode>> path)
     {
+        if (path == null)
+        {
+            Debug.Log("Can't find path!!");
+            yield break;
+        }
+
         performingAction = true;
         foreach (IPathNode<HexNode> node in path)
         {
@@ -37,8 +43,8 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
 
         if (node.Direction != orientation)
             yield return Rotate(node);
-
-        yield return Walk(node.Tile);
+        else
+            yield return Walk(node.Tile);
     }
 
     private IEnumerator Walk(ITile<HexNode> tile)

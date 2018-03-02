@@ -6,11 +6,12 @@ using UnityEngine;
 class UnitController : MonoBehaviour
 {
     IUnit<HexNode> selectedUnit = null;
+    HexCell selectedCell = null;
 
     private void Update()
     {
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
+
         if (Input.GetMouseButtonDown(0))
         {
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit")))

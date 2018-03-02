@@ -21,16 +21,17 @@ class Tester : MonoBehaviour
 
         engine.PlaceUnit(unit, tile.X, tile.Z);
 
-        unit.Move(engine.MoveUnit(unit, tile, engine.GetTile(1, 0)));
+        //unit.Move(engine.MoveUnit(unit, tile, engine.GetTile(1, 0)));
 
+        //int index = 23;
         //ITile<HexNode>[] cells = grid.GenerateTiles(sizeX, sizeZ);
         //HexNode[] nodes = {
-        //    new HexNode(HexDirection.NE, cells[11]),
-        //    new HexNode(HexDirection.E, cells[11]),
-        //    new HexNode(HexDirection.SE, cells[11]),
-        //    new HexNode(HexDirection.SW, cells[11]),
-        //    new HexNode(HexDirection.W, cells[11]),
-        //    new HexNode(HexDirection.NW, cells[11])
+        //    new HexNode(HexDirection.NE, cells[index]),
+        //    new HexNode(HexDirection.E, cells[index]),
+        //    new HexNode(HexDirection.SE, cells[index]),
+        //    new HexNode(HexDirection.SW, cells[index]),
+        //    new HexNode(HexDirection.W, cells[index]),
+        //    new HexNode(HexDirection.NW, cells[index])
         //};
 
         //foreach (HexNode node in nodes)

@@ -56,7 +56,7 @@ namespace Assets.Scripts.HexImpl
         public IEnumerable<IPathNode<HexNode>> MoveUnit(IUnit<HexNode> unit, ITile<HexNode> startTile, ITile<HexNode> endTile)
         {
             HexNode start = new HexNode((HexDirection) unit.Direction, startTile);
-            HexNode end = new HexNode(0, endTile);
+            HexNode end = new HexNode(HexDirection.Any, endTile);
             IEnumerable<IPathNode<HexNode>> path = pathfinder.GetShortestPath(start, end, new HexHeuristic());
 
             if (path != null)

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using GraphAlgorithms;
 
 namespace Assets.Scripts.HexImpl
@@ -25,15 +23,16 @@ namespace Assets.Scripts.HexImpl
             HexEdge turnRight = new HexEdge(0.2f, new HexNode(GetValidDirection(direction, 1), tile));
 
             HexEngine engine = HexEngine.Singleton;
-            HexNode back = engine.GetNodeBehind(this);
+            //HexNode back = engine.GetNodeBehind(this);
             HexNode forward = engine.GetNodeInFront(this);
 
             edges.Add(turnLeft);
             edges.Add(turnRight);
-            if (back != null)
-                edges.Add(new HexEdge(1.3f, back));
+            //if (back != null)
+            //    edges.Add(new HexEdge(1.3f, back));
             if (forward != null)
                 edges.Add(new HexEdge(1, forward));
+
             return edges.GetEnumerator();
         }
 
@@ -58,7 +57,14 @@ namespace Assets.Scripts.HexImpl
             if (node == null)
                 return false;
 
-            return tile.X == node.tile.X && tile.Z == node.tile.Z;
+            if (direction == HexDirection.Any || node.direction == HexDirection.Any)
+            {
+                return tile.X == node.tile.X && tile.Z == node.tile.Z;
+            }
+            else
+            {
+                return tile.X == node.tile.X && tile.Z == node.tile.Z && direction == node.direction;
+            }
         }
 
         public override int GetHashCode()

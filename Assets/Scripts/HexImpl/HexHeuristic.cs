@@ -8,11 +8,16 @@ namespace Assets.Scripts.HexImpl
     {
         public float MinDist(HexNode a, HexNode b)
         {
-            int x = Mathf.Abs(a.X) - Math.Abs(b.X);
-            int z = Mathf.Abs(a.Z) - Math.Abs(b.Z);
-            int y = Mathf.Abs(-(a.X + a.Z)) - Math.Abs(-(b.X + b.Z));
+            int x = Mathf.Abs(a.X - b.X);
+            int z = Mathf.Abs(a.Z - b.Z);
+            int y = Mathf.Abs(-(a.X + a.Z) - -(b.X + b.Z));
 
             return Mathf.Max(x, z, y);
+        }
+
+        public int GetCubeCoordinateFromAxial(int x, int z)
+        {
+            return -x - z;
         }
     }
 }

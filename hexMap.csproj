@@ -222,13 +222,9 @@
     <Reference Include="C5">
       <HintPath>Assets\Dependencies\C5.dll</HintPath>
     </Reference>
-    <Reference Include="C5">
-      <HintPath>Assets\Scripts\C5.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\Hex.cs" />
     <Compile Include="Assets\Scripts\HexCell.cs" />
     <Compile Include="Assets\Scripts\HexGrid.cs" />
     <Compile Include="Assets\Scripts\HexImpl\HexEdge.cs" />
