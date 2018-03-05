@@ -53,18 +53,11 @@ namespace Assets.Scripts.HexImpl
             return pathfinder.GetReachableNodes(node, 5);
         }
 
-        public IEnumerable<IPathNode<HexNode>> MoveUnit(IUnit<HexNode> unit, ITile<HexNode> startTile, ITile<HexNode> endTile)
+        public IEnumerable<IPathNode<HexNode>> GetShortestPath(IUnit<HexNode> unit, ITile<HexNode> startTile, ITile<HexNode> endTile)
         {
             HexNode start = new HexNode((HexDirection) unit.Direction, startTile);
             HexNode end = new HexNode(HexDirection.Any, endTile);
             IEnumerable<IPathNode<HexNode>> path = pathfinder.GetShortestPath(start, end, new HexHeuristic());
-
-            if (path != null)
-            {
-                unit.Tile = endTile;
-                startTile.UnitOnTile = null;
-                endTile.UnitOnTile = unit;
-            }
 
             return path;
         }
@@ -77,6 +70,19 @@ namespace Assets.Scripts.HexImpl
 
             unit.Tile = tile;
             tile.UnitOnTile = unit;
+            return true;
+        }
+
+        public bool MoveUnit(IUnit<HexNode> unit, int lastX, int lastZ, int newX, int newZ)
+        {
+            ITile<HexNode> endTile = GetTile(newX, newZ);
+            if (endTile.UnitOnTile != null)
+                return false;
+
+            ITile<HexNode> currentTile = unit.Tile;
+            currentTile.UnitOnTile = null;
+            endTile.UnitOnTile = unit;
+            unit.Tile = endTile;
             return true;
         }
 

@@ -44,9 +44,9 @@ public class HexGrid : MonoBehaviour, IMapGenerator<HexNode>
 
         cells[i].Initialize(x, z);
         cells[i].GetComponentInChildren<TextMesh>().text = x + ", " + z;
-        cells[i].color = GetRandomColor();
 
         cells[i].Elevation = Random.Range(0, 4);
+        cells[i].color = GetRandomColor(cells[i].Elevation);
 
         if (x > 0)
         {
@@ -73,20 +73,20 @@ public class HexGrid : MonoBehaviour, IMapGenerator<HexNode>
         }
     }
 
-    private Color GetRandomColor()
+    private Color GetRandomColor(int elevation)
     {
-        int rnd = Random.Range(0, 4);
-        
-        switch (rnd)
+        switch (elevation)
         {
             case 0:
                 return Color.blue;
-            case 2:
+            case 1:
                 return Color.yellow;
-            case 3:
-                return Color.white;
-            default:
+            case 2:
                 return Color.green;
+            case 3:
+                return Color.grey;
+            default:
+                return Color.white;
         }
     }
 

@@ -9,7 +9,7 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
 {
     [SerializeField] private float moveSpeed = 1.2f;
     [SerializeField] private float rotateSpeed = 0.2f;
-    [SerializeField] private float displacementY = 1.2f;
+    [SerializeField] private float displacementY = 1;
 
     private ITile<HexNode> tile;
     private HexDirection orientation;
@@ -27,13 +27,16 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
             Debug.Log("Can't find path!!");
             yield break;
         }
-
         performingAction = true;
-        foreach (IPathNode<HexNode> node in path)
+
+        IEnumerator<IPathNode<HexNode>> enumerator = path.GetEnumerator();
+        enumerator.MoveNext(); // Skips first;
+        while(enumerator.MoveNext())
         {
-            Debug.Log(node.GetNode());
+            IPathNode<HexNode> node = enumerator.Current;
             yield return Step(node);
         }
+
         performingAction = false;
     }
 
@@ -41,14 +44,19 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
     {
         HexNode node = pathNode.GetNode();
 
+        //if (tile.X == node.X && tile.Z == node.Z && orientation == node.Direction)
+        //    yield break;
+
         if (node.Direction != orientation)
             yield return Rotate(node);
         else
-            yield return Walk(node.Tile);
+            yield return Walk(node);
     }
 
-    private IEnumerator Walk(ITile<HexNode> tile)
+    private IEnumerator Walk(HexNode node)
     {
+        ITile<HexNode> tile = node.Tile;
+
         Vector3 startPoint = transform.position;
         Vector3 nodePoint = new Vector3(tile.WorldPosX, tile.WorldPosY, tile.WorldPosZ) + Vector3.up * displacementY;
 
@@ -62,6 +70,7 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
         }
 
         transform.position = nodePoint;
+        HexEngine.Singleton.MoveUnit(this, tile.X, tile.Z, node.X, node.Z);
     }
 
     private IEnumerator Rotate(HexNode node)

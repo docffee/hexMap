@@ -28,11 +28,6 @@ public static class HexUtil
             return direction + 1;
     }
 
-    public static int DirectionRotation(this HexDirection direction)
-    {
-        return (int)direction * 60 + 30;
-    }
-
     public static int StepRotation(this HexDirection direction, HexDirection other)
     {
         if (direction == other)

@@ -61,6 +61,10 @@ namespace GraphAlgorithms
                         curNode = curNode.prev;
                     } while (curNode != null);
                     res.Reverse();
+                    foreach(IPathNode<N> node in res)
+                    {
+                        UnityEngine.Debug.Log(node.GetNode());
+                    }
                     return res;
                 }
             }

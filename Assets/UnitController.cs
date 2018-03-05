@@ -26,7 +26,7 @@ class UnitController : MonoBehaviour
                 Debug.Log("Hit cell at: " + cell.X + ", " + cell.Z);
 
                 HexEngine engine = HexEngine.Singleton;
-                IEnumerable<IPathNode<HexNode>> path = engine.MoveUnit(selectedUnit, selectedUnit.Tile, cell);
+                IEnumerable<IPathNode<HexNode>> path = engine.GetShortestPath(selectedUnit, selectedUnit.Tile, cell);
                 selectedUnit.Move(path);
             }
         }
