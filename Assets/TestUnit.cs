@@ -7,13 +7,16 @@ using System;
 
 public class TestUnit : MonoBehaviour, IUnit<HexNode>
 {
-    [SerializeField] private float moveSpeed = 1.2f;
-    [SerializeField] private float rotateSpeed = 0.2f;
+    [SerializeField] private float moveTime = 1.2f;
+    [SerializeField] private float rotateTime = 0.2f;
     [SerializeField] private float displacementY = 1;
 
     private ITile<HexNode> tile;
     private HexDirection orientation;
     private bool performingAction = false;
+
+    float maxMovePoints = 8;
+    [SerializeField] float currentMovePoints = 8;
 
     public void Move(IEnumerable<IPathNode<HexNode>> path)
     {
@@ -34,7 +37,12 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
         while(enumerator.MoveNext())
         {
             IPathNode<HexNode> node = enumerator.Current;
-            yield return Step(node);
+            float cost = node.GetCost();
+
+            if (cost <= currentMovePoints)
+                yield return Step(node);
+            else
+                break;
         }
 
         performingAction = false;
@@ -43,6 +51,7 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
     private IEnumerator Step(IPathNode<HexNode> pathNode)
     {
         HexNode node = pathNode.GetNode();
+        currentMovePoints -= pathNode.GetCost();
 
         //if (tile.X == node.X && tile.Z == node.Z && orientation == node.Direction)
         //    yield break;
@@ -61,9 +70,9 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
         Vector3 nodePoint = new Vector3(tile.WorldPosX, tile.WorldPosY, tile.WorldPosZ) + Vector3.up * displacementY;
 
         float elapsedTime = 0;
-        while (elapsedTime < moveSpeed)
+        while (elapsedTime < moveTime)
         {
-            Vector3 between = Vector3.Lerp(startPoint, nodePoint, elapsedTime / moveSpeed);
+            Vector3 between = Vector3.Lerp(startPoint, nodePoint, elapsedTime / moveTime);
             transform.position = between;
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
@@ -82,9 +91,9 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
         float yIncrement = HexUtil.StepRotation(orientation, node.Direction);
         Quaternion end = Quaternion.Euler(startEuler.x, startEuler.y + yIncrement, startEuler.z);
 
-        while (elapsedTime < rotateSpeed)
+        while (elapsedTime < rotateTime)
         {
-            Quaternion between = Quaternion.Lerp(start, end, elapsedTime / rotateSpeed);
+            Quaternion between = Quaternion.Lerp(start, end, elapsedTime / rotateTime);
             transform.rotation = between;
             elapsedTime += Time.deltaTime;
             yield return new WaitForEndOfFrame();
@@ -97,6 +106,33 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
     public bool PerformingAction()
     {
         return performingAction;
+    }
+
+    public float GetTerrainModifier(ITerrain terrain)
+    {
+        switch (terrain.Name)
+        {
+            case "Grass":
+                return 1;
+            case "Forest":
+                return 2;
+            case "Mountain":
+                return float.MaxValue;
+            case "Water":
+                return float.MaxValue;
+            case "Sand":
+                return 3;
+            default:
+                return float.MaxValue;
+        }
+    }
+
+    public float RotateCost
+    {
+        get
+        {
+            return 0.2f;
+        }
     }
 
     public int MaxActionPoints
@@ -142,5 +178,19 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
         {
             tile = value;
         }
+    }
+
+    public float MaxMovePoints
+    {
+        get { return maxMovePoints; }
+
+        set { maxMovePoints = value; }
+    }
+
+    public float CurrentMovePoints
+    {
+        get { return currentMovePoints; }
+
+        set { currentMovePoints = value; }
     }
 }

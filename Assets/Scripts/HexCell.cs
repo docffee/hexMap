@@ -13,11 +13,12 @@ public class HexCell : MonoBehaviour, ITile<HexNode>
     private ITerrain terrain;
     private IUnit<HexNode> unit;
 
-    public void Initialize(int x, int z)
+    public void Initialize(int x, int z, ITerrain terrain)
     {
         neighbours = new HexCell[6];
         this.x = x;
         this.z = z;
+        this.terrain = terrain;
     }
 
     public void SetNeighbourBiDirectional(HexCell cell, HexDirection dir)

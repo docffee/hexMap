@@ -9,18 +9,22 @@ namespace Assets.Scripts.HexImpl
     {
         private HexDirection direction;
         private ITile<HexNode> tile;
+        private IUnit<HexNode> movingUnit;
 
-        public HexNode(HexDirection direction, ITile<HexNode> tile)
+        public HexNode(HexDirection direction, ITile<HexNode> tile, IUnit<HexNode> movingUnit)
         {
             this.direction = direction;
             this.tile = tile;
+            this.movingUnit = movingUnit;
         }
 
         public IEnumerator<IEdge<HexNode>> GetEnumerator()
         {
             List<IEdge<HexNode>> edges = new List<IEdge<HexNode>>();
-            HexEdge turnLeft = new HexEdge(0.2f, new HexNode(GetValidDirection(direction, -1), tile));
-            HexEdge turnRight = new HexEdge(0.2f, new HexNode(GetValidDirection(direction, 1), tile));
+            float terrainMod = movingUnit.GetTerrainModifier(tile.Terrain);
+            float rotateCost = movingUnit.RotateCost * terrainMod;
+            HexEdge turnLeft = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, -1), tile, movingUnit));
+            HexEdge turnRight = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, 1), tile, movingUnit));
 
             HexEngine engine = HexEngine.Singleton;
             //HexNode back = engine.GetNodeBehind(this);
@@ -31,7 +35,10 @@ namespace Assets.Scripts.HexImpl
             //if (back != null)
             //    edges.Add(new HexEdge(1.3f, back));
             if (forward != null)
-                edges.Add(new HexEdge(1, forward));
+            {
+                float cost = ((terrainMod + movingUnit.GetTerrainModifier(forward.Tile.Terrain)) / 2);
+                edges.Add(new HexEdge(cost, forward));
+            }
 
             return edges.GetEnumerator();
         }
@@ -98,6 +105,11 @@ namespace Assets.Scripts.HexImpl
         public int Z
         {
             get { return tile.Z; }
+        }
+
+        public IUnit<HexNode> MovingUnit
+        {
+            get { return movingUnit; }
         }
     }
 }

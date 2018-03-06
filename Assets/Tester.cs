@@ -8,11 +8,8 @@ class Tester : MonoBehaviour
 {
     private void Start()
     {
-        int sizeX = 10;
-        int sizeZ = 10;
-
         HexGrid grid = FindObjectOfType<HexGrid>();
-        HexEngine engine = new HexEngine(sizeX, sizeZ, grid);
+        HexEngine engine = new HexEngine(grid.SizeX, grid.SizeZ, grid);
 
         TestUnit unit = GameObject.FindGameObjectWithTag("Unit").GetComponent<TestUnit>();
         ITile<HexNode> tile = engine.GetTile(0, 0);
