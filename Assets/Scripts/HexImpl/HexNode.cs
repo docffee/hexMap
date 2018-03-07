@@ -37,7 +37,7 @@ namespace Assets.Scripts.HexImpl
             if (forward != null)
             {
                 float cost = ((terrainMod + movingUnit.GetTerrainModifier(forward.Tile.Terrain)) / 2);
-                edges.Add(new HexEdge(cost, forward));
+                edges.Add(new HexEdge(1, forward));
             }
 
             return edges.GetEnumerator();

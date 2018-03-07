@@ -276,6 +276,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileMovementPrefab: {fileID: 1016150241131364, guid: c4d734cb2db5dd54f8ccb14bfd6b812b,
     type: 2}
+  pathArrowPrefab: {fileID: 1362063277278330, guid: 00edc65b09277ec4bb6e9a2d5ef7a724,
+    type: 2}
 --- !u!1 &1247923809
 GameObject:
   m_ObjectHideFlags: 0

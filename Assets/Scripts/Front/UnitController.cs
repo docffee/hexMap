@@ -7,9 +7,12 @@ using UnityEngine;
 class UnitController : MonoBehaviour
 {
     [SerializeField] private GameObject tileMovementPrefab;
+    [SerializeField] private GameObject pathArrowPrefab;
 
-    IUnit<HexNode> selectedUnit = null;
+    private IUnit<HexNode> selectedUnit = null;
     private List<GameObject> highlightedTiles = new List<GameObject>();
+    private List<GameObject> pathArrows = new List<GameObject>();
+    private ITile<HexNode> hoverOver;
 
     private void Update()
     {
@@ -34,7 +37,7 @@ class UnitController : MonoBehaviour
 
                 IEnumerable<IPathNode<HexNode>> path = engine.GetShortestPath(selectedUnit, selectedUnit.Tile, cell);
                 selectedUnit.Move(path);
-                ClearHighlights();
+                ClearGameObjectList(highlightedTiles);
             }
         }
 
@@ -42,12 +45,25 @@ class UnitController : MonoBehaviour
         {
             Debug.Log("Unit deselected");
             selectedUnit = null;
-            ClearHighlights();
+            ClearGameObjectList(highlightedTiles);
+            ClearGameObjectList(pathArrows);
+        }
+
+        if (selectedUnit != null && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
+        {
+            ITile<HexNode> hoverNow = hit.collider.gameObject.GetComponent<ITile<HexNode>>();
+            if (!hoverNow.Equals(hoverOver))
+            {
+                IEnumerable<IPathNode<HexNode>> path = engine.GetShortestPath(selectedUnit, selectedUnit.Tile, hoverNow);
+                ClearGameObjectList(pathArrows);
+                HighlightPath(path);
+            }
         }
     }
 
     private void HighlightTiles(IEnumerable<IPathNode<HexNode>> reachable)
     {
+        // Fix until selection of direction is implemented //
         List<ITile<HexNode>> tiles = new List<ITile<HexNode>>();
 
         foreach (IPathNode<HexNode> node in reachable)
@@ -65,12 +81,30 @@ class UnitController : MonoBehaviour
         }
     }
 
-    private void ClearHighlights()
+
+    private void HighlightPath(IEnumerable<IPathNode<HexNode>> path)
     {
-        foreach (GameObject obj in highlightedTiles)
+        IEnumerator<IPathNode<HexNode>> enumerator = path.GetEnumerator();
+        enumerator.MoveNext(); // Skips first //
+        while (enumerator.MoveNext())
+        {
+            IPathNode<HexNode> node = enumerator.Current;
+            HexNode hexNode = node.GetNode();
+            ITile<HexNode> tile = node.GetNode().Tile;
+            Vector3 position = new Vector3(tile.WorldPosX, tile.WorldPosY + 0.05f, tile.WorldPosZ);
+            Quaternion rotation = Quaternion.Euler(90, hexNode.Direction.DirectionRotation() - 60, 0);
+
+            GameObject highlight = Instantiate(pathArrowPrefab, position, rotation, transform);
+            pathArrows.Add(highlight);
+        }
+    }
+
+    private void ClearGameObjectList(List<GameObject> list)
+    {
+        foreach (GameObject obj in list)
         {
             Destroy(obj);
         }
-        highlightedTiles.Clear();
+        list.Clear();
     }
 }
