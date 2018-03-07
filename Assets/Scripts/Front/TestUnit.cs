@@ -34,9 +34,11 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
 
         IEnumerator<IPathNode<HexNode>> enumerator = path.GetEnumerator();
         enumerator.MoveNext(); // Skips first;
+        IPathNode<HexNode> lastNode = enumerator.Current;
         while(enumerator.MoveNext())
         {
             IPathNode<HexNode> node = enumerator.Current;
+            lastNode = enumerator.Current;
             float cost = node.GetCost();
 
             if (cost <= currentMovePoints)
@@ -45,13 +47,13 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
                 break;
         }
 
+        currentMovePoints -= lastNode.GetCost();
         performingAction = false;
     }
 
     private IEnumerator Step(IPathNode<HexNode> pathNode)
     {
         HexNode node = pathNode.GetNode();
-        currentMovePoints -= pathNode.GetCost();
 
         if (node.Direction != orientation)
             yield return Rotate(node);
@@ -105,22 +107,22 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
         return performingAction;
     }
 
-    public float GetTerrainModifier(ITerrain terrain)
+    public IWalkable GetTerrainWalkability(ITerrain terrain)
     {
         switch (terrain.Name)
         {
             case "Grass":
-                return 1;
+                return new Walkable(1, true);
             case "Forest":
-                return 2;
+                return new Walkable(2, true);
             case "Mountain":
-                return float.MaxValue;
+                return new Walkable(0, false);
             case "Water":
-                return float.MaxValue;
+                return new Walkable(0, false);
             case "Sand":
-                return 3;
+                return new Walkable(3, true);
             default:
-                return float.MaxValue;
+                return new Walkable(0, false);
         }
     }
 

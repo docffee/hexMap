@@ -12,11 +12,12 @@ class Tester : MonoBehaviour
         HexEngine engine = new HexEngine(grid.SizeX, grid.SizeZ, grid);
 
         TestUnit unit = GameObject.FindGameObjectWithTag("Unit").GetComponent<TestUnit>();
-        ITile<HexNode> tile = engine.GetTile(0, 0);
+        ITile<HexNode> tile = engine.GetTile(19, 12);
         Vector3 tilePosition = new Vector3(tile.WorldPosX, tile.WorldPosY, tile.WorldPosZ);
         unit.transform.position = tilePosition + Vector3.up * unit.DisplacementY;
 
         engine.PlaceUnit(unit, tile.X, tile.Z);
+        Camera.main.transform.position = new Vector3(tilePosition.x, Camera.main.transform.position.y, tilePosition.z - 35);
 
         //unit.Move(engine.MoveUnit(unit, tile, engine.GetTile(1, 0)));
 

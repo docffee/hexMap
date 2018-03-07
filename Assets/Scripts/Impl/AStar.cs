@@ -27,8 +27,7 @@ namespace GraphAlgorithms
                             otherNode = new PathNode<N>(other);
                             nodeDictionary.Add(other, otherNode);
                         }
-                        //float newG = edge.GetCost() + curNode.g;
-                        float newG = edge.GetCost();
+                        float newG = edge.GetCost() + curNode.g;
                         if (otherNode.g > newG)
                         {
                             otherNode.g = newG;

@@ -647,7 +647,7 @@ MonoBehaviour:
   moveTime: 0.5
   rotateTime: 0.1
   displacementY: 1.6
-  currentMovePoints: 8
+  currentMovePoints: 7
 --- !u!4 &1929074092
 Transform:
   m_ObjectHideFlags: 0

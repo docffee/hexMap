@@ -26,7 +26,6 @@ class UnitController : MonoBehaviour
                 Debug.Log("Unit selected");
                 selectedUnit = hit.collider.gameObject.GetComponent<IUnit<HexNode>>();
                 IEnumerable<IPathNode<HexNode>> reachable = engine.GetReachable(selectedUnit, selectedUnit.Tile);
-
                 HighlightTiles(reachable);
             }
             else if (selectedUnit != null && !selectedUnit.PerformingAction() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
@@ -38,6 +37,7 @@ class UnitController : MonoBehaviour
                 IEnumerable<IPathNode<HexNode>> path = engine.GetShortestPath(selectedUnit, selectedUnit.Tile, cell);
                 selectedUnit.Move(path);
                 ClearGameObjectList(highlightedTiles);
+                ClearGameObjectList(pathArrows);
             }
         }
 
@@ -49,9 +49,12 @@ class UnitController : MonoBehaviour
             ClearGameObjectList(pathArrows);
         }
 
-        if (selectedUnit != null && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
+        if (selectedUnit != null && !selectedUnit.PerformingAction() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
         {
             ITile<HexNode> hoverNow = hit.collider.gameObject.GetComponent<ITile<HexNode>>();
+            if (!selectedUnit.GetTerrainWalkability(hoverNow.Terrain).Passable)
+                return;
+
             if (!hoverNow.Equals(hoverOver))
             {
                 IEnumerable<IPathNode<HexNode>> path = engine.GetShortestPath(selectedUnit, selectedUnit.Tile, hoverNow);

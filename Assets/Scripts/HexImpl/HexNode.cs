@@ -21,7 +21,7 @@ namespace Assets.Scripts.HexImpl
         public IEnumerator<IEdge<HexNode>> GetEnumerator()
         {
             List<IEdge<HexNode>> edges = new List<IEdge<HexNode>>();
-            float terrainMod = movingUnit.GetTerrainModifier(tile.Terrain);
+            float terrainMod = movingUnit.GetTerrainWalkability(tile.Terrain).Modifier;
             float rotateCost = movingUnit.RotateCost * terrainMod;
             HexEdge turnLeft = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, -1), tile, movingUnit));
             HexEdge turnRight = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, 1), tile, movingUnit));
@@ -36,8 +36,12 @@ namespace Assets.Scripts.HexImpl
             //    edges.Add(new HexEdge(1.3f, back));
             if (forward != null)
             {
-                float cost = ((terrainMod + movingUnit.GetTerrainModifier(forward.Tile.Terrain)) / 2);
-                edges.Add(new HexEdge(1, forward));
+                IWalkable walkable = movingUnit.GetTerrainWalkability(forward.Tile.Terrain);
+                if (walkable.Passable)
+                {
+                    float cost = ((terrainMod + walkable.Modifier) / 2);
+                    edges.Add(new HexEdge(cost, forward));
+                }
             }
 
             return edges.GetEnumerator();
