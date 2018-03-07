@@ -42,20 +42,21 @@ public class HexCell : MonoBehaviour, ITile<HexNode>
         return HexMetrics.GetHexSlopeType(elevation, neighbours[(int)direction].elevation);
     }
 
-    public int Elevation
+    public override bool Equals(object obj)
     {
-        get
-        {
-            return elevation;
-        }
+        var cell = obj as HexCell;
+        if (cell == null)
+            return false;
 
-        set
-        {
-            elevation = value;
-            Vector3 position = transform.localPosition;
-            position.y = value * HexMetrics.elevationStep;
-            transform.localPosition = position;
-        }
+        return x == cell.x && z == cell.z;
+    }
+
+    public override int GetHashCode()
+    {
+        var hashCode = -300798877;
+        hashCode = hashCode * -1521134295 + x.GetHashCode();
+        hashCode = hashCode * -1521134295 + z.GetHashCode();
+        return hashCode;
     }
 
     public override string ToString()
@@ -113,6 +114,22 @@ public class HexCell : MonoBehaviour, ITile<HexNode>
         set
         {
             unit = value;
+        }
+    }
+
+    public int Elevation
+    {
+        get
+        {
+            return elevation;
+        }
+
+        set
+        {
+            elevation = value;
+            Vector3 position = transform.localPosition;
+            position.y = value * HexMetrics.elevationStep;
+            transform.localPosition = position;
         }
     }
 }

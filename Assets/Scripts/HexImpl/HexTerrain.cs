@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Assets.Scripts.HexImpl
 {
-    class Terrain : ITerrain
+    class HexTerrain : ITerrain
     {
         private TerrainType type;
         private static ITerrain[] prefabTerrains;
 
-        public Terrain(TerrainType type)
+        public HexTerrain(TerrainType type)
         {
             this.type = type;
         }
@@ -55,14 +55,14 @@ namespace Assets.Scripts.HexImpl
 
         private static void PopulatePrefabTerrain()
         {
-            prefabTerrains = new Terrain[6];
+            prefabTerrains = new HexTerrain[6];
 
-            prefabTerrains[0] = new Terrain(TerrainType.Grass);
-            prefabTerrains[1] = new Terrain(TerrainType.Water);
-            prefabTerrains[2] = new Terrain(TerrainType.Mountain);
-            prefabTerrains[3] = new Terrain(TerrainType.Sand);
-            prefabTerrains[4] = new Terrain(TerrainType.Forest);
-            prefabTerrains[5] = new Terrain(TerrainType.Unpassable);
+            prefabTerrains[0] = new HexTerrain(TerrainType.Grass);
+            prefabTerrains[1] = new HexTerrain(TerrainType.Water);
+            prefabTerrains[2] = new HexTerrain(TerrainType.Mountain);
+            prefabTerrains[3] = new HexTerrain(TerrainType.Sand);
+            prefabTerrains[4] = new HexTerrain(TerrainType.Forest);
+            prefabTerrains[5] = new HexTerrain(TerrainType.Unpassable);
         }
     }
 

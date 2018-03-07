@@ -53,9 +53,6 @@ public class TestUnit : MonoBehaviour, IUnit<HexNode>
         HexNode node = pathNode.GetNode();
         currentMovePoints -= pathNode.GetCost();
 
-        //if (tile.X == node.X && tile.Z == node.Z && orientation == node.Direction)
-        //    yield break;
-
         if (node.Direction != orientation)
             yield return Rotate(node);
         else

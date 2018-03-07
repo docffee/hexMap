@@ -25,7 +25,7 @@ public class BreindalenMap : IMapGenerator<HexNode>
         for (int i = 0; i < tileChars.Length; i++)
         {
             char c = tileChars[i];
-            generated[i] = new TileInfo(Terrain.GetTerrainFromChar(c));
+            generated[i] = new TileInfo(HexTerrain.GetTerrainFromChar(c));
         }
 
         return generated;

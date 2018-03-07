@@ -62,7 +62,6 @@ namespace GraphAlgorithms
             }
         }
 
-
         private class PathNode<N> : IPathNode<N>, IEquatable<PathNode<N>> where N : INode<N>
         {
             public N node { get; }

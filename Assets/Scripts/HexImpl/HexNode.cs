@@ -45,7 +45,7 @@ namespace Assets.Scripts.HexImpl
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
 
         public HexDirection GetValidDirection(HexDirection direction, int increment)

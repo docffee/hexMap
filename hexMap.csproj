@@ -13,13 +13,11 @@
     <TargetFrameworkIdentifier>.NETFramework</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Unity Subset v3.5</TargetFrameworkProfile>
-    <CompilerResponseFile>
-    </CompilerResponseFile>
+    <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>StandaloneWindows64:19</UnityBuildTarget>
     <UnityVersion>2017.2.0f3</UnityVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <LangVersion Condition=" '$(VisualStudioVersion)' != '10.0' ">4</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -224,32 +222,35 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\HexCell.cs" />
-    <Compile Include="Assets\Scripts\HexGrid.cs" />
+    <Compile Include="Assets\Scripts\Front\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Front\HexCell.cs" />
+    <Compile Include="Assets\Scripts\Front\HexGrid.cs" />
+    <Compile Include="Assets\Scripts\Front\HexMesh.cs" />
+    <Compile Include="Assets\Scripts\Front\HexMetrics.cs" />
+    <Compile Include="Assets\Scripts\Front\HexUtil.cs" />
+    <Compile Include="Assets\Scripts\Front\Tester.cs" />
+    <Compile Include="Assets\Scripts\Front\TestUnit.cs" />
+    <Compile Include="Assets\Scripts\Front\UnitController.cs" />
+    <Compile Include="Assets\Scripts\HexImpl\BreindalenMap.cs" />
     <Compile Include="Assets\Scripts\HexImpl\HexEdge.cs" />
     <Compile Include="Assets\Scripts\HexImpl\HexEngine.cs" />
     <Compile Include="Assets\Scripts\HexImpl\HexHeuristic.cs" />
     <Compile Include="Assets\Scripts\HexImpl\HexNode.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\IMapGenerator.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\ITerrain.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\ITile.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\IUnit.cs" />
-    <Compile Include="Assets\Scripts\HexMesh.cs" />
-    <Compile Include="Assets\Scripts\HexMetrics.cs" />
-    <Compile Include="Assets\Scripts\HexUtil.cs" />
+    <Compile Include="Assets\Scripts\HexImpl\HexTerrain.cs" />
+    <Compile Include="Assets\Scripts\HexImpl\TileInfo.cs" />
     <Compile Include="Assets\Scripts\Impl\AStar.cs" />
     <Compile Include="Assets\Scripts\Impl\Pathfinding.cs" />
     <Compile Include="Assets\Scripts\Impl\ReachableNodes.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IEdge.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IHeuristic.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IMapGenerator.cs" />
     <Compile Include="Assets\Scripts\Interfaces\INode.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPathfinding.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IPathNode.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\ITerrain.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\ITile.cs" />
     <Compile Include="Assets\Scripts\Interfaces\ITileEngine.cs" />
-    <Compile Include="Assets\Tester.cs" />
-    <Compile Include="Assets\TestUnit.cs" />
-    <Compile Include="Assets\UnitController.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IUnit.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Resources\Shaders\HexMeshShader.shader" />

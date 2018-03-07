@@ -7,9 +7,9 @@ namespace Assets.Scripts.HexImpl
         private HexNode end;
         private float cost;
 
-        public HexEdge(float prevCost, HexNode end)
+        public HexEdge(float cost, HexNode end)
         {
-            cost = prevCost;
+            this.cost = cost;
             this.end = end;
         }
 
