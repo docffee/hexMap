@@ -52,6 +52,9 @@ class UnitController : MonoBehaviour
         if (selectedUnit != null && !selectedUnit.PerformingAction() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
         {
             ITile<HexNode> hoverNow = hit.collider.gameObject.GetComponent<ITile<HexNode>>();
+
+            if (hoverNow.UnitOnTile != null)
+                return;
             if (!selectedUnit.GetTerrainWalkability(hoverNow.Terrain).Passable)
                 return;
 
@@ -87,6 +90,9 @@ class UnitController : MonoBehaviour
 
     private void HighlightPath(IEnumerable<IPathNode<HexNode>> path)
     {
+        if (path == null)
+            return;
+
         Dictionary<ITile<HexNode>, bool> tiles = new Dictionary<ITile<HexNode>, bool>();
 
         IEnumerator<IPathNode<HexNode>> enumerator = path.GetEnumerator();

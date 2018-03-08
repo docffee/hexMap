@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class TestUnit : UnityUnit
+public class TestUnit2 : UnityUnit
 {
     [SerializeField] private float moveTime = 1.2f;
     [SerializeField] private float rotateTime = 0.2f;
@@ -17,6 +17,37 @@ public class TestUnit : UnityUnit
 
     float maxMovePoints = 8;
     [SerializeField] float currentMovePoints = 8;
+
+    private void Start()
+    {
+        StartCoroutine(FloatingRoutine());
+    }
+
+    private IEnumerator FloatingRoutine()
+    {
+        float offset = 1.8f;
+        float time = 1.2f;
+        int mod = 1;
+        while (true)
+        {
+            float elapsedTime = 0;
+            float startY = transform.position.y;
+            float endY = startY + (offset * mod);
+            while (elapsedTime < time)
+            {
+                Vector3 posBefore = new Vector3(transform.position.x, startY, transform.position.z);
+                Vector3 posAfter = new Vector3(transform.position.x, endY, transform.position.z);
+                Vector3 next = Vector3.Lerp(posBefore, posAfter, elapsedTime / time);
+                transform.position = next;
+                elapsedTime += Time.deltaTime;
+                yield return new WaitForEndOfFrame();
+            }
+
+            transform.position = new Vector3(transform.position.x, endY, transform.position.z);
+            mod = mod * -1;
+            yield return new WaitForEndOfFrame();
+        }
+    }
 
     public override void Move(IEnumerable<IPathNode<HexNode>> path)
     {
@@ -35,7 +66,7 @@ public class TestUnit : UnityUnit
         IEnumerator<IPathNode<HexNode>> enumerator = path.GetEnumerator();
         enumerator.MoveNext(); // Skips first;
         IPathNode<HexNode> lastNode = enumerator.Current;
-        while(enumerator.MoveNext())
+        while (enumerator.MoveNext())
         {
             IPathNode<HexNode> node = enumerator.Current;
             lastNode = enumerator.Current;
@@ -112,15 +143,15 @@ public class TestUnit : UnityUnit
         switch (terrain.Name)
         {
             case "Grass":
-                return new Walkable(1, true);
+                return new Walkable(2, true);
             case "Forest":
                 return new Walkable(2, true);
             case "Mountain":
-                return new Walkable(0, false);
+                return new Walkable(2, true);
             case "Water":
-                return new Walkable(0, false);
+                return new Walkable(2, true);
             case "Sand":
-                return new Walkable(3, true);
+                return new Walkable(2, true);
             default:
                 return new Walkable(0, false);
         }

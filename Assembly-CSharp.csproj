@@ -59,7 +59,9 @@
      <Compile Include="Assets\Scripts\Front\HexUtil.cs" />
      <Compile Include="Assets\Scripts\Front\Tester.cs" />
      <Compile Include="Assets\Scripts\Front\TestUnit.cs" />
+     <Compile Include="Assets\Scripts\Front\TestUnit2.cs" />
      <Compile Include="Assets\Scripts\Front\UnitController.cs" />
+     <Compile Include="Assets\Scripts\Front\UnityUnit.cs" />
      <Compile Include="Assets\Scripts\HexImpl\BreindalenMap.cs" />
      <Compile Include="Assets\Scripts\HexImpl\HexEdge.cs" />
      <Compile Include="Assets\Scripts\HexImpl\HexEngine.cs" />
