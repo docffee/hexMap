@@ -8,8 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>
-    </RootNamespace>
+    <RootNamespace></RootNamespace>
     <ProjectGuid>{B2389AD8-7658-4233-3015-5669C66DBF16}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
@@ -52,72 +51,74 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scripts\HexCell.cs" />
-    <Compile Include="Assets\Scripts\HexGrid.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\BreindalenMap.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\HexEdge.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\HexEngine.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\HexHeuristic.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\HexNode.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\IMapGenerator.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\ITerrain.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\ITile.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\IUnit.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\Terrain.cs" />
-    <Compile Include="Assets\Scripts\HexImpl\TileInfo.cs" />
-    <Compile Include="Assets\Scripts\HexMesh.cs" />
-    <Compile Include="Assets\Scripts\HexMetrics.cs" />
-    <Compile Include="Assets\Scripts\HexUtil.cs" />
-    <Compile Include="Assets\Scripts\Impl\AStar.cs" />
-    <Compile Include="Assets\Scripts\Impl\Pathfinding.cs" />
-    <Compile Include="Assets\Scripts\Impl\ReachableNodes.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\IEdge.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\IHeuristic.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\INode.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\IPathfinding.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\IPathNode.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\ITileEngine.cs" />
-    <Compile Include="Assets\Tester.cs" />
-    <Compile Include="Assets\TestUnit.cs" />
-    <Compile Include="Assets\UnitController.cs" />
-    <None Include="Assets\Resources\Shaders\HexMeshShader.shader" />
-    <Reference Include="UnityEngine.UI">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Networking">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TestRunner">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
-    </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Timeline">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIAutomation">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.GoogleAudioSpatializer">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.HoloLens">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
-    </Reference>
-    <Reference Include="C5">
-      <HintPath>C:/Users/Bade/Documents/Git/hexMap/Assets/Dependencies/C5.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Analytics">
-      <HintPath>C:/Users/Bade/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.Purchasing">
-      <HintPath>C:/Users/Bade/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
-    </Reference>
+     <Compile Include="Assets\Scripts\Front\CameraController.cs" />
+     <Compile Include="Assets\Scripts\Front\HexCell.cs" />
+     <Compile Include="Assets\Scripts\Front\HexGrid.cs" />
+     <Compile Include="Assets\Scripts\Front\HexMesh.cs" />
+     <Compile Include="Assets\Scripts\Front\HexMetrics.cs" />
+     <Compile Include="Assets\Scripts\Front\HexUtil.cs" />
+     <Compile Include="Assets\Scripts\Front\Tester.cs" />
+     <Compile Include="Assets\Scripts\Front\TestUnit.cs" />
+     <Compile Include="Assets\Scripts\Front\UnitController.cs" />
+     <Compile Include="Assets\Scripts\HexImpl\BreindalenMap.cs" />
+     <Compile Include="Assets\Scripts\HexImpl\HexEdge.cs" />
+     <Compile Include="Assets\Scripts\HexImpl\HexEngine.cs" />
+     <Compile Include="Assets\Scripts\HexImpl\HexHeuristic.cs" />
+     <Compile Include="Assets\Scripts\HexImpl\HexNode.cs" />
+     <Compile Include="Assets\Scripts\HexImpl\HexTerrain.cs" />
+     <Compile Include="Assets\Scripts\HexImpl\TileInfo.cs" />
+     <Compile Include="Assets\Scripts\HexImpl\Walkable.cs" />
+     <Compile Include="Assets\Scripts\Impl\AStar.cs" />
+     <Compile Include="Assets\Scripts\Impl\Pathfinding.cs" />
+     <Compile Include="Assets\Scripts\Impl\ReachableNodes.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IEdge.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IHeuristic.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IMapGenerator.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\INode.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IPathfinding.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IPathNode.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\ITerrain.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\ITile.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\ITileEngine.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IUnit.cs" />
+     <Compile Include="Assets\Scripts\Interfaces\IWalkable.cs" />
+     <None Include="Assets\Resources\Shaders\HexMeshShader.shader" />
+ <Reference Include="UnityEngine.UI">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Networking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.TestRunner">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/UnityEngine.TestRunner.dll</HintPath>
+ </Reference>
+ <Reference Include="nunit.framework">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/TestRunner/net35/unity-custom/nunit.framework.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Timeline">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Timeline/RuntimeEditor/UnityEngine.Timeline.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.UIAutomation">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UIAutomation/UnityEngine.UIAutomation.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.GoogleAudioSpatializer">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityGoogleAudioSpatializer/RuntimeEditor/UnityEngine.GoogleAudioSpatializer.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.HoloLens">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityHoloLens/RuntimeEditor/UnityEngine.HoloLens.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.SpatialTracking">
+ <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnitySpatialTracking/RuntimeEditor/UnityEngine.SpatialTracking.dll</HintPath>
+ </Reference>
+ <Reference Include="C5">
+ <HintPath>C:/Users/Bade/Documents/Git/hexMap/Assets/Dependencies/C5.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Analytics">
+ <HintPath>C:/Users/Bade/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.analytics@1.0.1/UnityEngine.Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Purchasing">
+ <HintPath>C:/Users/Bade/AppData/LocalLow/Unity/cache/packages/packages.unity.com/com.unity.purchasing@1.0.1/UnityEngine.Purchasing.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -127,4 +128,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  
 </Project>

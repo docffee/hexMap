@@ -67,16 +67,16 @@ class UnitController : MonoBehaviour
     private void HighlightTiles(IEnumerable<IPathNode<HexNode>> reachable)
     {
         // Fix until selection of direction is implemented //
-        List<ITile<HexNode>> tiles = new List<ITile<HexNode>>();
+        Dictionary<ITile<HexNode>, bool> tiles = new Dictionary<ITile<HexNode>, bool>();
 
         foreach (IPathNode<HexNode> node in reachable)
         {
             ITile<HexNode> tile = node.GetNode().Tile;
 
-            if (tiles.Contains(tile))
+            if (tiles.ContainsKey(tile))
                 continue;
 
-            tiles.Add(tile);
+            tiles.Add(tile, true);
             Vector3 position = new Vector3(tile.WorldPosX, tile.WorldPosY + 0.05f, tile.WorldPosZ);
 
             GameObject highlight = Instantiate(tileMovementPrefab, position, tileMovementPrefab.transform.rotation, transform);
@@ -87,13 +87,22 @@ class UnitController : MonoBehaviour
 
     private void HighlightPath(IEnumerable<IPathNode<HexNode>> path)
     {
+        Dictionary<ITile<HexNode>, bool> tiles = new Dictionary<ITile<HexNode>, bool>();
+
         IEnumerator<IPathNode<HexNode>> enumerator = path.GetEnumerator();
         enumerator.MoveNext(); // Skips first //
+        tiles.Add(enumerator.Current.GetNode().Tile, true);
+
         while (enumerator.MoveNext())
         {
             IPathNode<HexNode> node = enumerator.Current;
             HexNode hexNode = node.GetNode();
-            ITile<HexNode> tile = node.GetNode().Tile;
+            ITile<HexNode> tile = hexNode.Tile;
+
+            if (tiles.ContainsKey(tile))
+                continue;
+            tiles.Add(tile, true);
+
             Vector3 position = new Vector3(tile.WorldPosX, tile.WorldPosY + 0.05f, tile.WorldPosZ);
             Quaternion rotation = Quaternion.Euler(90, hexNode.Direction.DirectionRotation() - 60, 0);
 
