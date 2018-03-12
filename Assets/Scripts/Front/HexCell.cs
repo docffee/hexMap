@@ -12,6 +12,7 @@ public class HexCell : MonoBehaviour, ITile<HexNode>
 
     private ITerrain terrain;
     private IUnit<HexNode> unit;
+    private IUnit<HexNode> airUnit;
 
     public void Initialize(int x, int z, ITerrain terrain)
     {
@@ -130,6 +131,19 @@ public class HexCell : MonoBehaviour, ITile<HexNode>
             Vector3 position = transform.localPosition;
             position.y = value * HexMetrics.elevationStep;
             transform.localPosition = position;
+        }
+    }
+
+    public IUnit<HexNode> AirUnitOnTile
+    {
+        get
+        {
+            return airUnit;
+        }
+
+        set
+        {
+            airUnit = value;
         }
     }
 }

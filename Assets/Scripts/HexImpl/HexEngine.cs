@@ -65,24 +65,46 @@ namespace Assets.Scripts.HexImpl
         public bool PlaceUnit(IUnit<HexNode> unit, int x, int z)
         {
             ITile<HexNode> tile = GetTile(x, z);
-            if (tile.UnitOnTile != null)
-                return false;
+            if (unit.Flying)
+            {
+                if (tile.AirUnitOnTile != null)
+                    return false;
 
-            unit.Tile = tile;
-            tile.UnitOnTile = unit;
+                unit.Tile = tile;
+                tile.AirUnitOnTile = unit;
+            }
+            else
+            {
+                if (tile.UnitOnTile != null)
+                    return false;
+
+                unit.Tile = tile;
+                tile.UnitOnTile = unit;
+            }
             return true;
         }
 
         public bool MoveUnit(IUnit<HexNode> unit, int lastX, int lastZ, int newX, int newZ)
         {
             ITile<HexNode> endTile = GetTile(newX, newZ);
-            if (endTile.UnitOnTile != null)
-                return false;
+            if (unit.Flying)
+            {
+                if (endTile.AirUnitOnTile != null)
+                    return false;
 
-            ITile<HexNode> currentTile = unit.Tile;
-            currentTile.UnitOnTile = null;
-            endTile.UnitOnTile = unit;
-            unit.Tile = endTile;
+                unit.Tile.AirUnitOnTile = null;
+                unit.Tile = endTile;
+                endTile.AirUnitOnTile = unit;
+            }
+            else
+            {
+                if (endTile.UnitOnTile != null)
+                    return false;
+
+                unit.Tile.UnitOnTile = null;
+                unit.Tile = endTile;
+                endTile.UnitOnTile = unit;
+            }
             return true;
         }
 

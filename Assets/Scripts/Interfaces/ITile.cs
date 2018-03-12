@@ -12,4 +12,5 @@ public interface ITile<N> where N : INode<N>
 
     ITerrain Terrain { get; }
     IUnit<N> UnitOnTile { get; set; }
+    IUnit<N> AirUnitOnTile { get; set; }
 }

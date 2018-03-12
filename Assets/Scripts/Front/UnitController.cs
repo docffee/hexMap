@@ -4,7 +4,7 @@ using GraphAlgorithms;
 using System.Collections.Generic;
 using UnityEngine;
 
-class UnitController : MonoBehaviour
+class UnitController : MonoBehaviour, IReady
 {
     [SerializeField] private GameObject tileMovementPrefab;
     [SerializeField] private GameObject pathArrowPrefab;
@@ -13,9 +13,13 @@ class UnitController : MonoBehaviour
     private List<GameObject> highlightedTiles = new List<GameObject>();
     private List<GameObject> pathArrows = new List<GameObject>();
     private ITile<HexNode> hoverOver;
+    private bool performingAction;
 
     private void Update()
     {
+        if (performingAction)
+            return;
+
         RaycastHit hit;
         ITileEngine<HexNode> engine = HexEngine.Singleton;
 
@@ -35,9 +39,10 @@ class UnitController : MonoBehaviour
                 Debug.Log("Hit cell at: " + cell.X + ", " + cell.Z);
 
                 IEnumerable<IPathNode<HexNode>> path = engine.GetShortestPath(selectedUnit, selectedUnit.Tile, cell);
-                selectedUnit.Move(path);
+                selectedUnit.Move(path, this);
                 ClearGameObjectList(highlightedTiles);
                 ClearGameObjectList(pathArrows);
+                performingAction = true;
             }
         }
 
@@ -60,6 +65,7 @@ class UnitController : MonoBehaviour
 
             if (!hoverNow.Equals(hoverOver))
             {
+                hoverOver = hoverNow;
                 IEnumerable<IPathNode<HexNode>> path = engine.GetShortestPath(selectedUnit, selectedUnit.Tile, hoverNow);
                 ClearGameObjectList(pathArrows);
                 HighlightPath(path);
@@ -69,6 +75,9 @@ class UnitController : MonoBehaviour
 
     private void HighlightTiles(IEnumerable<IPathNode<HexNode>> reachable)
     {
+        if (highlightedTiles.Count > 0)
+            return;
+
         // Fix until selection of direction is implemented //
         Dictionary<ITile<HexNode>, bool> tiles = new Dictionary<ITile<HexNode>, bool>();
 
@@ -124,5 +133,10 @@ class UnitController : MonoBehaviour
             Destroy(obj);
         }
         list.Clear();
+    }
+
+    public void Ready()
+    {
+        performingAction = false;
     }
 }

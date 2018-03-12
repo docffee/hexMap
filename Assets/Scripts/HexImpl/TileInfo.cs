@@ -54,6 +54,19 @@ namespace Assets.Scripts.HexImpl
             get { return 0; }
         }
 
+        public IUnit<HexNode> AirUnitOnTile
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         IUnit<HexNode> ITile<HexNode>.UnitOnTile
         {
             get

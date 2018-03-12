@@ -37,7 +37,12 @@ namespace Assets.Scripts.HexImpl
             if (forward != null)
             {
                 IWalkable walkable = movingUnit.GetTerrainWalkability(forward.Tile.Terrain);
-                if (forward.Tile.UnitOnTile == null && walkable.Passable)
+                if (movingUnit.Flying && forward.Tile.AirUnitOnTile == null && walkable.Passable)
+                {
+                    float cost = ((terrainMod + walkable.Modifier) / 2);
+                    edges.Add(new HexEdge(cost, forward));
+                }
+                else if (forward.Tile.UnitOnTile == null && walkable.Passable)
                 {
                     float cost = ((terrainMod + walkable.Modifier) / 2);
                     edges.Add(new HexEdge(cost, forward));
