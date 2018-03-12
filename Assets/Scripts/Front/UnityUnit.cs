@@ -59,8 +59,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
             lastNode = enumerator.Current;
         }
 
-        if (lastNode.GetCost() <= currentMovePoints)
-            currentMovePoints -= lastNode.GetCost();
+        currentMovePoints -= lastNode.GetCost();
 
         controller.Ready();
         performingAction = false;

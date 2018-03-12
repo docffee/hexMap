@@ -36,13 +36,14 @@ class UnitController : MonoBehaviour, IReady
             {
                 HexCell cell = hit.collider.gameObject.GetComponent<HexCell>();
 
-                Debug.Log("Hit cell at: " + cell.X + ", " + cell.Z);
-
                 IEnumerable<IPathNode<HexNode>> path = engine.GetShortestPath(selectedUnit, selectedUnit.Tile, cell);
-                selectedUnit.Move(path, this);
-                ClearGameObjectList(highlightedTiles);
-                ClearGameObjectList(pathArrows);
-                performingAction = true;
+                if (path != null)
+                {
+                    performingAction = true;
+                    selectedUnit.Move(path, this);
+                    ClearGameObjectList(highlightedTiles);
+                    ClearGameObjectList(pathArrows);
+                }
             }
         }
 
