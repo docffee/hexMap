@@ -3,22 +3,31 @@ using Assets.Scripts.Interfaces;
 using GraphAlgorithms;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 class UnitController : MonoBehaviour, IReady
 {
     [SerializeField] private GameObject tileMovementPrefab;
     [SerializeField] private GameObject pathArrowPrefab;
-
+    [SerializeField] private GameObject unitTypeText;
+    [SerializeField] private GameObject movementText;
+    [SerializeField] private GameObject image;
+    [SerializeField] private Sprite unitSprite;
     private IUnit<HexNode> selectedUnit = null;
     private List<GameObject> highlightedTiles = new List<GameObject>();
     private List<GameObject> pathArrows = new List<GameObject>();
     private ITile<HexNode> hoverOver;
     private bool performingAction;
 
-    private void Update()
+    private void Update()   
     {
+        
         if (performingAction)
             return;
+
+        if(selectedUnit != null){
+            movementText.GetComponent<Text>().text = "Move points:	" + selectedUnit.CurrentMovePoints.ToString() + "/" + selectedUnit.MaxMovePoints.ToString();
+        }
 
         RaycastHit hit;
         ITileEngine<HexNode> engine = HexEngine.Singleton;
@@ -29,7 +38,10 @@ class UnitController : MonoBehaviour, IReady
             {
                 Debug.Log("Unit selected");
                 selectedUnit = hit.collider.gameObject.GetComponent<IUnit<HexNode>>();
+                unitTypeText.GetComponent<Text>().text = "Unit Targeted";
+                movementText.GetComponent<Text>().text = "Move points:	" + selectedUnit.CurrentMovePoints.ToString() + "/" + selectedUnit.MaxMovePoints.ToString();
                 IEnumerable<IPathNode<HexNode>> reachable = engine.GetReachable(selectedUnit, selectedUnit.Tile);
+                image.GetComponent<Image>().sprite = unitSprite;
                 ClearGameObjectList(highlightedTiles);
                 HighlightTiles(reachable);
             }
@@ -51,6 +63,9 @@ class UnitController : MonoBehaviour, IReady
         if (Input.GetMouseButtonDown(1) && selectedUnit != null)
         {
             Debug.Log("Unit deselected");
+            image.GetComponent<Image>().sprite = null;
+            unitTypeText.GetComponent<Text>().text = "No Unit Targeted";
+            movementText.GetComponent<Text>().text = "";
             selectedUnit = null;
             ClearGameObjectList(highlightedTiles);
             ClearGameObjectList(pathArrows);

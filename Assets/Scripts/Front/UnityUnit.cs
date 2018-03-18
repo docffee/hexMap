@@ -13,6 +13,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
     [SerializeField] protected bool flying;
     [SerializeField] protected float maxMovePoints = 8;
     [SerializeField] protected float currentMovePoints = 8;
+    [SerializeField] protected Sprite icon;
 
     protected ITile<HexNode> tile;
     protected HexDirection orientation;

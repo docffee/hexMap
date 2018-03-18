@@ -8,6 +8,7 @@ using Assets.Scripts.Interfaces;
 
 public class TestSoldier : UnityUnit
 {
+
     public override void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller)
     {
         StartCoroutine(MoveWaiter(path, controller));

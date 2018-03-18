@@ -368,3 +368,4 @@ MonoBehaviour:
   flying: 1
   maxMovePoints: 8
   currentMovePoints: 7
+  icon: {fileID: 21300000, guid: c491f3eb86be6a840bee35bbdc34d596, type: 3}
