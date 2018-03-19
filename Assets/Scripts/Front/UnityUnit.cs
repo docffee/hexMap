@@ -118,13 +118,13 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
         get { return icon; }
     }
 
-    public float MaxMovePoints
+    public float MaxActionPoints
     {
         get { return maxMovePoints; }
         set { maxMovePoints = value; }
     }
 
-    public float CurrentMovePoints
+    public float CurrentActionPoints
     {
         get { return currentMovePoints; }
         set { currentMovePoints = value; }

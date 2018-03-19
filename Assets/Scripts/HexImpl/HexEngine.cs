@@ -50,7 +50,7 @@ namespace Assets.Scripts.HexImpl
         public IEnumerable<IPathNode<HexNode>> GetReachable(IUnit<HexNode> unit, ITile<HexNode> startTile)
         {
             HexNode node = new HexNode((HexDirection) unit.Direction, startTile, unit);
-            return pathfinder.GetReachableNodes(node, unit.CurrentMovePoints);
+            return pathfinder.GetReachableNodes(node, unit.CurrentActionPoints);
         }
 
         public IEnumerable<IPathNode<HexNode>> GetShortestPath(IUnit<HexNode> unit, ITile<HexNode> startTile, ITile<HexNode> endTile)

@@ -25,8 +25,8 @@ public class EndTurnScript : MonoBehaviour {
 	public void EndTurn()
 	{
 		Debug.Log("Endturn Button clicked!");
-		unit1.CurrentMovePoints = unit1.MaxMovePoints;
-		unit2.CurrentMovePoints = unit2.MaxMovePoints;
-		unit3.CurrentMovePoints = unit3.MaxMovePoints;
+		unit1.CurrentActionPoints = unit1.MaxActionPoints;
+		unit2.CurrentActionPoints = unit2.MaxActionPoints;
+		unit3.CurrentActionPoints = unit3.MaxActionPoints;
 	}
 }
