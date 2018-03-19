@@ -41,7 +41,8 @@ class UnitController : MonoBehaviour, IReady
             {
                 Debug.Log("Unit selected");
                 selectedUnit = hit.collider.gameObject.GetComponent<UnityUnit>();
-                unitTypeText.GetComponent<Text>().text = "Unit Targeted";
+                unitTypeText.GetComponent<Text>().text = selectedUnit.unitName;
+
                 unitPanel.gameObject.SetActive(true);
                 IEnumerable<IPathNode<HexNode>> reachable = engine.GetReachable(selectedUnit, selectedUnit.Tile);
                 unitIcon.GetComponent<Image>().sprite = selectedUnit.Icon;

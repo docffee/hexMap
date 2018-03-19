@@ -74,6 +74,7 @@ GameObject:
   - component: {fileID: 65809174170550902}
   - component: {fileID: 23460185209813882}
   - component: {fileID: 114009143746053344}
+  - component: {fileID: 95786175827590974}
   m_Layer: 8
   m_Name: TestTank
   m_TagString: Unit
@@ -672,6 +673,23 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!95 &95786175827590974
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1397226894849798}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 04d9b630accfb2041ac1eca5654a3765, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114009143746053344
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -693,4 +711,5 @@ MonoBehaviour:
   currentActionPoints: 5
   damage: 1
   health: 5
+  unitName: Tank
   icon: {fileID: 21300000, guid: 994d86dae4c4daf43b23d195dda12b20, type: 3}
