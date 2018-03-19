@@ -12,8 +12,7 @@ class UnitController : MonoBehaviour, IReady
     [SerializeField] private GameObject unitTypeText;
     [SerializeField] private GameObject movementText;
     [SerializeField] private GameObject image;
-    [SerializeField] private Sprite unitSprite;
-    private IUnit<HexNode> selectedUnit = null;
+    private UnityUnit selectedUnit = null;
     private List<GameObject> highlightedTiles = new List<GameObject>();
     private List<GameObject> pathArrows = new List<GameObject>();
     private ITile<HexNode> hoverOver;
@@ -37,11 +36,12 @@ class UnitController : MonoBehaviour, IReady
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit")))
             {
                 Debug.Log("Unit selected");
-                selectedUnit = hit.collider.gameObject.GetComponent<IUnit<HexNode>>();
+                selectedUnit = hit.collider.gameObject.GetComponent<UnityUnit>();
                 unitTypeText.GetComponent<Text>().text = "Unit Targeted";
-                movementText.GetComponent<Text>().text = "Move points:	" + selectedUnit.CurrentMovePoints.ToString() + "/" + selectedUnit.MaxMovePoints.ToString();
+
+                //movementText.GetComponent<Text>().text = "Move points:	" + selectedUnit.CurrentMovePoints.ToString() + "/" + selectedUnit.MaxMovePoints.ToString();
                 IEnumerable<IPathNode<HexNode>> reachable = engine.GetReachable(selectedUnit, selectedUnit.Tile);
-                image.GetComponent<Image>().sprite = unitSprite;
+                image.GetComponent<Image>().sprite = selectedUnit.Icon;
                 ClearGameObjectList(highlightedTiles);
                 HighlightTiles(reachable);
             }
