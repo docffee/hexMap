@@ -4,6 +4,7 @@ using GraphAlgorithms;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
 {
@@ -13,10 +14,10 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
     [SerializeField] protected bool flying;
     [SerializeField] protected bool canWalkBackwards;
     [SerializeField] protected float rotateCost;
-    [SerializeField] protected float maxMovePoints = 8;
-    [SerializeField] protected float currentMovePoints = 8;
+    [SerializeField] protected float maxActionPoints = 1;
+    [SerializeField] protected float currentActionPoints = 1;
     [SerializeField] protected float damage = 1;
-    [SerializeField] protected float health = 5;
+    [SerializeField] protected float health = 1;
 
     [SerializeField] protected Sprite icon;
 
@@ -47,7 +48,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
             IPathNode<HexNode> node = enumerator.Current;
             float cost = node.GetCost();
 
-            if (cost <= currentMovePoints)
+            if (cost <= currentActionPoints)
                 yield return Step(node);
             else
                 break;
@@ -55,7 +56,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
             lastNode = enumerator.Current;
         }
 
-        currentMovePoints -= lastNode.GetCost();
+        currentActionPoints -= lastNode.GetCost();
 
         controller.Ready();
         performingAction = false;
@@ -120,14 +121,14 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
 
     public float MaxActionPoints
     {
-        get { return maxMovePoints; }
-        set { maxMovePoints = value; }
+        get { return maxActionPoints; }
+        set { maxActionPoints = value; }
     }
 
     public float CurrentActionPoints
     {
-        get { return currentMovePoints; }
-        set { currentMovePoints = value; }
+        get { return currentActionPoints; }
+        set { currentActionPoints = value; }
     }
 
     public int Direction

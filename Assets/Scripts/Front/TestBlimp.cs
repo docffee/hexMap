@@ -15,7 +15,7 @@ public class TestBlimp : UnityUnit
     private IEnumerator FloatingRoutine()
     {
         float offset = 1.8f;
-        float time = 1.2f;
+        float time = 1.4f;
         int mod = 1;
         while (true)
         {
@@ -53,15 +53,15 @@ public class TestBlimp : UnityUnit
         switch (terrain.Name)
         {
             case "Grass":
-                return new Walkable(2, true);
+                return new Walkable(1, true);
             case "Forest":
-                return new Walkable(2, true);
+                return new Walkable(1, true);
             case "Mountain":
-                return new Walkable(2, true);
+                return new Walkable(1, true);
             case "Water":
-                return new Walkable(2, true);
+                return new Walkable(1, true);
             case "Sand":
-                return new Walkable(2, true);
+                return new Walkable(1, true);
             default:
                 return new Walkable(0, false);
         }
