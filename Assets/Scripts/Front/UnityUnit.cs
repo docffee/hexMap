@@ -18,6 +18,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
     [SerializeField] protected float currentActionPoints = 1;
     [SerializeField] protected float damage = 1;
     [SerializeField] protected float health = 1;
+    public string unitName;
 
     [SerializeField] protected Sprite icon;
 

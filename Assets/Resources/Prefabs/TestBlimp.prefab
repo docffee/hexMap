@@ -477,4 +477,5 @@ MonoBehaviour:
   currentActionPoints: 4
   damage: 1
   health: 5
+  unitName: Blimp
   icon: {fileID: 21300000, guid: c491f3eb86be6a840bee35bbdc34d596, type: 3}
