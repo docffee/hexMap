@@ -19,6 +19,14 @@ public class CameraController : MonoBehaviour
         float posX = 0, posZ = 0;
         float speed = scrollSpeed * Time.deltaTime;
 
+        //Camera zoom - should change zoom to change camera position. This is a quick way to make a working zoom
+        if(Input.GetAxis("Mouse ScrollWheel") > 0 && GetComponent<Camera>().fieldOfView > 14) {
+            GetComponent<Camera>().fieldOfView--;
+        }
+        if(Input.GetAxis("Mouse ScrollWheel") < 0 && GetComponent<Camera>().fieldOfView < 100) {
+            GetComponent<Camera>().fieldOfView++;
+        }
+
         if (allowMouseScroll)
         {
             if (Input.mousePosition.x < scrollZone || Input.GetKey("a"))
