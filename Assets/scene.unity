@@ -391,6 +391,16 @@ Prefab:
       propertyPath: maxMovePoints
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 114009143746053344, guid: ba539a100a2d93d48971ce25e92f0e18,
+        type: 2}
+      propertyPath: canWalkBackwards
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114009143746053344, guid: ba539a100a2d93d48971ce25e92f0e18,
+        type: 2}
+      propertyPath: rotateCost
+      value: 0.2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ba539a100a2d93d48971ce25e92f0e18, type: 2}
   m_IsPrefabParent: 0
@@ -1188,6 +1198,11 @@ Prefab:
         type: 2}
       propertyPath: currentMovePoints
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 114448148453318858, guid: 68da09084d9f8f14ca5b26d59bea7e0e,
+        type: 2}
+      propertyPath: rotateCost
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68da09084d9f8f14ca5b26d59bea7e0e, type: 2}
