@@ -18,13 +18,14 @@ class UnitController : MonoBehaviour, IReady
     private List<GameObject> pathArrows = new List<GameObject>();
     private ITile<HexNode> hoverOver;
     private bool performingAction;
-    private void Start() {
-        unitPanel.gameObject.SetActive(false);
-        
+
+    private void Start()
+    {
+        unitPanel.gameObject.SetActive(false);    
     }
+
     private void Update()   
     {
-        
         if (performingAction)
             return;
 
@@ -48,7 +49,7 @@ class UnitController : MonoBehaviour, IReady
                 ClearGameObjectList(highlightedTiles);
                 HighlightTiles(reachable);
             }
-            else if (selectedUnit != null && !selectedUnit.PerformingAction() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
+            else if (selectedUnit != null && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
             {
                 HexCell cell = hit.collider.gameObject.GetComponent<HexCell>();
 

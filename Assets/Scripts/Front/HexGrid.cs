@@ -27,7 +27,7 @@ public class HexGrid : MonoBehaviour, IMapGenerator<HexNode>
         //    }
         //}
 
-        BreindalenMap map = new BreindalenMap();
+        BreindalMap map = new BreindalMap();
         CreateMeshFromCells(map.GenerateTiles(40, 20), 40, 20);
 
         hexMesh.Initialize();
@@ -44,13 +44,13 @@ public class HexGrid : MonoBehaviour, IMapGenerator<HexNode>
             for (int x = 0; x < sizeX; x++)
             {
                 ITile<HexNode> tile = tiles[i];
-                CreateCell(x, z, i, tile.Terrain);
+                CreateCell(x, z, i, tile);
                 i++;
             }
         }
     }
 
-    private void CreateCell(int x, int z, int i, ITerrain terrain)
+    private void CreateCell(int x, int z, int i, ITile<HexNode> tile)
     {
         Vector3 position;
         position.x = (x + z * 0.5f - z / 2) * (HexMetrics.innerRadius * 2f);
@@ -61,11 +61,9 @@ public class HexGrid : MonoBehaviour, IMapGenerator<HexNode>
         cells[i].transform.SetParent(transform, false);
         cells[i].transform.localPosition = position;
 
-        cells[i].Initialize(x, z, terrain);
-        cells[i].GetComponentInChildren<TextMesh>().text = x + ", " + z;
-
-        //cells[i].Elevation = Random.Range(0, 4);
-        cells[i].color = GetColorFromTerrain(terrain);
+        cells[i].Initialize(x, z, tile.Terrain);
+        cells[i].Elevation = tile.Y;
+        cells[i].color = GetColorFromTerrain(tile.Terrain);
         
         if (x > 0)
         {

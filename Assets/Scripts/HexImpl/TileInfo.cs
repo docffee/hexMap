@@ -8,10 +8,12 @@ namespace Assets.Scripts.HexImpl
     class TileInfo : ITile<HexNode>
     {
         private ITerrain terrain;
+        private int elevation;
 
-        public TileInfo(ITerrain terrain)
+        public TileInfo(ITerrain terrain, int elevation)
         {
             this.terrain = terrain;
+            this.elevation = elevation;
         }
 
         public int X
@@ -26,7 +28,7 @@ namespace Assets.Scripts.HexImpl
 
         public int Y
         {
-            get { return 0; }
+            get { return elevation; }
         }
 
         public ITerrain Terrain

@@ -104,6 +104,7 @@ public class HexMesh : MonoBehaviour
             AddTriangleColor(cell.color, neighbor.color, nextNeighbor.color);
         }
 
+        /*
         if (cell.GetNeighbourSlopeType(direction) == HexSlopeType.Slope)
         {
             TriangulateTerraces(v1, v2, v3, v4, cell, neighbor);
@@ -113,6 +114,10 @@ public class HexMesh : MonoBehaviour
             AddQuad(v1, v2, v3, v4);
             AddQuadColor(cell.color, neighbor.color);
         }
+        */
+
+        AddQuad(v1, v2, v3, v4);
+        AddQuadColor(cell.color, neighbor.color);
     }
 
     private void TriangulateTerraces(Vector3 beginLeft, Vector3 beginRight, Vector3 endLeft, 
