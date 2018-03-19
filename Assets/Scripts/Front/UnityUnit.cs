@@ -13,12 +13,20 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
     [SerializeField] protected bool flying;
     [SerializeField] protected float maxMovePoints = 8;
     [SerializeField] protected float currentMovePoints = 8;
+    [SerializeField] protected float damage = 1;
+    [SerializeField] protected float health = 5;
+
     [SerializeField] protected Sprite icon;
 
     protected ITile<HexNode> tile;
     protected HexDirection orientation;
     protected bool performingAction = false;
 
+    //Remove abstract at some point
+    public Sprite Icon
+    {
+        get { return icon; }
+    }
     public abstract int MaxActionPoints { get; }
     public abstract int CurrentActionPoints { get; }
     public abstract float MaxMovePoints { get; set; }

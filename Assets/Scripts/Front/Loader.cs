@@ -25,7 +25,7 @@ class Loader : MonoBehaviour
         Vector3 tilePosition3 = new Vector3(tile3.WorldPosX, tile3.WorldPosY, tile3.WorldPosZ);
         unit1.transform.position = tilePosition + Vector3.up * unit1.DisplacementY;
         unit2.transform.position = tilePosition2 + Vector3.up * unit2.DisplacementY;
-        unit3.transform.position = tilePosition3 + Vector3.up * unit3.DisplacementY;
+        unit3.transform.position = tilePosition3 + (Vector3.up * unit3.DisplacementY);
 
         engine.PlaceUnit(unit1, tile.X, tile.Z);
         engine.PlaceUnit(unit2, tile2.X, tile2.Z);
