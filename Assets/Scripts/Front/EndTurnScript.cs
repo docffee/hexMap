@@ -9,13 +9,20 @@ public class EndTurnScript : MonoBehaviour {
 	private UnityUnit unit3;
 	public Button endTurnButton;
 	// Use this for initialization
+	private List<UnityUnit> units;
+	private GameObject[] gameObjectUnits;
 	void Start () 
 	{
-		GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
+		units = new List<UnityUnit>();
+		gameObjectUnits = GameObject.FindGameObjectsWithTag("Unit");
+
+		foreach (GameObject unit in gameObjectUnits)
+		{
+			units.Add(unit.GetComponent<UnityUnit>());
+		}
+
 		Debug.Log("EndturnScript loaded!");
-        unit1 = units[0].GetComponent<UnityUnit>();
-        unit2 = units[1].GetComponent<UnityUnit>();
-        unit3 = units[2].GetComponent<UnityUnit>();
+        
 
 		Button endTurnBtn = endTurnButton.GetComponent<Button>();
 		endTurnBtn.onClick.AddListener(EndTurn);
@@ -24,9 +31,13 @@ public class EndTurnScript : MonoBehaviour {
 	// Update is called once per frame
 	public void EndTurn()
 	{
+		foreach (UnityUnit unit in units)
+		{
+			
+			unit.CurrentMovePoints = unit.MaxMovePoints;
+
+		}
 		Debug.Log("Endturn Button clicked!");
-		unit1.CurrentMovePoints = unit1.MaxMovePoints;
-		unit2.CurrentMovePoints = unit2.MaxMovePoints;
-		unit3.CurrentMovePoints = unit3.MaxMovePoints;
+		
 	}
 }
