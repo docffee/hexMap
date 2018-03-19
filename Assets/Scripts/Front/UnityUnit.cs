@@ -11,6 +11,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
     [SerializeField] protected float rotateTime = 0.2f;
     [SerializeField] protected float displacementY = 1;
     [SerializeField] protected bool flying;
+    [SerializeField] protected bool canWalkBackwards;
     [SerializeField] protected float maxMovePoints = 8;
     [SerializeField] protected float currentMovePoints = 8;
     [SerializeField] protected Sprite icon;
@@ -34,6 +35,14 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
 
     public abstract float DisplacementY { get; }
     public abstract bool Flying { get; }
+
+    public bool CanWalkBackwards
+    {
+        get
+        {
+            return canWalkBackwards;
+        }
+    }
 
     protected IEnumerator MoveWaiter(IEnumerable<IPathNode<HexNode>> path, IReady controller)
     {

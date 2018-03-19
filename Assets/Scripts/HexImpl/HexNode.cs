@@ -27,13 +27,12 @@ namespace Assets.Scripts.HexImpl
             HexEdge turnRight = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, 1), tile, movingUnit));
 
             HexEngine engine = HexEngine.Singleton;
-            //HexNode back = engine.GetNodeBehind(this);
+            HexNode back = null;
+
             HexNode forward = engine.GetNodeInFront(this);
 
             edges.Add(turnLeft);
             edges.Add(turnRight);
-            //if (back != null)
-            //    edges.Add(new HexEdge(1.3f, back));
             if (forward != null)
             {
                 IWalkable walkable = movingUnit.GetTerrainWalkability(forward.Tile.Terrain);
@@ -46,6 +45,20 @@ namespace Assets.Scripts.HexImpl
                 {
                     float cost = ((terrainMod + walkable.Modifier) / 2);
                     edges.Add(new HexEdge(cost, forward));
+                }
+            }
+            if (back != null)
+            {
+                IWalkable walkable = movingUnit.GetTerrainWalkability(back.Tile.Terrain);
+                if (movingUnit.Flying && forward.Tile.AirUnitOnTile == null && walkable.Passable)
+                {
+                    float cost = ((terrainMod + walkable.Modifier) / 1.7f);
+                    edges.Add(new HexEdge(cost, back));
+                }
+                else if (forward.Tile.UnitOnTile == null && walkable.Passable)
+                {
+                    float cost = ((terrainMod + walkable.Modifier) / 1.7f);
+                    edges.Add(new HexEdge(cost, back));
                 }
             }
 
