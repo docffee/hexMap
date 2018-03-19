@@ -1,9 +1,6 @@
 ﻿using Assets.Scripts.HexImpl;
 using GraphAlgorithms;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using Assets.Scripts.Interfaces;
 
 public class TestSoldier : UnityUnit
@@ -38,46 +35,6 @@ public class TestSoldier : UnityUnit
         }
     }
 
-    public override float RotateCost
-    {
-        get
-        {
-            return 0.0f;
-        }
-    }
-
-    public override int MaxActionPoints
-    {
-        get
-        {
-            return 2;
-        }
-    }
-
-    public override int CurrentActionPoints
-    {
-        get
-        {
-            return 2;
-        }
-    }
-
-    public override int Direction
-    {
-        get
-        {
-            return (int)orientation;
-        }
-    }
-
-    public override float DisplacementY
-    {
-        get
-        {
-            return displacementY;
-        }
-    }
-
     public override ITile<HexNode> Tile
     {
         get
@@ -90,27 +47,4 @@ public class TestSoldier : UnityUnit
             tile = value;
         }
     }
-
-    public override float MaxMovePoints
-    {
-        get { return maxMovePoints; }
-
-        set { maxMovePoints = value; }
-    }
-
-    public override float CurrentMovePoints
-    {
-        get { return currentMovePoints; }
-
-        set { currentMovePoints = value; }
-    }
-
-    public override bool Flying
-    {
-        get
-        {
-            return flying;
-        }
-    }
 }
-

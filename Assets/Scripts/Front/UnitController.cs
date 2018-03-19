@@ -25,7 +25,7 @@ class UnitController : MonoBehaviour, IReady
             return;
 
         if(selectedUnit != null){
-            movementText.GetComponent<Text>().text = "Move points:	" + selectedUnit.CurrentMovePoints.ToString() + "/" + selectedUnit.MaxMovePoints.ToString();
+            movementText.GetComponent<Text>().text = "Move points:	" + selectedUnit.CurrentActionPoints.ToString() + "/" + selectedUnit.MaxActionPoints.ToString();
         }
 
         RaycastHit hit;

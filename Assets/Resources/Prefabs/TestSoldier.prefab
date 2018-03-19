@@ -1264,7 +1264,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 3fde2fef9e90091448dc916816b7253a, type: 2}
+  - {fileID: 2100000, guid: 7910eea0007c8a94fb6afd64834876f6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1728,5 +1728,10 @@ MonoBehaviour:
   rotateTime: 0.2
   displacementY: -2.8
   flying: 0
-  maxMovePoints: 8
-  currentMovePoints: 8
+  canWalkBackwards: 0
+  rotateCost: 0
+  maxMovePoints: 5
+  currentMovePoints: 5
+  damage: 1
+  health: 5
+  icon: {fileID: 21300000, guid: 49f199459bb804d42af3e66c78370062, type: 3}

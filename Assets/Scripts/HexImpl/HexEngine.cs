@@ -50,7 +50,7 @@ namespace Assets.Scripts.HexImpl
         public IEnumerable<IPathNode<HexNode>> GetReachable(IUnit<HexNode> unit, ITile<HexNode> startTile)
         {
             HexNode node = new HexNode((HexDirection) unit.Direction, startTile, unit);
-            return pathfinder.GetReachableNodes(node, unit.CurrentMovePoints);
+            return pathfinder.GetReachableNodes(node, unit.CurrentActionPoints);
         }
 
         public IEnumerable<IPathNode<HexNode>> GetShortestPath(IUnit<HexNode> unit, ITile<HexNode> startTile, ITile<HexNode> endTile)
@@ -114,40 +114,40 @@ namespace Assets.Scripts.HexImpl
             {
                 case 0:
                     if ((cur.Z & 1) != 0)
-                        return CreateNode(cur.X, cur.Z - 1, cur.Direction.OppositeDirection(), cur);
+                        return CreateNode(cur.X, cur.Z - 1, cur.Direction, cur);
                     else if (cur.Z > 0 && cur.X > 0)
-                        return CreateNode(cur.X - 1, cur.Z - 1, cur.Direction.OppositeDirection(), cur);
+                        return CreateNode(cur.X - 1, cur.Z - 1, cur.Direction, cur);
 
                     return null;
                 case 1:
                     if (cur.X > 0)
-                        return CreateNode(cur.X - 1, cur.Z, cur.Direction.OppositeDirection(), cur);
+                        return CreateNode(cur.X - 1, cur.Z, cur.Direction, cur);
 
                     return null;
                 case 2:
                     if ((cur.Z & 1) != 0 && cur.Z < BoardSizeZ - 1)
-                        return CreateNode(cur.X, cur.Z + 1, cur.Direction.OppositeDirection(), cur);
+                        return CreateNode(cur.X, cur.Z + 1, cur.Direction, cur);
                     else if (cur.Z < BoardSizeZ - 1 && cur.X > 0)
-                        return CreateNode(cur.X - 1, cur.Z + 1, cur.Direction.OppositeDirection(), cur);
+                        return CreateNode(cur.X - 1, cur.Z + 1, cur.Direction, cur);
 
                     return null;
                 case 3:
                     if ((cur.Z & 1) == 0 && cur.Z < BoardSizeZ - 1)
-                        return CreateNode(cur.X, cur.Z + 1, cur.Direction.OppositeDirection(), cur);
+                        return CreateNode(cur.X, cur.Z + 1, cur.Direction, cur);
                     else if (cur.Z < BoardSizeZ - 1)
-                        return CreateNode(cur.X + 1, cur.Z + 1, cur.Direction.OppositeDirection(), cur);
+                        return CreateNode(cur.X + 1, cur.Z + 1, cur.Direction, cur);
 
                     return null;
                 case 4:
                     if (cur.X < BoardSizeX - 1)
-                        return CreateNode(cur.X + 1, cur.Z, cur.Direction.OppositeDirection(), cur);
+                        return CreateNode(cur.X + 1, cur.Z, cur.Direction, cur);
 
                     return null;
                 case 5:
                     if ((cur.Z & 1) == 0 && cur.Z > 0)
-                        return CreateNode(cur.X, cur.Z - 1, cur.Direction.OppositeDirection(), cur);
+                        return CreateNode(cur.X, cur.Z - 1, cur.Direction, cur);
                     else if (cur.X < BoardSizeX - 1 && cur.Z > 0)
-                        return CreateNode(cur.X + 1, cur.Z - 1, cur.Direction.OppositeDirection(), cur);
+                        return CreateNode(cur.X + 1, cur.Z - 1, cur.Direction, cur);
 
                     return null;
                 default:

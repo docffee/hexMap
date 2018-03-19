@@ -34,10 +34,10 @@ public class EndTurnScript : MonoBehaviour {
 		foreach (UnityUnit unit in units)
 		{
 			
-			unit.CurrentMovePoints = unit.MaxMovePoints;
+			unit.CurrentActionPoints = unit.MaxActionPoints;
 
 		}
 		Debug.Log("Endturn Button clicked!");
-		
+
 	}
 }

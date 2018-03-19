@@ -11,6 +11,8 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
     [SerializeField] protected float rotateTime = 0.2f;
     [SerializeField] protected float displacementY = 1;
     [SerializeField] protected bool flying;
+    [SerializeField] protected bool canWalkBackwards;
+    [SerializeField] protected float rotateCost;
     [SerializeField] protected float maxMovePoints = 8;
     [SerializeField] protected float currentMovePoints = 8;
     [SerializeField] protected float damage = 1;
@@ -22,26 +24,11 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
     protected HexDirection orientation;
     protected bool performingAction = false;
 
-    //Remove abstract at some point
-    public Sprite Icon
-    {
-        get { return icon; }
-    }
-    public abstract int MaxActionPoints { get; }
-    public abstract int CurrentActionPoints { get; }
-    public abstract float MaxMovePoints { get; set; }
-    public abstract float CurrentMovePoints { get; set; }
-    public abstract int Direction { get; }
-    public abstract float RotateCost { get; }
-    public abstract ITile<HexNode> Tile { get; set; }
-
     public abstract IWalkable GetTerrainWalkability(ITerrain terrain);
 
+    public abstract ITile<HexNode> Tile { get; set; }
     public abstract void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller);
     public abstract bool PerformingAction();
-
-    public abstract float DisplacementY { get; }
-    public abstract bool Flying { get; }
 
     protected IEnumerator MoveWaiter(IEnumerable<IPathNode<HexNode>> path, IReady controller)
     {
@@ -123,5 +110,52 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
 
         orientation = node.Direction;
         transform.rotation = end;
+    }
+
+    //Remove abstract at some point
+    public Sprite Icon
+    {
+        get { return icon; }
+    }
+
+    public float MaxActionPoints
+    {
+        get { return maxMovePoints; }
+        set { maxMovePoints = value; }
+    }
+
+    public float CurrentActionPoints
+    {
+        get { return currentMovePoints; }
+        set { currentMovePoints = value; }
+    }
+
+    public int Direction
+    {
+        get { return (int) orientation; }
+        set { orientation = (HexDirection) value; }
+    }
+
+    public float RotateCost
+    {
+        get { return rotateCost; }
+    }
+
+    public float DisplacementY
+    {
+        get { return displacementY; }
+    }
+
+    public bool Flying
+    {
+        get { return flying; }
+    }
+
+    public bool CanWalkBackwards
+    {
+        get
+        {
+            return canWalkBackwards;
+        }
     }
 }
