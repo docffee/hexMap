@@ -67,46 +67,6 @@ public class TestBlimp : UnityUnit
         }
     }
 
-    public override float RotateCost
-    {
-        get
-        {
-            return 0.2f;
-        }
-    }
-
-    public override int MaxActionPoints
-    {
-        get
-        {
-            return 2;
-        }
-    }
-
-    public override int CurrentActionPoints
-    {
-        get
-        {
-            return 2;
-        }
-    }
-
-    public override int Direction
-    {
-        get
-        {
-            return (int)orientation;
-        }
-    }
-
-    public override float DisplacementY
-    {
-        get
-        {
-            return displacementY;
-        }
-    }
-
     public override ITile<HexNode> Tile
     {
         get
@@ -117,28 +77,6 @@ public class TestBlimp : UnityUnit
         set
         {
             tile = value;
-        }
-    }
-
-    public override float MaxMovePoints
-    {
-        get { return maxMovePoints; }
-
-        set { maxMovePoints = value; }
-    }
-
-    public override float CurrentMovePoints
-    {
-        get { return currentMovePoints; }
-
-        set { currentMovePoints = value; }
-    }
-
-    public override bool Flying
-    {
-        get
-        {
-            return flying;
         }
     }
 }

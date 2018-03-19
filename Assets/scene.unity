@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.43667546, g: 0.48427135, b: 0.5645225, a: 1}
+  m_IndirectSpecularColor: {r: 0.43667555, g: 0.48427176, b: 0.5645241, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -289,8 +289,8 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 114009143746053344, guid: ba539a100a2d93d48971ce25e92f0e18,
         type: 2}
-      propertyPath: maxMovePoints
-      value: 7
+      propertyPath: rotateCost
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ba539a100a2d93d48971ce25e92f0e18, type: 2}
@@ -674,27 +674,6 @@ Prefab:
     - target: {fileID: 4603990744512890, guid: 4ee4b6f40068e294b9e43025cef86c4a, type: 2}
       propertyPath: m_RootOrder
       value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 23962269993718756, guid: 4ee4b6f40068e294b9e43025cef86c4a,
-        type: 2}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7910eea0007c8a94fb6afd64834876f6, type: 2}
-    - target: {fileID: 114568111465229364, guid: 4ee4b6f40068e294b9e43025cef86c4a,
-        type: 2}
-      propertyPath: icon
-      value: 
-      objectReference: {fileID: 21300000, guid: 49f199459bb804d42af3e66c78370062,
-        type: 3}
-    - target: {fileID: 114568111465229364, guid: 4ee4b6f40068e294b9e43025cef86c4a,
-        type: 2}
-      propertyPath: maxMovePoints
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114568111465229364, guid: 4ee4b6f40068e294b9e43025cef86c4a,
-        type: 2}
-      propertyPath: currentMovePoints
-      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4ee4b6f40068e294b9e43025cef86c4a, type: 2}
@@ -1148,11 +1127,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 114448148453318858, guid: 68da09084d9f8f14ca5b26d59bea7e0e,
-        type: 2}
-      propertyPath: currentMovePoints
-      value: 8
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 68da09084d9f8f14ca5b26d59bea7e0e, type: 2}
   m_IsPrefabParent: 0
@@ -1182,8 +1156,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1954568747}
   m_LocalRotation: {x: -0.46174863, y: -0, z: -0, w: 0.8870109}
-  m_LocalPosition: {x: 349.9, y: 86.59941, z: -106.242325}
-  m_LocalScale: {x: 0.95125, y: 0.95125014, z: 0.95125014}
+  m_LocalPosition: {x: 460.9, y: 113.27072, z: -144.3329}
+  m_LocalScale: {x: 1.22875, y: 1.2287502, z: 1.2287502}
   m_Children:
   - {fileID: 2131467194}
   - {fileID: 166915322}
@@ -1289,7 +1263,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2071600270}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.00012207031, y: -115.64717, z: 10}
+  m_LocalPosition: {x: -0.00012207031, y: -106.48271, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 322188548}
@@ -1411,7 +1385,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2131467193}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35.299988, y: -168.14717, z: 0}
+  m_LocalPosition: {x: -35.299988, y: -158.98271, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 531792892}

@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 public interface IUnit<N> where N : INode<N>
 {
-    int MaxActionPoints { get; }
-    int CurrentActionPoints { get; }
     float MaxMovePoints { get; set; }
     float CurrentMovePoints { get; set; }
     int Direction { get; }

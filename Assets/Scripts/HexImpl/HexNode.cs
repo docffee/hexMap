@@ -28,36 +28,35 @@ namespace Assets.Scripts.HexImpl
 
             HexEngine engine = HexEngine.Singleton;
             HexNode back = null;
-
             HexNode forward = engine.GetNodeInFront(this);
+            if (movingUnit.CanWalkBackwards)
+                back = engine.GetNodeBehind(this);
 
             edges.Add(turnLeft);
             edges.Add(turnRight);
             if (forward != null)
             {
                 IWalkable walkable = movingUnit.GetTerrainWalkability(forward.Tile.Terrain);
+                float cost = ((terrainMod + walkable.Modifier) / 2);
                 if (movingUnit.Flying && forward.Tile.AirUnitOnTile == null && walkable.Passable)
                 {
-                    float cost = ((terrainMod + walkable.Modifier) / 2);
                     edges.Add(new HexEdge(cost, forward));
                 }
                 else if (forward.Tile.UnitOnTile == null && walkable.Passable)
                 {
-                    float cost = ((terrainMod + walkable.Modifier) / 2);
                     edges.Add(new HexEdge(cost, forward));
                 }
             }
             if (back != null)
             {
                 IWalkable walkable = movingUnit.GetTerrainWalkability(back.Tile.Terrain);
-                if (movingUnit.Flying && forward.Tile.AirUnitOnTile == null && walkable.Passable)
+                float cost = ((terrainMod + walkable.Modifier) / 1.7f);
+                if (movingUnit.Flying && back.Tile.AirUnitOnTile == null && walkable.Passable)
                 {
-                    float cost = ((terrainMod + walkable.Modifier) / 1.7f);
                     edges.Add(new HexEdge(cost, back));
                 }
-                else if (forward.Tile.UnitOnTile == null && walkable.Passable)
+                else if (back.Tile.UnitOnTile == null && walkable.Passable)
                 {
-                    float cost = ((terrainMod + walkable.Modifier) / 1.7f);
                     edges.Add(new HexEdge(cost, back));
                 }
             }
