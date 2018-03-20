@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreindalMap : IMapGenerator<HexNode>
+public class BreindalMap : IMapGenerator
 {
     private const string tiles = "GGGGGGGGGGGGFFFGGGGGGGGGFFFFFFFFFFFFFFFFWWWWWWWGGGGGFFFGGGGGGFFFFFFFFF" +
         "FFFFFFFFFFGWWWWWWWGGGGFFFGGGGFFFFFFFFFFFFFFFFFFFFFGWWWWWWGGGGGFFFGFFFFFFFGGGFFF" +
@@ -17,12 +17,12 @@ public class BreindalMap : IMapGenerator<HexNode>
         "GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGMMMMMMGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGMMMMMMM" +
         "MGGGGGGGGGGGGGGGGGG";
 
-    public ITile<HexNode>[] GenerateTiles(int sizeX, int sizeY)
+    public ITile[] GenerateTiles(int sizeX, int sizeY)
     {
         sizeX = 40;
         sizeY = 20;
         char[] tileChars = tiles.ToCharArray();
-        ITile<HexNode>[] generated = new TileInfo[sizeX * sizeY];
+        ITile[] generated = new TileInfo[sizeX * sizeY];
         for (int i = 0; i < tileChars.Length; i++)
         {
             char c = tileChars[i];

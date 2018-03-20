@@ -16,7 +16,7 @@ class UnitController : MonoBehaviour, IReady
     private UnityUnit selectedUnit = null;
     private List<GameObject> highlightedTiles = new List<GameObject>();
     private List<GameObject> pathArrows = new List<GameObject>();
-    private ITile<HexNode> hoverOver;
+    private ITile hoverOver;
     private bool performingAction;
 
     private void Start()
@@ -76,7 +76,7 @@ class UnitController : MonoBehaviour, IReady
 
         if (selectedUnit != null && !selectedUnit.PerformingAction() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
         {
-            ITile<HexNode> hoverNow = hit.collider.gameObject.GetComponent<ITile<HexNode>>();
+            ITile hoverNow = hit.collider.gameObject.GetComponent<ITile>();
 
             if (hoverNow.UnitOnTile != null)
                 return;
@@ -99,11 +99,11 @@ class UnitController : MonoBehaviour, IReady
             return;
 
         // Fix until selection of direction is implemented //
-        Dictionary<ITile<HexNode>, bool> tiles = new Dictionary<ITile<HexNode>, bool>();
+        Dictionary<ITile, bool> tiles = new Dictionary<ITile, bool>();
 
         foreach (IPathNode<HexNode> node in reachable)
         {
-            ITile<HexNode> tile = node.GetNode().Tile;
+            ITile tile = node.GetNode().Tile;
 
             if (tiles.ContainsKey(tile))
                 continue;
@@ -122,7 +122,7 @@ class UnitController : MonoBehaviour, IReady
         if (path == null)
             return;
 
-        Dictionary<ITile<HexNode>, bool> tiles = new Dictionary<ITile<HexNode>, bool>();
+        Dictionary<ITile, bool> tiles = new Dictionary<ITile, bool>();
 
         IEnumerator<IPathNode<HexNode>> enumerator = path.GetEnumerator();
         enumerator.MoveNext(); // Skips first //
@@ -132,7 +132,7 @@ class UnitController : MonoBehaviour, IReady
         {
             IPathNode<HexNode> node = enumerator.Current;
             HexNode hexNode = node.GetNode();
-            ITile<HexNode> tile = hexNode.Tile;
+            ITile tile = hexNode.Tile;
 
             if (tiles.ContainsKey(tile))
                 continue;

@@ -8,10 +8,10 @@ namespace Assets.Scripts.HexImpl
     public class HexNode : INode<HexNode>
     {
         private HexDirection direction;
-        private ITile<HexNode> tile;
-        private IUnit<HexNode> movingUnit;
+        private ITile tile;
+        private IUnit movingUnit;
 
-        public HexNode(HexDirection direction, ITile<HexNode> tile, IUnit<HexNode> movingUnit)
+        public HexNode(HexDirection direction, ITile tile, IUnit movingUnit)
         {
             this.direction = direction;
             this.tile = tile;
@@ -99,7 +99,7 @@ namespace Assets.Scripts.HexImpl
         {
             var hashCode = -300798877;
             hashCode = hashCode * -1521134295 + Direction.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<ITile<HexNode>>.Default.GetHashCode(tile);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ITile>.Default.GetHashCode(tile);
             return hashCode;
         }
 
@@ -113,7 +113,7 @@ namespace Assets.Scripts.HexImpl
             get { return direction; }
         }
 
-        public ITile<HexNode> Tile
+        public ITile Tile
         {
             get { return tile; }
         }
@@ -128,7 +128,7 @@ namespace Assets.Scripts.HexImpl
             get { return tile.Z; }
         }
 
-        public IUnit<HexNode> MovingUnit
+        public IUnit MovingUnit
         {
             get { return movingUnit; }
         }

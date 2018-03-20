@@ -1,9 +1,5 @@
-﻿using Assets.Scripts.HexImpl;
-using Assets.Scripts.Interfaces;
-using GraphAlgorithms;
-using System.Collections.Generic;
-
-public interface IUnit<N> where N : INode<N>
+﻿
+public interface IUnit
 {
     float MaxActionPoints { get; set; }
     float CurrentActionPoints { get; set; }
@@ -14,7 +10,6 @@ public interface IUnit<N> where N : INode<N>
     float RotateCost { get; }
     IWalkable GetTerrainWalkability(ITerrain terrain);
 
-    ITile<HexNode> Tile { get; set; }
-    void Move(IEnumerable<IPathNode<N>> path, IReady controller);
+    ITile Tile { get; set; }
     bool PerformingAction();
 }

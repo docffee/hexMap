@@ -2,7 +2,7 @@
 using Assets.Scripts.HexImpl;
 using UnityEngine;
 
-public class HexCell : MonoBehaviour, ITile<HexNode>
+public class HexCell : MonoBehaviour, ITile
 {
     public Color color;
 
@@ -11,8 +11,8 @@ public class HexCell : MonoBehaviour, ITile<HexNode>
     private int elevation;
 
     private ITerrain terrain;
-    private IUnit<HexNode> unit;
-    private IUnit<HexNode> airUnit;
+    private IUnit unit;
+    private IUnit airUnit;
 
     public void Initialize(int x, int z, ITerrain terrain)
     {
@@ -85,7 +85,7 @@ public class HexCell : MonoBehaviour, ITile<HexNode>
         get { return terrain; }
     }
 
-    public IUnit<HexNode> UnitOnTile
+    public IUnit UnitOnTile
     {
         get { return unit; }
     }
@@ -105,7 +105,7 @@ public class HexCell : MonoBehaviour, ITile<HexNode>
         get { return transform.position.z; }
     }
 
-    IUnit<HexNode> ITile<HexNode>.UnitOnTile
+    IUnit ITile.UnitOnTile
     {
         get
         {
@@ -134,7 +134,7 @@ public class HexCell : MonoBehaviour, ITile<HexNode>
         }
     }
 
-    public IUnit<HexNode> AirUnitOnTile
+    public IUnit AirUnitOnTile
     {
         get
         {

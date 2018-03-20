@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.HexImpl
 {
-    class TileInfo : ITile<HexNode>
+    class TileInfo : ITile
     {
         private ITerrain terrain;
         private int elevation;
@@ -36,7 +36,7 @@ namespace Assets.Scripts.HexImpl
             get { return terrain; }
         }
 
-        public IUnit<HexNode> UnitOnTile
+        public IUnit UnitOnTile
         {
             get { return null; }
         }
@@ -56,7 +56,7 @@ namespace Assets.Scripts.HexImpl
             get { return 0; }
         }
 
-        public IUnit<HexNode> AirUnitOnTile
+        public IUnit AirUnitOnTile
         {
             get
             {
@@ -69,7 +69,7 @@ namespace Assets.Scripts.HexImpl
             }
         }
 
-        IUnit<HexNode> ITile<HexNode>.UnitOnTile
+        IUnit ITile.UnitOnTile
         {
             get
             {

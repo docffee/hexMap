@@ -2,8 +2,8 @@
 
 namespace Assets.Scripts.HexImpl
 {
-    public interface IMapGenerator<N> where N : INode<N>
+    public interface IMapGenerator
     {
-        ITile<N>[] GenerateTiles(int sizeX, int sizeY);
+        ITile[] GenerateTiles(int sizeX, int sizeY);
     }
 }

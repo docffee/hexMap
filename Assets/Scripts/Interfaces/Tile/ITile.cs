@@ -1,6 +1,6 @@
 ﻿using GraphAlgorithms;
 
-public interface ITile<N> where N : INode<N>
+public interface ITile
 {
     int X { get; }
     int Y { get; }
@@ -11,6 +11,6 @@ public interface ITile<N> where N : INode<N>
     float WorldPosZ { get; }
 
     ITerrain Terrain { get; }
-    IUnit<N> UnitOnTile { get; set; }
-    IUnit<N> AirUnitOnTile { get; set; }
+    IUnit UnitOnTile { get; set; }
+    IUnit AirUnitOnTile { get; set; }
 }

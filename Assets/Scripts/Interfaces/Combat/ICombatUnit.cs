@@ -1,6 +1,6 @@
 ﻿using GraphAlgorithms;
 
-public interface ICombatUnit<N> : IUnit<N> where N : INode<N>
+public interface ICombatUnit : IUnit
 {
     int CurrentHealth { get; set; }
     int MaxHealth { get; }

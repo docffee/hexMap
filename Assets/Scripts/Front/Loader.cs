@@ -21,10 +21,10 @@ class Loader : MonoBehaviour
             unit.CurrentHealth = unit.MaxHealth;
         }
 
-        ITile<HexNode> tile = engine.GetTile(19, 12);
-        ITile<HexNode> tile2 = engine.GetTile(21, 12);
-        ITile<HexNode> tile3 = engine.GetTile(23, 12);
-        ITile<HexNode> tile4 = engine.GetTile(17, 12);
+        ITile tile = engine.GetTile(19, 12);
+        ITile tile2 = engine.GetTile(21, 12);
+        ITile tile3 = engine.GetTile(23, 12);
+        ITile tile4 = engine.GetTile(17, 12);
         Vector3 tilePosition = new Vector3(tile.WorldPosX, tile.WorldPosY, tile.WorldPosZ);
         Vector3 tilePosition2 = new Vector3(tile2.WorldPosX, tile2.WorldPosY, tile2.WorldPosZ);
         Vector3 tilePosition3 = new Vector3(tile3.WorldPosX, tile3.WorldPosY, tile3.WorldPosZ);

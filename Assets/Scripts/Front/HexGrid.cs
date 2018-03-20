@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HexGrid : MonoBehaviour, IMapGenerator<HexNode>
+public class HexGrid : MonoBehaviour, IMapGenerator
 {
     [SerializeField] private int sizeX;
     [SerializeField] private int sizeZ;
@@ -34,7 +34,7 @@ public class HexGrid : MonoBehaviour, IMapGenerator<HexNode>
         hexMesh.Triangulate(cells);
     }
 
-    public void CreateMeshFromCells(ITile<HexNode>[] tiles, int sizeX, int sizeY)
+    public void CreateMeshFromCells(ITile[] tiles, int sizeX, int sizeY)
     {
         cells = new HexCell[sizeX * sizeY];
 
@@ -43,14 +43,14 @@ public class HexGrid : MonoBehaviour, IMapGenerator<HexNode>
         {
             for (int x = 0; x < sizeX; x++)
             {
-                ITile<HexNode> tile = tiles[i];
+                ITile tile = tiles[i];
                 CreateCell(x, z, i, tile);
                 i++;
             }
         }
     }
 
-    private void CreateCell(int x, int z, int i, ITile<HexNode> tile)
+    private void CreateCell(int x, int z, int i, ITile tile)
     {
         Vector3 position;
         position.x = (x + z * 0.5f - z / 2) * (HexMetrics.innerRadius * 2f);
@@ -144,7 +144,7 @@ public class HexGrid : MonoBehaviour, IMapGenerator<HexNode>
         }
     }
 
-    public ITile<HexNode>[] GenerateTiles(int sizeX, int sizeY)
+    public ITile[] GenerateTiles(int sizeX, int sizeY)
     {
         return cells;
     }

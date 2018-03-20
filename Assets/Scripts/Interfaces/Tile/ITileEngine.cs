@@ -7,11 +7,11 @@ namespace Assets.Scripts.Interfaces
     {
         int BoardSizeX { get; }
         int BoardSizeZ { get; }
-        ITile<N> GetTile(int x, int z);
-        ITile<N>[] GetAllTiles();
-        IEnumerable<IPathNode<N>> GetShortestPath(IUnit<N> unit, ITile<N> startTile, ITile<N> endTile);
-        IEnumerable<IPathNode<N>> GetReachable(IUnit<N> unit, ITile<N> startTile);
-        bool PlaceUnit(IUnit<N> unit, int x, int z);
-        bool MoveUnit(IUnit<N> unit, int lastX, int lastZ, int newX, int newZ);
+        ITile GetTile(int x, int z);
+        ITile[] GetAllTiles();
+        IEnumerable<IPathNode<N>> GetShortestPath(IUnit unit, ITile startTile, ITile endTile);
+        IEnumerable<IPathNode<N>> GetReachable(IUnit unit, ITile startTile);
+        bool PlaceUnit(IUnit unit, int x, int z);
+        bool MoveUnit(IUnit unit, int lastX, int lastZ, int newX, int newZ);
     }
 }

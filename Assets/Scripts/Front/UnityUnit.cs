@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>, ICombatUnit<HexNode>
+public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
 {
     [Header ("Visuals:")]
     [SerializeField] private string unitName = "New Unit";
@@ -28,7 +28,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>, ICombatUnit<Hex
     [SerializeField] private int damage = 1;
     [SerializeField] private int range = 1;
 
-    protected ITile<HexNode> tile;
+    protected ITile tile;
     protected HexDirection orientation;
     protected bool performingAction = false;
 
@@ -79,7 +79,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>, ICombatUnit<Hex
 
     private IEnumerator Walk(HexNode node)
     {
-        ITile<HexNode> tile = node.Tile;
+        ITile tile = node.Tile;
 
         Vector3 startPoint = transform.position;
         Vector3 nodePoint = new Vector3(tile.WorldPosX, tile.WorldPosY, tile.WorldPosZ) + Vector3.up * displacementY;
@@ -213,7 +213,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>, ICombatUnit<Hex
         }
     }
 
-    public ITile<HexNode> Tile
+    public ITile Tile
     {
         get
         {

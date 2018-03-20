@@ -8,12 +8,12 @@ namespace Assets.Scripts.HexImpl
     class HexEngine : ITileEngine<HexNode>
     {
         int sizeX, sizeZ;
-        ITile<HexNode>[] tiles;
+        ITile[] tiles;
         IPathfinding pathfinder;
 
         private static HexEngine singleton;
 
-        public HexEngine(int sizeX, int sizeZ, IMapGenerator<HexNode> generator)
+        public HexEngine(int sizeX, int sizeZ, IMapGenerator generator)
         {
             this.sizeX = sizeX;
             this.sizeZ = sizeZ;
@@ -33,12 +33,12 @@ namespace Assets.Scripts.HexImpl
             get { return sizeZ; }
         }
 
-        public ITile<HexNode>[] GetAllTiles()
+        public ITile[] GetAllTiles()
         {
             return tiles;
         }
 
-        public ITile<HexNode> GetTile(int x, int z)
+        public ITile GetTile(int x, int z)
         {
             int index = z * sizeX + x;
             if (index < 0 || index >= tiles.Length)
@@ -47,13 +47,13 @@ namespace Assets.Scripts.HexImpl
             return tiles[index];
         }
 
-        public IEnumerable<IPathNode<HexNode>> GetReachable(IUnit<HexNode> unit, ITile<HexNode> startTile)
+        public IEnumerable<IPathNode<HexNode>> GetReachable(IUnit unit, ITile startTile)
         {
             HexNode node = new HexNode((HexDirection) unit.Direction, startTile, unit);
             return pathfinder.GetReachableNodes(node, unit.CurrentActionPoints);
         }
 
-        public IEnumerable<IPathNode<HexNode>> GetShortestPath(IUnit<HexNode> unit, ITile<HexNode> startTile, ITile<HexNode> endTile)
+        public IEnumerable<IPathNode<HexNode>> GetShortestPath(IUnit unit, ITile startTile, ITile endTile)
         {
             HexNode start = new HexNode((HexDirection) unit.Direction, startTile, unit);
             HexNode end = new HexNode(HexDirection.Any, endTile, unit);
@@ -62,9 +62,9 @@ namespace Assets.Scripts.HexImpl
             return path;
         }
 
-        public bool PlaceUnit(IUnit<HexNode> unit, int x, int z)
+        public bool PlaceUnit(IUnit unit, int x, int z)
         {
-            ITile<HexNode> tile = GetTile(x, z);
+            ITile tile = GetTile(x, z);
             if (unit.Flying)
             {
                 if (tile.AirUnitOnTile != null)
@@ -84,9 +84,9 @@ namespace Assets.Scripts.HexImpl
             return true;
         }
 
-        public bool MoveUnit(IUnit<HexNode> unit, int lastX, int lastZ, int newX, int newZ)
+        public bool MoveUnit(IUnit unit, int lastX, int lastZ, int newX, int newZ)
         {
-            ITile<HexNode> endTile = GetTile(newX, newZ);
+            ITile endTile = GetTile(newX, newZ);
             if (unit.Flying)
             {
                 if (endTile.AirUnitOnTile != null)
@@ -204,7 +204,7 @@ namespace Assets.Scripts.HexImpl
 
         private HexNode CreateNode(int x, int z, HexDirection direction, HexNode prev)
         {
-            ITile<HexNode> tile = GetTile(x, z);
+            ITile tile = GetTile(x, z);
             HexNode node = new HexNode(direction, tile, prev.MovingUnit);
             return node;
         }
