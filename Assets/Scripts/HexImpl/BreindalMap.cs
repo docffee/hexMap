@@ -27,11 +27,13 @@ public class BreindalMap : IMapGenerator
         {
             char c = tileChars[i];
 
-            int elevation = Random.Range(0, 5);
+            int elevation = 0;
             if (c == 'M')
                 elevation = 15;
+            else if (c == 'F')
+                elevation = 3;
             else if (c == 'W')
-                elevation = -5;
+                elevation = -3;
 
             generated[i] = new TileInfo(HexTerrain.GetTerrainFromChar(c), elevation);
         }

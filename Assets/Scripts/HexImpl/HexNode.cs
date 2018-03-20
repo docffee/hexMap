@@ -26,11 +26,11 @@ namespace Assets.Scripts.HexImpl
             HexEdge turnLeft = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, -1), tile, movingUnit));
             HexEdge turnRight = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, 1), tile, movingUnit));
 
-            HexEngine engine = HexEngine.Singleton;
+            HexControl hexControl = HexControl.Singleton;
             HexNode back = null;
-            HexNode forward = engine.GetNodeInFront(this);
+            HexNode forward = hexControl.GetNodeInFront(this);
             if (movingUnit.CanWalkBackwards)
-                back = engine.GetNodeBehind(this);
+                back = hexControl.GetNodeBehind(this);
 
             edges.Add(turnLeft);
             edges.Add(turnRight);

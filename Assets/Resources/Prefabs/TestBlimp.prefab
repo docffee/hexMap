@@ -476,7 +476,8 @@ MonoBehaviour:
   canWalkBackwards: 0
   rotateCost: 0.4
   maxActionPoints: 4
-  currentHealth: 1
-  maxHealth: 1
-  damage: 2
-  range: 1
+  currentHealth: 8
+  maxHealth: 8
+  damage: 4
+  range: 0
+  attackActionPointCost: 1

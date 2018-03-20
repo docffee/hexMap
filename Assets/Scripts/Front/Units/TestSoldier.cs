@@ -2,7 +2,8 @@
 using GraphAlgorithms;
 using System.Collections.Generic;
 using Assets.Scripts.Interfaces;
-using System;
+using UnityEngine;
+using System.Collections;
 
 public class TestSoldier : UnityUnit
 {
@@ -31,7 +32,7 @@ public class TestSoldier : UnityUnit
             case "Water":
                 return new Walkable(0, false);
             case "Sand":
-                return new Walkable(2, true);
+                return new Walkable(1.5f, true);
             default:
                 return new Walkable(0, false);
         }
@@ -42,8 +43,14 @@ public class TestSoldier : UnityUnit
         return canRetaliate;
     }
 
-    public override void OnAttack()
+    public override void OnAttack(ICombatUnit target)
     {
-        // Do nothing
+        Vector3 targetPosition = (target as UnityUnit).transform.position;
+        StartCoroutine(AttackAnimation(targetPosition));
+    }
+
+    private IEnumerator AttackAnimation(Vector3 targetPosition)
+    {
+        yield break;
     }
 }

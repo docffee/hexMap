@@ -41,9 +41,4 @@ public class TestArtilleryTank : UnityUnit
     {
         return canRetaliate;
     }
-
-    public override void OnAttack()
-    {
-        // Do nothing
-    }
 }

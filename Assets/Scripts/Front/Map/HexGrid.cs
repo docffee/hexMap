@@ -1,6 +1,4 @@
 ﻿using Assets.Scripts.HexImpl;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HexGrid : MonoBehaviour, IMapGenerator
@@ -28,7 +26,7 @@ public class HexGrid : MonoBehaviour, IMapGenerator
         //}
 
         BreindalMap map = new BreindalMap();
-        CreateMeshFromCells(map.GenerateTiles(40, 20), 40, 20);
+        CreateMeshFromCells(map.GenerateTiles(sizeX, sizeZ), sizeX, sizeZ);
 
         hexMesh.Initialize();
         hexMesh.Triangulate(cells);

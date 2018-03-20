@@ -74,9 +74,4 @@ public class TestBlimp : UnityUnit
     {
         return canRetaliate;
     }
-
-    public override void OnAttack()
-    {
-        // Do nothing
-    }
 }

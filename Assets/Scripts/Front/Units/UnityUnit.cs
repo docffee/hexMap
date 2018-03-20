@@ -4,7 +4,6 @@ using GraphAlgorithms;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
 {
@@ -27,6 +26,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
     [SerializeField] private int maxHealth = 1;
     [SerializeField] private int damage = 1;
     [SerializeField] private int range = 1;
+    [SerializeField] private float attackActionPointCost;
 
     protected ITile tile;
     protected HexDirection orientation;
@@ -37,10 +37,25 @@ public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
     public abstract void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller);
     public abstract bool PerformingAction();
     public abstract bool CanRetaliate();
-    public abstract void OnAttack();
+
+    public void Initialize(IPlayer controller)
+    {
+        this.controller = controller;
+        currentActionPoints = maxActionPoints;
+    }
+
+    public virtual void OnAttack(ICombatUnit target)
+    {
+        // Do nothing
+    }
 
     public virtual void OnDeath()
     {
+        if (flying)
+            tile.AirUnitOnTile = null;
+        else
+            tile.UnitOnTile = null;
+
         Destroy(gameObject);
     }
 
@@ -102,7 +117,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
         }
 
         transform.position = nodePoint;
-        HexEngine.Singleton.MoveUnit(this, tile.X, tile.Z, node.X, node.Z);
+        HexControl.Singleton.MoveUnit(this, tile.X, tile.Z, node.X, node.Z);
     }
 
     private IEnumerator Rotate(HexNode node)
@@ -218,6 +233,14 @@ public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
         get
         {
             return range;
+        }
+    }
+
+    public float AttackActionPointCost
+    {
+        get
+        {
+            return attackActionPointCost;
         }
     }
 

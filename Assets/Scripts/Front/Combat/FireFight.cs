@@ -5,7 +5,8 @@ public class FireFight : IFireFight
     public void Fight(ICombatUnit attacker, ICombatUnit defender)
     {
         int damage = CalculateAttackerDamage(attacker, defender);
-        attacker.OnAttack();
+        attacker.OnAttack(defender);
+        attacker.CurrentActionPoints -= attacker.AttackActionPointCost;
         defender.CurrentHealth -= damage;
 
         if (defender.CurrentHealth <= 0)
@@ -15,7 +16,7 @@ public class FireFight : IFireFight
         else if (defender.CanRetaliate())
         {
             damage = CalculateDefenderDamage(defender);
-            defender.OnAttack();
+            defender.OnAttack(attacker);
             attacker.CurrentHealth -= damage;
         }
     }
@@ -34,7 +35,7 @@ public class FireFight : IFireFight
     {
         int dif = Mathf.Abs(aDir - bDir);
 
-        if (dif >= 2)
+        if (dif < 2)
             return 2;
 
         return 1;

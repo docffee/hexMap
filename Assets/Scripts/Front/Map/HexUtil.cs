@@ -30,7 +30,7 @@ public static class HexUtil
 
     public static int DirectionRotation(this HexDirection direction)
     {
-        return (int)direction * 60;
+        return (int)direction * 60 + 30;
     }
 
     public static int StepRotation(this HexDirection direction, HexDirection other)
