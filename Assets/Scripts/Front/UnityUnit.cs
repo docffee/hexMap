@@ -6,29 +6,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
+public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>, ICombatUnit<HexNode>
 {
+    [Header ("Visuals:")]
+    [SerializeField] private string unitName = "New Unit";
+    [SerializeField] protected Sprite icon = null;
     [SerializeField] protected float moveTime = 1.2f;
     [SerializeField] protected float rotateTime = 0.2f;
     [SerializeField] protected float displacementY = 1;
-    [SerializeField] protected bool flying;
-    [SerializeField] protected bool canWalkBackwards;
-    [SerializeField] protected float rotateCost;
-    [SerializeField] protected float maxActionPoints = 1;
-    [SerializeField] protected float currentActionPoints = 1;
-    [SerializeField] protected float damage = 1;
-    [SerializeField] protected float health = 1;
-    public string unitName;
 
-    [SerializeField] protected Sprite icon;
+    [Header ("Pathfinding and Actions")]
+    [SerializeField] protected bool flying = false;
+    [SerializeField] protected bool canWalkBackwards = false;
+    [SerializeField] protected float rotateCost = 0.1f;
+    [SerializeField] protected float maxActionPoints = 1;
+    protected float currentActionPoints = 1;
+
+    [Header ("Combat")]
+    [SerializeField] private int currentHealth = 1;
+    [SerializeField] private int maxHealth = 1;
+    [SerializeField] private int damage = 1;
+    [SerializeField] private int range = 1;
 
     protected ITile<HexNode> tile;
     protected HexDirection orientation;
     protected bool performingAction = false;
 
     public abstract IWalkable GetTerrainWalkability(ITerrain terrain);
-
-    public abstract ITile<HexNode> Tile { get; set; }
     public abstract void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller);
     public abstract bool PerformingAction();
 
@@ -114,7 +118,10 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
         transform.rotation = end;
     }
 
-    //Remove abstract at some point
+    //#######################################//
+    //##### Properties below this point #####//
+    //#######################################//
+
     public Sprite Icon
     {
         get { return icon; }
@@ -158,6 +165,64 @@ public abstract class UnityUnit : MonoBehaviour, IUnit<HexNode>
         get
         {
             return canWalkBackwards;
+        }
+    }
+
+    public string UnitName
+    {
+        get
+        {
+            return unitName;
+        }
+    }
+
+    public int CurrentHealth
+    {
+        get
+        {
+            return currentHealth;
+        }
+
+        set
+        {
+            currentHealth = value;
+        }
+    }
+
+    public int MaxHealth
+    {
+        get
+        {
+            return maxHealth;
+        }
+    }
+
+    public int Damage
+    {
+        get
+        {
+            return damage;
+        }
+    }
+
+    public int Range
+    {
+        get
+        {
+            return range;
+        }
+    }
+
+    public ITile<HexNode> Tile
+    {
+        get
+        {
+            return tile;
+        }
+
+        set
+        {
+            tile = value;
         }
     }
 }

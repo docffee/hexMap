@@ -20,30 +20,17 @@ public class TestArtilleryTank : UnityUnit
         switch (terrain.Name)
         {
             case "Grass":
-                return new Walkable(2, true);
+                return new Walkable(1, true);
             case "Forest":
-                return new Walkable(2, true);
+                return new Walkable(1, true);
             case "Mountain":
                 return new Walkable(0, false);
             case "Water":
                 return new Walkable(0, false);
             case "Sand":
-                return new Walkable(4, true);
+                return new Walkable(2, true);
             default:
                 return new Walkable(0, false);
-        }
-    }
-
-    public override ITile<HexNode> Tile
-    {
-        get
-        {
-            return tile;
-        }
-
-        set
-        {
-            tile = value;
         }
     }
 }

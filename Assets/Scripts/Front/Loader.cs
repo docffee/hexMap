@@ -1,7 +1,4 @@
 ﻿using Assets.Scripts.HexImpl;
-using GraphAlgorithms;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 class Loader : MonoBehaviour
@@ -11,12 +8,18 @@ class Loader : MonoBehaviour
         HexGrid grid = FindObjectOfType<HexGrid>();
         HexEngine engine = new HexEngine(grid.SizeX, grid.SizeZ, grid);
 
-        GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
+        UnityUnit[] units = FindObjectsOfType<UnityUnit>();
 
-        UnityUnit unit1 = units[0].GetComponent<UnityUnit>();
-        UnityUnit unit2 = units[1].GetComponent<UnityUnit>();
-        UnityUnit unit3 = units[2].GetComponent<UnityUnit>();
-        UnityUnit unit4 = units[3].GetComponent<UnityUnit>();
+        UnityUnit unit1 = units[0];
+        UnityUnit unit2 = units[1];
+        UnityUnit unit3 = units[2];
+        UnityUnit unit4 = units[3];
+
+        foreach (UnityUnit unit in units)
+        {
+            unit.CurrentActionPoints = unit.MaxActionPoints;
+            unit.CurrentHealth = unit.MaxHealth;
+        }
 
         ITile<HexNode> tile = engine.GetTile(19, 12);
         ITile<HexNode> tile2 = engine.GetTile(21, 12);

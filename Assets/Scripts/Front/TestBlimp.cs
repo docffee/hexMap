@@ -66,17 +66,4 @@ public class TestBlimp : UnityUnit
                 return new Walkable(0, false);
         }
     }
-
-    public override ITile<HexNode> Tile
-    {
-        get
-        {
-            return tile;
-        }
-
-        set
-        {
-            tile = value;
-        }
-    }
 }

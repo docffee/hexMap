@@ -292,7 +292,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4411116928791176}
   - component: {fileID: 33703578902744350}
-  - component: {fileID: 65493729254386600}
   - component: {fileID: 23653407920725566}
   m_Layer: 0
   m_Name: launcher_left
@@ -309,9 +308,11 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4190179640869234}
-  m_Layer: 0
+  - component: {fileID: 65360504420485190}
+  - component: {fileID: 114766710597535786}
+  m_Layer: 8
   m_Name: TestArtilleryTank
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -376,7 +377,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4002563617768372}
   - component: {fileID: 33552598834336036}
-  - component: {fileID: 65020983315455722}
   - component: {fileID: 23876556453360074}
   m_Layer: 0
   m_Name: launcher_right
@@ -428,7 +428,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4874797463662824}
   - component: {fileID: 33921595634693548}
-  - component: {fileID: 65796001777349470}
   - component: {fileID: 23362928916172922}
   m_Layer: 0
   m_Name: window
@@ -463,7 +462,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4619026708762268}
   - component: {fileID: 33077792257574960}
-  - component: {fileID: 65195359986338366}
   - component: {fileID: 23932387195192684}
   m_Layer: 0
   m_Name: Body
@@ -552,14 +550,14 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1826711006237492}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
   m_LocalPosition: {x: -10, y: 1, z: 5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4619026708762268}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
 --- !u!4 &4222012480731950
 Transform:
   m_ObjectHideFlags: 1
@@ -692,7 +690,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1960637403524212}
-  m_LocalRotation: {x: 0, y: 0.2588191, z: 0, w: 0.9659258}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0.293}
   m_LocalScale: {x: 4, y: 2, z: 6}
   m_Children:
@@ -705,7 +703,7 @@ Transform:
   - {fileID: 4874797463662824}
   m_Father: {fileID: 4190179640869234}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4663060761898518
 Transform:
   m_ObjectHideFlags: 1
@@ -1915,51 +1913,38 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1335261191633990}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &65020983315455722
+--- !u!65 &65360504420485190
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1879366542577512}
+  m_GameObject: {fileID: 1826711006237492}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65195359986338366
-BoxCollider:
+  m_Size: {x: 4, y: 4, z: 7}
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &114766710597535786
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1960637403524212}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_GameObject: {fileID: 1826711006237492}
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65493729254386600
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1747009306656566}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65796001777349470
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1918004523259002}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fd379ad4107b6342a7c95743585e439, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveTime: 1
+  rotateTime: 0.4
+  displacementY: 1
+  flying: 0
+  canWalkBackwards: 1
+  rotateCost: 0.5
+  maxActionPoints: 7
+  currentActionPoints: 7
+  damage: 3
+  health: 5
+  unitName: Artillery Tank
+  icon: {fileID: 21300000, guid: 994d86dae4c4daf43b23d195dda12b20, type: 3}
