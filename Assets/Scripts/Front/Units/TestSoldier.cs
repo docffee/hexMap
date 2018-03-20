@@ -6,6 +6,7 @@ using System;
 
 public class TestSoldier : UnityUnit
 {
+    private bool canRetaliate = true;
 
     public override void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller)
     {
@@ -34,5 +35,15 @@ public class TestSoldier : UnityUnit
             default:
                 return new Walkable(0, false);
         }
+    }
+
+    public override bool CanRetaliate()
+    {
+        return canRetaliate;
+    }
+
+    public override void OnAttack()
+    {
+        // Do nothing
     }
 }

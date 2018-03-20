@@ -755,7 +755,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 995ee199474df7f4691c0ffff08a69b1, type: 2}
+  - {fileID: 2100000, guid: d237601f87eb27d43a47ffe20f462ddf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -857,7 +857,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 995ee199474df7f4691c0ffff08a69b1, type: 2}
+  - {fileID: 2100000, guid: d237601f87eb27d43a47ffe20f462ddf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1129,7 +1129,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: 995ee199474df7f4691c0ffff08a69b1, type: 2}
+  - {fileID: 2100000, guid: d237601f87eb27d43a47ffe20f462ddf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1742,6 +1742,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e51a7feba2c2f9e4bbada6e91bb5fb24, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitName: Soldiers
+  icon: {fileID: 21300000, guid: 49f199459bb804d42af3e66c78370062, type: 3}
   moveTime: 1.2
   rotateTime: 0.2
   displacementY: -1.4
@@ -1749,8 +1751,7 @@ MonoBehaviour:
   canWalkBackwards: 0
   rotateCost: 0
   maxActionPoints: 3
-  currentActionPoints: 3
+  currentHealth: 1
+  maxHealth: 1
   damage: 1
-  health: 5
-  unitName: Soldiers
-  icon: {fileID: 21300000, guid: 49f199459bb804d42af3e66c78370062, type: 3}
+  range: 1

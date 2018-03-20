@@ -442,7 +442,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d237601f87eb27d43a47ffe20f462ddf, type: 2}
+  - {fileID: 2100000, guid: 995ee199474df7f4691c0ffff08a69b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -476,7 +476,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: e99504eedbd77f64e8a3fd083cea2de6, type: 2}
+  - {fileID: 2100000, guid: 30f9859147e055f45877d42b11d4e395, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -510,7 +510,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e99504eedbd77f64e8a3fd083cea2de6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -682,7 +682,7 @@ Animator:
   m_GameObject: {fileID: 1397226894849798}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 04d9b630accfb2041ac1eca5654a3765, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -701,6 +701,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1149a22edfcbb948b173c9d46cc8077, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitName: Tank
+  icon: {fileID: 21300000, guid: 994d86dae4c4daf43b23d195dda12b20, type: 3}
   moveTime: 0.7
   rotateTime: 0.2
   displacementY: 1.6
@@ -708,8 +710,7 @@ MonoBehaviour:
   canWalkBackwards: 1
   rotateCost: 0.2
   maxActionPoints: 5
-  currentActionPoints: 5
-  damage: 1
-  health: 5
-  unitName: Tank
-  icon: {fileID: 21300000, guid: 994d86dae4c4daf43b23d195dda12b20, type: 3}
+  currentHealth: 1
+  maxHealth: 1
+  damage: 2
+  range: 1

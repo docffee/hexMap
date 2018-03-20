@@ -1936,15 +1936,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fd379ad4107b6342a7c95743585e439, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitName: Artillery Tank
+  icon: {fileID: 21300000, guid: 994d86dae4c4daf43b23d195dda12b20, type: 3}
   moveTime: 1
   rotateTime: 0.4
   displacementY: 1
   flying: 0
   canWalkBackwards: 1
   rotateCost: 0.5
-  maxActionPoints: 7
-  currentActionPoints: 7
+  maxActionPoints: 2.5
+  currentHealth: 2
+  maxHealth: 2
   damage: 3
-  health: 5
-  unitName: Artillery Tank
-  icon: {fileID: 21300000, guid: 994d86dae4c4daf43b23d195dda12b20, type: 3}
+  range: 5

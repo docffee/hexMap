@@ -467,6 +467,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f3c3b65ba9e70c4fb958c2c74625346, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unitName: Blimp
+  icon: {fileID: 21300000, guid: c491f3eb86be6a840bee35bbdc34d596, type: 3}
   moveTime: 1
   rotateTime: 0.4
   displacementY: 12
@@ -474,8 +476,7 @@ MonoBehaviour:
   canWalkBackwards: 0
   rotateCost: 0.4
   maxActionPoints: 4
-  currentActionPoints: 4
-  damage: 1
-  health: 5
-  unitName: Blimp
-  icon: {fileID: 21300000, guid: c491f3eb86be6a840bee35bbdc34d596, type: 3}
+  currentHealth: 1
+  maxHealth: 1
+  damage: 2
+  range: 1

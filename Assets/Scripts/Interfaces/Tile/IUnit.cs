@@ -11,5 +11,4 @@ public interface IUnit
     IWalkable GetTerrainWalkability(ITerrain terrain);
 
     ITile Tile { get; set; }
-    bool PerformingAction();
 }

@@ -2,9 +2,12 @@
 using GraphAlgorithms;
 using System.Collections.Generic;
 using Assets.Scripts.Interfaces;
+using System;
 
-public class TestArtilleryTank : UnityUnit
+public class TestTank : UnityUnit
 {
+    private bool canRetaliate = true;
+
     public override void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller)
     {
         StartCoroutine(MoveWaiter(path, controller));
@@ -22,15 +25,25 @@ public class TestArtilleryTank : UnityUnit
             case "Grass":
                 return new Walkable(1, true);
             case "Forest":
-                return new Walkable(1, true);
+                return new Walkable(2, true);
             case "Mountain":
                 return new Walkable(0, false);
             case "Water":
                 return new Walkable(0, false);
             case "Sand":
-                return new Walkable(2, true);
+                return new Walkable(3, true);
             default:
                 return new Walkable(0, false);
         }
+    }
+
+    public override bool CanRetaliate()
+    {
+        return canRetaliate;
+    }
+
+    public override void OnAttack()
+    {
+        // Do nothing
     }
 }
