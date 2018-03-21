@@ -37,16 +37,18 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
     protected bool performingAction = false;
     protected IPlayer controller;
     protected ITileControl<HexNode> hexControl;
+    protected GameController gameController;
 
     public abstract IWalkable GetTerrainWalkability(ITerrain terrain);
     public abstract void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller);
     public abstract bool PerformingAction();
     public abstract bool CanRetaliate();
 
-    public void Initialize(IPlayer controller, ITileControl<HexNode> hexControl)
+    public void Initialize(IPlayer controller, ITileControl<HexNode> hexControl, GameController gameController)
     {
         this.controller = controller;
         this.hexControl = hexControl;
+        this.gameController = gameController;
         currentActionPoints = maxActionPoints;
     }
 
@@ -62,6 +64,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
         else
             tile.UnitOnTile = null;
 
+        gameController.RemoveUnit(this);
         Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }

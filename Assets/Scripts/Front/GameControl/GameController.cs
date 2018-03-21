@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour
         unit.transform.position = tilePosition + Vector3.up * unit.DisplacementY;
 
         hexControl.PlaceUnit(unit, tile.X, tile.Z);
-        unit.Initialize(controller, hexControl);
+        unit.Initialize(controller, hexControl, this);
         return unit;
     }
 
