@@ -56,9 +56,6 @@ public class UnitController : MonoBehaviour, IReady
                     if (dist <= selectedUnit.Range)
                     {
                         IFireFight fireFight = new FireFight();
-                        // projectilePrefab.GetComponent<Projectile>().findTarget(other.transform);
-                        //Vector3 bulletStartPosition = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y+3, selectedUnit.transform.position.z);
-
                         fireFight.Fight(selectedUnit, other);
                         ClearGameObjectList(highlightedTiles);
                         IEnumerable<IPathNode<HexNode>> path = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
