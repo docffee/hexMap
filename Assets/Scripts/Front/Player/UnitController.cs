@@ -15,6 +15,7 @@ public class UnitController : MonoBehaviour, IReady
     [SerializeField] private GameObject unitIcon;
     [SerializeField] private GameObject unitPanel;
     [SerializeField] private GameController gameController;
+    [SerializeField] private GameObject projectile;
 
     private ITileControl<HexNode> hexControl;
 
@@ -53,9 +54,12 @@ public class UnitController : MonoBehaviour, IReady
                     Unit other = hit.collider.gameObject.GetComponent<Unit>();
 
                     int dist = HexHeuristic.MinDistTile(selectedUnit.Tile, other.Tile);
-                    if (dist <= selectedUnit.Range)
+                    if (dist <= selectedUnit.Range && other != null)
                     {
                         IFireFight fireFight = new FireFight();
+                        projectile.GetComponent<Projectile>().findTarget(other.GetComponent<Transform>());
+                        Vector3 bulletStartPosition = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y+3, selectedUnit.transform.position.z);
+                        Instantiate(projectile, bulletStartPosition, selectedUnit.transform.rotation);
                         fireFight.Fight(selectedUnit, other);
                         Debug.Log("Fighting!");
                     }

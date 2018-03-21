@@ -15,6 +15,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
     [SerializeField] private float rotateTime = 0.2f;
     [SerializeField] private float displacementY = 1;
     [SerializeField] private GameObject explosion;
+    [SerializeField] private Projectile projectile;
     [SerializeField] private MeshRenderer[] mainBodyRenderers;
 
     [Header ("---Pathfinding and Actions---")]
@@ -51,7 +52,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
 
     public virtual void OnAttack(ICombatable target)
     {
-        // Do nothing
+
     }
 
     public virtual void OnDeath()
