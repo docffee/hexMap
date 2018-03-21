@@ -261,9 +261,9 @@ GameObject:
   - component: {fileID: 23396771340016580}
   - component: {fileID: 114770602291090484}
   - component: {fileID: 65757457343907182}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: TestArtilleryTank
-  m_TagString: Untagged
+  m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1911,9 +1911,10 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: 994d86dae4c4daf43b23d195dda12b20, type: 3}
   moveTime: 1
   rotateTime: 0.4
-  displacementY: 1
+  displacementY: 1.53
   explosion: {fileID: 100004, guid: 7832405a9409be941bbdf5b1f38f3f5c, type: 2}
-  projectile: {fileID: 0}
+  projectilePrefab: {fileID: 114681379039728964, guid: ee96bca026167f64fb0e21b9b9678e07,
+    type: 2}
   mainBodyRenderers:
   - {fileID: 23396771340016580}
   flying: 0

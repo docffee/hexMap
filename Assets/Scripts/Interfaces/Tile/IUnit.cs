@@ -10,5 +10,9 @@ public interface IUnit
     float RotateCost { get; }
     IWalkable GetTerrainWalkability(ITerrain terrain);
 
+    float PosX { get; }
+    float PosY { get; }
+    float PosZ { get; }
+
     ITile Tile { get; set; }
 }

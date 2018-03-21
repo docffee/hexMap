@@ -15,7 +15,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
     [SerializeField] private float rotateTime = 0.2f;
     [SerializeField] private float displacementY = 1;
     [SerializeField] private GameObject explosion;
-    [SerializeField] private Projectile projectile;
+    [SerializeField] private Projectile2 projectilePrefab;
     [SerializeField] private MeshRenderer[] mainBodyRenderers;
 
     [Header ("---Pathfinding and Actions---")]
@@ -54,7 +54,12 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
 
     public virtual void OnAttack(ICombatable target)
     {
-
+        if (projectilePrefab != null)
+        {
+            Projectile2 instance = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            Vector3 targetPos = new Vector3(target.PosX, target.PosY, target.PosZ);
+            instance.Initialize(targetPos);
+        }
     }
 
     public virtual void OnDeath()
@@ -123,7 +128,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
         ITile tile = node.Tile;
 
         Vector3 startPoint = transform.position;
-        Vector3 nodePoint = new Vector3(tile.WorldPosX, tile.WorldPosY, tile.WorldPosZ) + Vector3.up * displacementY;
+        Vector3 nodePoint = new Vector3(tile.PosX, tile.PosY, tile.PosZ) + Vector3.up * displacementY;
 
         float elapsedTime = 0;
         while (elapsedTime < moveTime)
@@ -293,6 +298,30 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
         get
         {
             return controller;
+        }
+    }
+
+    public float PosX
+    {
+        get
+        {
+            return transform.position.x;
+        }
+    }
+
+    public float PosY
+    {
+        get
+        {
+            return transform.position.y;
+        }
+    }
+
+    public float PosZ
+    {
+        get
+        {
+            return transform.position.z; ;
         }
     }
 }

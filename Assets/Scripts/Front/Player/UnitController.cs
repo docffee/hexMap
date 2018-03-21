@@ -15,7 +15,6 @@ public class UnitController : MonoBehaviour, IReady
     [SerializeField] private GameObject unitIcon;
     [SerializeField] private GameObject unitPanel;
     [SerializeField] private GameController gameController;
-    [SerializeField] private GameObject projectile;
 
     private ITileControl<HexNode> hexControl;
 
@@ -54,13 +53,16 @@ public class UnitController : MonoBehaviour, IReady
                     Unit other = hit.collider.gameObject.GetComponent<Unit>();
 
                     int dist = HexHeuristic.MinDistTile(selectedUnit.Tile, other.Tile);
-                    if (dist <= selectedUnit.Range && other != null)
+                    if (dist <= selectedUnit.Range)
                     {
                         IFireFight fireFight = new FireFight();
-                        projectile.GetComponent<Projectile>().findTarget(other.GetComponent<Transform>());
-                        Vector3 bulletStartPosition = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y+3, selectedUnit.transform.position.z);
-                        Instantiate(projectile, bulletStartPosition, selectedUnit.transform.rotation);
+                        // projectilePrefab.GetComponent<Projectile>().findTarget(other.transform);
+                        //Vector3 bulletStartPosition = new Vector3(selectedUnit.transform.position.x, selectedUnit.transform.position.y+3, selectedUnit.transform.position.z);
+
                         fireFight.Fight(selectedUnit, other);
+                        ClearGameObjectList(highlightedTiles);
+                        IEnumerable<IPathNode<HexNode>> path = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
+                        HighlightTiles(path);
                         Debug.Log("Fighting!");
                     }
                 }
@@ -140,7 +142,7 @@ public class UnitController : MonoBehaviour, IReady
                 continue;
 
             tiles.Add(tile, true);
-            Vector3 position = new Vector3(tile.WorldPosX, tile.WorldPosY + 0.05f, tile.WorldPosZ);
+            Vector3 position = new Vector3(tile.PosX, tile.PosY + 0.05f, tile.PosZ);
 
             GameObject highlight = Instantiate(tileMovementPrefab, position, tileMovementPrefab.transform.rotation, transform);
             highlightedTiles.Add(highlight);
@@ -168,7 +170,7 @@ public class UnitController : MonoBehaviour, IReady
                 continue;
             tiles.Add(tile, true);
 
-            Vector3 position = new Vector3(tile.WorldPosX, tile.WorldPosY + 0.05f, tile.WorldPosZ);
+            Vector3 position = new Vector3(tile.PosX, tile.PosY + 0.05f, tile.PosZ);
             Quaternion rotation = Quaternion.Euler(90, hexNode.Direction.DirectionRotation() - 90, 0);
 
             GameObject highlight = Instantiate(pathArrowPrefab, position, rotation, transform);

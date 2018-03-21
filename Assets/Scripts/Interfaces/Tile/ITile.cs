@@ -6,9 +6,9 @@ public interface ITile
     int Y { get; }
     int Z { get; }
 
-    float WorldPosX { get; }
-    float WorldPosY { get; }
-    float WorldPosZ { get; }
+    float PosX { get; }
+    float PosY { get; }
+    float PosZ { get; }
 
     ITerrain Terrain { get; }
     IUnit UnitOnTile { get; set; }

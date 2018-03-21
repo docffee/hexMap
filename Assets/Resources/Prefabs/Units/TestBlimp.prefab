@@ -473,7 +473,8 @@ MonoBehaviour:
   rotateTime: 0.4
   displacementY: 12
   explosion: {fileID: 100004, guid: 7832405a9409be941bbdf5b1f38f3f5c, type: 2}
-  projectile: {fileID: 0}
+  projectilePrefab: {fileID: 114681379039728964, guid: ee96bca026167f64fb0e21b9b9678e07,
+    type: 2}
   mainBodyRenderers:
   - {fileID: 23899135197099640}
   flying: 1

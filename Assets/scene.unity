@@ -510,7 +510,6 @@ MonoBehaviour:
   unitIcon: {fileID: 531792891}
   unitPanel: {fileID: 2131467193}
   gameController: {fileID: 2105524159}
-  projectile: {fileID: 1968308561168002, guid: a24aced48a88b9f47b1088e41bf1ce26, type: 2}
 --- !u!114 &797831302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1068,8 +1067,8 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1485880015}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 516, y: 294, z: 0}
-  m_LocalScale: {x: 1.29, y: 1.29, z: 1.29}
+  m_LocalPosition: {x: 460.5, y: 259, z: 0}
+  m_LocalScale: {x: 1.15125, y: 1.15125, z: 1.15125}
   m_Children:
   - {fileID: 2131467194}
   - {fileID: 166915322}
@@ -1256,8 +1255,10 @@ MonoBehaviour:
   numberOfPlayers: 2
   startMoney: 500
   playerColors:
-  - {fileID: 2100000, guid: e99504eedbd77f64e8a3fd083cea2de6, type: 2}
-  - {fileID: 2100000, guid: d237601f87eb27d43a47ffe20f462ddf, type: 2}
+  - {fileID: 2100000, guid: dff3f97ad3564314589310c2932713d4, type: 2}
+  - {fileID: 2100000, guid: 8cbcae591056e634285d65ca73af7f98, type: 2}
+  - {fileID: 2100000, guid: d4df8baf035c48c43bb4132eaa8dfa55, type: 2}
+  - {fileID: 2100000, guid: 6bf5da719781943428aef5327fee025f, type: 2}
   allUnitPrefabs:
   - {fileID: 114770602291090484, guid: bc5aac420f00145479338d20ed956c9e, type: 2}
   - {fileID: 114448148453318858, guid: 68da09084d9f8f14ca5b26d59bea7e0e, type: 2}
@@ -1300,7 +1301,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2131467193}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -178.90698, z: 0}
+  m_LocalPosition: {x: 0, y: -175.97285, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 531792892}

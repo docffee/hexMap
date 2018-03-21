@@ -41,17 +41,17 @@ namespace Assets.Scripts.HexImpl
             get { return null; }
         }
 
-        public float WorldPosX
+        public float PosX
         {
             get { return 0; }
         }
 
-        public float WorldPosY
+        public float PosY
         {
             get { return 0; }
         }
 
-        public float WorldPosZ
+        public float PosZ
         {
             get { return 0; }
         }

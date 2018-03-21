@@ -71,7 +71,7 @@ public class GameController : MonoBehaviour
 
         unit.Direction = (int) orientation;
         unit.transform.rotation = Quaternion.Euler(0, orientation.DirectionRotation(), 0);
-        Vector3 tilePosition = new Vector3(tile.WorldPosX, tile.WorldPosY, tile.WorldPosZ);
+        Vector3 tilePosition = new Vector3(tile.PosX, tile.PosY, tile.PosZ);
         unit.transform.position = tilePosition + Vector3.up * unit.DisplacementY;
 
         hexControl.PlaceUnit(unit, tile.X, tile.Z);

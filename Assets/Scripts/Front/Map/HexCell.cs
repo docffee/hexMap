@@ -90,17 +90,17 @@ public class HexCell : MonoBehaviour, ITile
         get { return unit; }
     }
 
-    public float WorldPosX
+    public float PosX
     {
         get { return transform.position.x; }
     }
 
-    public float WorldPosY
+    public float PosY
     {
         get { return transform.position.y; }
     }
 
-    public float WorldPosZ
+    public float PosZ
     {
         get { return transform.position.z; }
     }

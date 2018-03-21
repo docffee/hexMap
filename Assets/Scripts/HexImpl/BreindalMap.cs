@@ -1,7 +1,4 @@
 ﻿using Assets.Scripts.HexImpl;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class BreindalMap : IMapGenerator
 {

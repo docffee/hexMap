@@ -42,15 +42,4 @@ public class TestSoldier : Unit
     {
         return canRetaliate;
     }
-
-    public override void OnAttack(ICombatable target)
-    {
-        Vector3 targetPosition = (target as Unit).transform.position;
-        StartCoroutine(AttackAnimation(targetPosition));
-    }
-
-    private IEnumerator AttackAnimation(Vector3 targetPosition)
-    {
-        yield break;
-    }
 }
