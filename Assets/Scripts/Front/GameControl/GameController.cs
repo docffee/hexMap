@@ -12,7 +12,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private Player playerPrefab;
     [SerializeField] private int numberOfPlayers;
     [SerializeField] private int startMoney;
-
+    [SerializeField] private GameObject unitCamera;
     [SerializeField] private Material[] playerColors;
 
     [Header ("This is only temporary")]
@@ -105,7 +105,9 @@ public class GameController : MonoBehaviour
         unitController.SetSelectedUnit(currentUnit);
 
         CameraController cam = Camera.main.GetComponent<CameraController>();
+        UnitCameraController unitCam = unitCamera.GetComponent<UnitCameraController>();
         cam.CenterOn(currentUnit.transform.position);
+        unitCam.CenterOn(currentUnit.transform.position);
     }
 
     public void RemoveUnit(Unit unit)

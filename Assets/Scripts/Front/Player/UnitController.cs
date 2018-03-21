@@ -11,7 +11,12 @@ public class UnitController : MonoBehaviour, IReady
     [SerializeField] private GameObject tileMovementPrefab;
     [SerializeField] private GameObject pathArrowPrefab;
     [SerializeField] private GameObject unitTypeText;
-    [SerializeField] private GameObject movementText;
+    [SerializeField] private GameObject UnitMovementText;
+    [SerializeField] private GameObject UnitDamageText;
+    [SerializeField] private GameObject UnitHealthText;
+    [SerializeField] private GameObject UnitActionCostText;
+    [SerializeField] private GameObject UnitRangeText;
+    [SerializeField] private GameObject UnitTurnCostText;
     [SerializeField] private GameObject unitIcon;
     [SerializeField] private GameObject unitPanel;
     [SerializeField] private GameController gameController;
@@ -37,8 +42,7 @@ public class UnitController : MonoBehaviour, IReady
 
         if(selectedUnit != null)
         {
-            movementText.GetComponent<Text>().text = 
-                "Move points:	" + selectedUnit.CurrentActionPoints + "/" + selectedUnit.MaxActionPoints;
+            unitTextUpdate();
         }
 
         RaycastHit hit;
@@ -202,5 +206,21 @@ public class UnitController : MonoBehaviour, IReady
         ClearGameObjectList(highlightedTiles);
         ClearGameObjectList(highlightedPath);
         HighlightTiles(reachable);
+    }
+
+    private void unitTextUpdate()
+    {
+        UnitMovementText.GetComponent<Text>().text =
+            "Action points:	    " + selectedUnit.CurrentActionPoints + "/" + selectedUnit.MaxActionPoints;
+        UnitDamageText.GetComponent<Text>().text =
+            "Damage:                 " + selectedUnit.Damage;
+        UnitHealthText.GetComponent<Text>().text =
+            "Health:                 " + selectedUnit.CurrentHealth + "/" + selectedUnit.MaxHealth;
+        UnitActionCostText.GetComponent<Text>().text =
+            "Attack cost:             " + selectedUnit.AttackActionPointCost;
+        UnitRangeText.GetComponent<Text>().text =
+            "Attack Range:          " + selectedUnit.Range;
+        UnitTurnCostText.GetComponent<Text>().text =
+            "Turn cost:                " + selectedUnit.RotateCost;
     }
 }
