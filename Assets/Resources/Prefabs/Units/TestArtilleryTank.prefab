@@ -1938,6 +1938,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Artillery Tank
   icon: {fileID: 21300000, guid: 994d86dae4c4daf43b23d195dda12b20, type: 3}
+  explosion: {fileID: 0}
   moveTime: 1
   rotateTime: 0.4
   displacementY: 1

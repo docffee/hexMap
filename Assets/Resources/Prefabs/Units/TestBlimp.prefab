@@ -469,6 +469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Blimp
   icon: {fileID: 21300000, guid: c491f3eb86be6a840bee35bbdc34d596, type: 3}
+  explosion: {fileID: 0}
   moveTime: 1
   rotateTime: 0.4
   displacementY: 12

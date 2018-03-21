@@ -10,6 +10,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
     [Header ("---Visuals---")]
     [SerializeField] private string unitName = "New Unit";
     [SerializeField] protected Sprite icon = null;
+    [SerializeField] protected GameObject explosion;
     [SerializeField] protected float moveTime = 1.2f;
     [SerializeField] protected float rotateTime = 0.2f;
     [SerializeField] protected float displacementY = 1;
@@ -56,6 +57,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
         else
             tile.UnitOnTile = null;
 
+        Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 
