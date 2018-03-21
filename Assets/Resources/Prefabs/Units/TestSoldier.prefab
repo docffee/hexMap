@@ -1748,6 +1748,10 @@ MonoBehaviour:
   moveTime: 1.2
   rotateTime: 0.2
   displacementY: -1.4
+  mainBodyRenderers:
+  - {fileID: 23075767483526544}
+  - {fileID: 23871485706256798}
+  - {fileID: 23261059566805266}
   flying: 0
   canWalkBackwards: 0
   rotateCost: 0

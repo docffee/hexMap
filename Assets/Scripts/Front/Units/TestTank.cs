@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Assets.Scripts.Interfaces;
 using System;
 
-public class TestTank : UnityUnit
+public class TestTank : Unit
 {
     private bool canRetaliate = true;
 

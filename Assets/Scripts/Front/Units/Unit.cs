@@ -4,16 +4,17 @@ using GraphAlgorithms;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
-public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
+public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>, IComparable<Unit>
 {
     [Header ("---Visuals---")]
     [SerializeField] private string unitName = "New Unit";
-    [SerializeField] protected Sprite icon = null;
-    [SerializeField] protected GameObject explosion;
-    [SerializeField] protected float moveTime = 1.2f;
-    [SerializeField] protected float rotateTime = 0.2f;
-    [SerializeField] protected float displacementY = 1;
+    [SerializeField] private Sprite icon = null;
+    [SerializeField] private float moveTime = 1.2f;
+    [SerializeField] private float rotateTime = 0.2f;
+    [SerializeField] private float displacementY = 1;
+    [SerializeField] private MeshRenderer[] mainBodyRenderers;
 
     [Header ("---Pathfinding and Actions---")]
     [SerializeField] protected bool flying = false;
@@ -33,19 +34,21 @@ public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
     protected HexDirection orientation;
     protected bool performingAction = false;
     protected IPlayer controller;
+    protected ITileControl<HexNode> hexControl;
 
     public abstract IWalkable GetTerrainWalkability(ITerrain terrain);
     public abstract void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller);
     public abstract bool PerformingAction();
     public abstract bool CanRetaliate();
 
-    public void Initialize(IPlayer controller)
+    public void Initialize(IPlayer controller, ITileControl<HexNode> hexControl)
     {
         this.controller = controller;
+        this.hexControl = hexControl;
         currentActionPoints = maxActionPoints;
     }
 
-    public virtual void OnAttack(ICombatUnit target)
+    public virtual void OnAttack(ICombatable target)
     {
         // Do nothing
     }
@@ -59,6 +62,14 @@ public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
 
         Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
+    }
+
+    public void SetUnitColorMaterial(Material color)
+    {
+        foreach (MeshRenderer rend in mainBodyRenderers)
+        {
+            rend.material = color;
+        }
     }
 
     protected IEnumerator MoveWaiter(IEnumerable<IPathNode<HexNode>> path, IReady controller)
@@ -119,7 +130,7 @@ public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
         }
 
         transform.position = nodePoint;
-        HexControl.Singleton.MoveUnit(this, tile.X, tile.Z, node.X, node.Z);
+        hexControl.MoveUnit(this, tile.X, tile.Z, node.X, node.Z);
     }
 
     private IEnumerator Rotate(HexNode node)
@@ -141,6 +152,19 @@ public abstract class UnityUnit : MonoBehaviour, IUnit, ICombatUnit
 
         orientation = node.Direction;
         transform.rotation = end;
+    }
+
+    public int CompareTo(Unit other)
+    {
+        return (int)(maxActionPoints - other.maxActionPoints);
+    }
+
+    public bool Equals(Unit other)
+    {
+        if (other == null)
+            return false;
+
+        return GetInstanceID() == other.GetInstanceID();
     }
 
     //#######################################//

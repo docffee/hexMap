@@ -10,12 +10,14 @@ namespace Assets.Scripts.HexImpl
         private HexDirection direction;
         private ITile tile;
         private IUnit movingUnit;
+        private HexControl hexControl;
 
-        public HexNode(HexDirection direction, ITile tile, IUnit movingUnit)
+        public HexNode(HexDirection direction, ITile tile, IUnit movingUnit, HexControl hexControl)
         {
             this.direction = direction;
             this.tile = tile;
             this.movingUnit = movingUnit;
+            this.hexControl = hexControl;
         }
 
         public IEnumerator<IEdge<HexNode>> GetEnumerator()
@@ -23,10 +25,9 @@ namespace Assets.Scripts.HexImpl
             List<IEdge<HexNode>> edges = new List<IEdge<HexNode>>();
             float terrainMod = movingUnit.GetTerrainWalkability(tile.Terrain).Modifier;
             float rotateCost = movingUnit.RotateCost * terrainMod;
-            HexEdge turnLeft = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, -1), tile, movingUnit));
-            HexEdge turnRight = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, 1), tile, movingUnit));
+            HexEdge turnLeft = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, -1), tile, movingUnit, hexControl));
+            HexEdge turnRight = new HexEdge(rotateCost, new HexNode(GetValidDirection(direction, 1), tile, movingUnit, hexControl));
 
-            HexControl hexControl = HexControl.Singleton;
             HexNode back = null;
             HexNode forward = hexControl.GetNodeInFront(this);
             if (movingUnit.CanWalkBackwards)

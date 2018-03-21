@@ -5,7 +5,7 @@ using Assets.Scripts.Interfaces;
 using UnityEngine;
 using System.Collections;
 
-public class TestSoldier : UnityUnit
+public class TestSoldier : Unit
 {
     private bool canRetaliate = true;
 
@@ -43,9 +43,9 @@ public class TestSoldier : UnityUnit
         return canRetaliate;
     }
 
-    public override void OnAttack(ICombatUnit target)
+    public override void OnAttack(ICombatable target)
     {
-        Vector3 targetPosition = (target as UnityUnit).transform.position;
+        Vector3 targetPosition = (target as Unit).transform.position;
         StartCoroutine(AttackAnimation(targetPosition));
     }
 

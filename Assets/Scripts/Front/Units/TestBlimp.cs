@@ -4,9 +4,8 @@ using GraphAlgorithms;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
-public class TestBlimp : UnityUnit
+public class TestBlimp : Unit
 {
     private bool canRetaliate = true;
 

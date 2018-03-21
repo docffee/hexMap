@@ -3,25 +3,31 @@ using Assets.Scripts.Interfaces;
 using GraphAlgorithms;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-class UnitController : MonoBehaviour, IReady
+public class UnitController : MonoBehaviour, IReady
 {
     [SerializeField] private GameObject tileMovementPrefab;
     [SerializeField] private GameObject pathArrowPrefab;
     [SerializeField] private GameObject unitTypeText;
     [SerializeField] private GameObject movementText;
     [SerializeField] private GameObject unitIcon;
-    [SerializeField] protected GameObject unitPanel; 
-    private UnityUnit selectedUnit = null;
+    [SerializeField] private GameObject unitPanel;
+    [SerializeField] private GameController gameController;
+
+    private ITileControl<HexNode> hexControl;
+
+    private Unit selectedUnit = null;
     private List<GameObject> highlightedTiles = new List<GameObject>();
-    private List<GameObject> pathArrows = new List<GameObject>();
+    private List<GameObject> highlightedPath = new List<GameObject>();
     private ITile hoverOver;
     private bool performingAction;
 
-    private void Start()
+    public void Initialize(ITileControl<HexNode> hexControl)
     {
-        unitPanel.gameObject.SetActive(false);    
+        unitPanel.gameObject.SetActive(false);
+        this.hexControl = hexControl;
     }
 
     private void Update()   
@@ -36,19 +42,17 @@ class UnitController : MonoBehaviour, IReady
         }
 
         RaycastHit hit;
-        ITileControl<HexNode> hexControl = HexControl.Singleton;
 
         if (Input.GetMouseButtonDown(0))
         {
             if (selectedUnit != null && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit"))
-                && hit.collider.GetComponent<UnityUnit>().Controller.Team != selectedUnit.Controller.Team)
+                && hit.collider.GetComponent<Unit>().Controller.Team != selectedUnit.Controller.Team)
             {
                 if (selectedUnit.CurrentActionPoints >= selectedUnit.AttackActionPointCost)
                 {
-                    UnityUnit other = hit.collider.gameObject.GetComponent<UnityUnit>();
+                    Unit other = hit.collider.gameObject.GetComponent<Unit>();
 
-                    // Bad solution, change when there is time //
-                    int dist = (int)new HexHeuristic().MinDist(new HexNode(0, selectedUnit.Tile, null), new HexNode(0, other.Tile, null));
+                    int dist = HexHeuristic.MinDistTile(selectedUnit.Tile, other.Tile);
                     if (dist <= selectedUnit.Range)
                     {
                         IFireFight fireFight = new FireFight();
@@ -57,7 +61,8 @@ class UnitController : MonoBehaviour, IReady
                     }
                 }
             }
-            else if (selectedUnit != null && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
+            else if (selectedUnit != null && !EventSystem.current.IsPointerOverGameObject()
+                && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
             {
                 HexCell cell = hit.collider.gameObject.GetComponent<HexCell>();
 
@@ -67,31 +72,34 @@ class UnitController : MonoBehaviour, IReady
                     performingAction = true;
                     selectedUnit.Move(path, this);
                     ClearGameObjectList(highlightedTiles);
-                    ClearGameObjectList(pathArrows);
+                    ClearGameObjectList(highlightedPath);
                 }
             }
-            else if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit")))
-            {
-                Debug.Log("Unit selected");
-                selectedUnit = hit.collider.gameObject.GetComponent<UnityUnit>();
-                unitTypeText.GetComponent<Text>().text = selectedUnit.UnitName;
+            //else if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit")))
+            //{
+            //    Unit current = hit.collider.gameObject.GetComponent<Unit>();
+            //    if (gameController.CurrentUnit.Equals(current))
+            //    {
+            //        selectedUnit = current;
+            //        unitTypeText.GetComponent<Text>().text = selectedUnit.UnitName;
 
-                unitPanel.gameObject.SetActive(true);
-                IEnumerable<IPathNode<HexNode>> reachable = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
-                unitIcon.GetComponent<Image>().sprite = selectedUnit.Icon;
-                ClearGameObjectList(highlightedTiles);
-                HighlightTiles(reachable);
-            }
+            //        unitPanel.gameObject.SetActive(true);
+            //        IEnumerable<IPathNode<HexNode>> reachable = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
+            //        unitIcon.GetComponent<Image>().sprite = selectedUnit.Icon;
+            //        ClearGameObjectList(highlightedTiles);
+            //        ClearGameObjectList(highlightedPath);
+            //        HighlightTiles(reachable);
+            //    }
+            //}
         }
 
-        if (Input.GetMouseButtonDown(1) && selectedUnit != null)
-        {
-            Debug.Log("Unit deselected");
-            unitPanel.gameObject.SetActive(false);
-            selectedUnit = null;
-            ClearGameObjectList(highlightedTiles);
-            ClearGameObjectList(pathArrows);
-        }
+        //if (Input.GetMouseButtonDown(1) && selectedUnit != null)
+        //{
+        //    unitPanel.gameObject.SetActive(false);
+        //    selectedUnit = null;
+        //    ClearGameObjectList(highlightedTiles);
+        //    ClearGameObjectList(highlightedPath);
+        //}
 
         if (selectedUnit != null && !selectedUnit.PerformingAction() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
         {
@@ -106,7 +114,7 @@ class UnitController : MonoBehaviour, IReady
             {
                 hoverOver = hoverNow;
                 IEnumerable<IPathNode<HexNode>> path = hexControl.GetShortestPath(selectedUnit, selectedUnit.Tile, hoverNow);
-                ClearGameObjectList(pathArrows);
+                ClearGameObjectList(highlightedPath);
                 HighlightPath(path);
             }
         }
@@ -160,7 +168,7 @@ class UnitController : MonoBehaviour, IReady
             Quaternion rotation = Quaternion.Euler(90, hexNode.Direction.DirectionRotation() - 90, 0);
 
             GameObject highlight = Instantiate(pathArrowPrefab, position, rotation, transform);
-            pathArrows.Add(highlight);
+            highlightedPath.Add(highlight);
         }
     }
 
@@ -175,8 +183,21 @@ class UnitController : MonoBehaviour, IReady
 
     public void Ready()
     {
-        IEnumerable<IPathNode<HexNode>> reachable = HexControl.Singleton.GetReachable(selectedUnit, selectedUnit.Tile);
+        IEnumerable<IPathNode<HexNode>> reachable = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
         performingAction = false;
+        HighlightTiles(reachable);
+    }
+
+    public void SetSelectedUnit(Unit unit)
+    {
+        selectedUnit = unit;
+        unitTypeText.GetComponent<Text>().text = selectedUnit.UnitName;
+
+        unitPanel.gameObject.SetActive(true);
+        IEnumerable<IPathNode<HexNode>> reachable = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
+        unitIcon.GetComponent<Image>().sprite = selectedUnit.Icon;
+        ClearGameObjectList(highlightedTiles);
+        ClearGameObjectList(highlightedPath);
         HighlightTiles(reachable);
     }
 }

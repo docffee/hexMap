@@ -2,9 +2,8 @@
 using GraphAlgorithms;
 using System.Collections.Generic;
 using Assets.Scripts.Interfaces;
-using System;
 
-public class TestArtilleryTank : UnityUnit
+public class TestArtilleryTank : Unit
 {
     private bool canRetaliate = true;
 

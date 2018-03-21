@@ -1,5 +1,5 @@
 ﻿
 public interface IFireFight
 {
-    void Fight(ICombatUnit attacker, ICombatUnit defender);
+    void Fight(ICombatable attacker, ICombatable defender);
 }
