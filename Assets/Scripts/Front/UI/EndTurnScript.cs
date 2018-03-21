@@ -16,7 +16,7 @@ public class EndTurnScript : MonoBehaviour
         GameObject[] gameObjectUnits = GameObject.FindGameObjectsWithTag("Unit");
         foreach (GameObject go in gameObjectUnits)
         {
-            UnityUnit unit = go.GetComponent<UnityUnit>();
+            Unit unit = go.GetComponent<Unit>();
             unit.CurrentActionPoints = unit.MaxActionPoints;
         }
 

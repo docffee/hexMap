@@ -47,7 +47,7 @@ public class HexMesh : MonoBehaviour
             Vector3 v1 = center + HexMetrics.GetFirstSolidCorner(dir);
             Vector3 v2 = center + HexMetrics.GetSecondSolidCorner(dir);
 
-            Vector3 bridge = HexMetrics.GetBridge(dir);
+            //Vector3 bridge = HexMetrics.GetBridge(dir);
 
             AddTriangle(center, v1, v2);
             AddTriangleColor(cell.color);

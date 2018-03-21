@@ -13,7 +13,14 @@ namespace Assets.Scripts.HexImpl
             return HexLength(SubtractHex(aV, bV));
         }
 
-        private Cube SubtractHex(Cube a, Cube b)
+        public static int MinDistTile(ITile a, ITile b)
+        {
+            Cube aV = StraightenAxes(a.X, a.Z);
+            Cube bV = StraightenAxes(b.X, a.Z);
+            return HexLength(SubtractHex(aV, bV));
+        }
+
+        private static Cube SubtractHex(Cube a, Cube b)
         {
             Cube hex = new Cube();
             int aY = -(a.x + a.z);
@@ -26,12 +33,12 @@ namespace Assets.Scripts.HexImpl
             return hex;
         }
 
-        private int HexLength(Cube hex)
+        private static int HexLength(Cube hex)
         {
             return ((Mathf.Abs(hex.x) + Mathf.Abs(hex.y) + Mathf.Abs(hex.z)) / 2);
         }
 
-        private Cube StraightenAxes(int x, int z)
+        private static Cube StraightenAxes(int x, int z)
         {
             Cube cube = new Cube();
             cube.x = x - (z - (z & 1)) / 2;

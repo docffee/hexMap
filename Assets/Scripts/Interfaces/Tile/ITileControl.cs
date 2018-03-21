@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.Interfaces
 {
-    interface ITileControl<N> where N : INode<N>
+    public interface ITileControl<N> where N : INode<N>
     {
         int BoardSizeX { get; }
         int BoardSizeZ { get; }

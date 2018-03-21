@@ -3,8 +3,8 @@
 public class CameraController : MonoBehaviour
 {
     // Used in options //
-    public bool allowMouseScroll;
-    public float scrollSpeed = 5;
+    [SerializeField] private bool allowMouseScroll;
+    [SerializeField] private float scrollSpeed = 5;
 
     private float scrollZone = 15;
     private Vector3 desiredPosition;
@@ -63,8 +63,10 @@ public class CameraController : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, desiredPosition, 0.2f);
     }
 
-    private void LateUpdate()
+    public void CenterOn(Vector3 position)
     {
-
+        Vector3 next = new Vector3(position.x, transform.position.y, position.z - 35);
+        desiredPosition = next;
+        transform.position = next;
     }
 }

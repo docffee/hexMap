@@ -5,13 +5,11 @@ using GraphAlgorithms;
 
 namespace Assets.Scripts.HexImpl
 {
-    class HexControl : ITileControl<HexNode>
+    public class HexControl : ITileControl<HexNode>
     {
         int sizeX, sizeZ;
         ITile[] tiles;
         IPathfinding pathfinder;
-
-        private static HexControl singleton;
 
         public HexControl(int sizeX, int sizeZ, IMapGenerator generator)
         {
@@ -19,8 +17,6 @@ namespace Assets.Scripts.HexImpl
             this.sizeZ = sizeZ;
             tiles = generator.GenerateTiles(sizeX, sizeZ);
             pathfinder = new Pathfinding();
-
-            singleton = this;
         }
 
         public int BoardSizeX
@@ -49,14 +45,14 @@ namespace Assets.Scripts.HexImpl
 
         public IEnumerable<IPathNode<HexNode>> GetReachable(IUnit unit, ITile startTile)
         {
-            HexNode node = new HexNode((HexDirection) unit.Direction, startTile, unit);
+            HexNode node = new HexNode((HexDirection) unit.Direction, startTile, unit, this);
             return pathfinder.GetReachableNodes(node, unit.CurrentActionPoints);
         }
 
         public IEnumerable<IPathNode<HexNode>> GetShortestPath(IUnit unit, ITile startTile, ITile endTile)
         {
-            HexNode start = new HexNode((HexDirection) unit.Direction, startTile, unit);
-            HexNode end = new HexNode(HexDirection.Any, endTile, unit);
+            HexNode start = new HexNode((HexDirection) unit.Direction, startTile, unit, this);
+            HexNode end = new HexNode(HexDirection.Any, endTile, unit, this);
             IEnumerable<IPathNode<HexNode>> path = pathfinder.GetShortestPath(start, end, new HexHeuristic());
 
             return path;
@@ -205,13 +201,8 @@ namespace Assets.Scripts.HexImpl
         private HexNode CreateNode(int x, int z, HexDirection direction, HexNode prev)
         {
             ITile tile = GetTile(x, z);
-            HexNode node = new HexNode(direction, tile, prev.MovingUnit);
+            HexNode node = new HexNode(direction, tile, prev.MovingUnit, this);
             return node;
-        }
-
-        public static HexControl Singleton
-        {
-            get { return singleton; }
         }
     }
 }

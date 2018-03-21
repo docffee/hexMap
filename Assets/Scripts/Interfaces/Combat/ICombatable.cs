@@ -1,6 +1,5 @@
-﻿using GraphAlgorithms;
-
-public interface ICombatUnit : IUnit
+﻿
+public interface ICombatable : IUnit
 {
     int CurrentHealth { get; set; }
     int MaxHealth { get; }
@@ -10,6 +9,6 @@ public interface ICombatUnit : IUnit
     IPlayer Controller { get; }
 
     bool CanRetaliate();
-    void OnAttack(ICombatUnit target);
+    void OnAttack(ICombatable target);
     void OnDeath();
 }
