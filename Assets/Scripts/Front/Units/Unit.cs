@@ -14,6 +14,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
     [SerializeField] private float moveTime = 1.2f;
     [SerializeField] private float rotateTime = 0.2f;
     [SerializeField] private float displacementY = 1;
+    [SerializeField] private GameObject explosion;
     [SerializeField] private MeshRenderer[] mainBodyRenderers;
 
     [Header ("---Pathfinding and Actions---")]
