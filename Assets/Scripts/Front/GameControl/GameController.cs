@@ -60,7 +60,20 @@ public class GameController : MonoBehaviour
         units.Add(unit4);
         //////////////////////////////////
 
+        Debug.Log("Unsorted: \n");
+        foreach (Unit u in units)
+        {
+            Debug.Log(u);
+        }
+
         units.Sort();
+
+        Debug.Log("Sorted: \n");
+        foreach (Unit u in units)
+        {
+            Debug.Log(u);
+        }
+
         turnPointer = units.Count - 1;
         SwitchToUnit();
     }

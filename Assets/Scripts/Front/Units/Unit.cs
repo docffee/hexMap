@@ -166,7 +166,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
 
     public int CompareTo(Unit other)
     {
-        return (int)(maxActionPoints - other.maxActionPoints);
+        return (int)maxActionPoints - (int)other.maxActionPoints;
     }
 
     public bool Equals(Unit other)
