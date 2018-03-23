@@ -2,6 +2,7 @@
 using Assets.Scripts.Interfaces;
 using GraphAlgorithms;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -57,6 +58,7 @@ public class UnitController : MonoBehaviour, IReady
     {
         if (performingAction){
             unitIconCam.CenterOn(selectedUnit.transform.position);
+
             return;
         }
             
@@ -239,23 +241,23 @@ public class UnitController : MonoBehaviour, IReady
         ClearGameObjectList(highlightedPath);
         HighlightTiles(reachable);
     }
-
+    
     private void unitTextUpdate()
     {
         unitTypeText.GetComponent<Text>().text =
             selectedUnit.UnitName;
         UnitMovementText.GetComponent<Text>().text =
-            "Action points:	    " + selectedUnit.CurrentActionPoints + "/" + selectedUnit.MaxActionPoints;
+            "Action points:\t\t" + Math.Round(selectedUnit.CurrentActionPoints, 1) + "/" + selectedUnit.MaxActionPoints;
         UnitDamageText.GetComponent<Text>().text =
-            "Damage:                 " + selectedUnit.Damage;
+            "Damage:\t\t\t\t" + selectedUnit.Damage;
         UnitHealthText.GetComponent<Text>().text =
-            "Health:                 " + selectedUnit.CurrentHealth + "/" + selectedUnit.MaxHealth;
+            "Health:\t\t\t\t\t" + selectedUnit.CurrentHealth + "/" + selectedUnit.MaxHealth;
         UnitActionCostText.GetComponent<Text>().text =
-            "Attack cost:             " + selectedUnit.AttackActionPointCost;
+            "Attack cost:\t\t\t" + selectedUnit.AttackActionPointCost;
         UnitRangeText.GetComponent<Text>().text =
-            "Attack Range:          " + selectedUnit.Range;
+            "Attack Range:\t\t" + selectedUnit.Range;
         UnitTurnCostText.GetComponent<Text>().text =
-            "Turn cost:                " + selectedUnit.RotateCost;
+            "Turn cost:\t\t\t\t" + selectedUnit.RotateCost;
     }
 
     private void enemyUnitTextUpdate()
@@ -263,17 +265,17 @@ public class UnitController : MonoBehaviour, IReady
         enemyUnitTypeText.GetComponent<Text>().text =
             enemyUnit.UnitName;
         enemyUnitMovementText.GetComponent<Text>().text =
-            "Action points:	    " + enemyUnit.CurrentActionPoints + "/" + enemyUnit.MaxActionPoints;
+            "Action points:\t\t" + Math.Round(selectedUnit.CurrentActionPoints, 1) + "/" + enemyUnit.MaxActionPoints;
         enemyUnitDamageText.GetComponent<Text>().text =
-            "Damage:                 " + enemyUnit.Damage;
+            "Damage:\t\t\t\t" + enemyUnit.Damage;
         enemyUnitHealthText.GetComponent<Text>().text =
-            "Health:                 " + enemyUnit.CurrentHealth + "/" + enemyUnit.MaxHealth;
+            "Health:\t\t\t\t\t" + enemyUnit.CurrentHealth + "/" + enemyUnit.MaxHealth;
         enemyUnitActionCostText.GetComponent<Text>().text =
-            "Attack cost:             " + enemyUnit.AttackActionPointCost;
+            "Attack cost:\t\t\t" + enemyUnit.AttackActionPointCost;
         enemyUnitRangeText.GetComponent<Text>().text =
-            "Attack Range:          " + enemyUnit.Range;
+            "Attack Range:\t\t" + enemyUnit.Range;
         enemyUnitTurnCostText.GetComponent<Text>().text =
-            "Turn cost:                " + enemyUnit.RotateCost;
+            "Turn cost:\t\t\t\t" + enemyUnit.RotateCost;
     }
 
 }

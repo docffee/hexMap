@@ -47,9 +47,9 @@ public class GameController : MonoBehaviour
         ITile tile4 = hexControl.GetTile(21, 12);
 
         Unit unit1 = SpawnTroop(allUnitPrefabs[0], players[0], tile, HexDirection.E);
-        Unit unit2 = SpawnTroop(allUnitPrefabs[2], players[0], tile2, HexDirection.E);
-        Unit unit3 = SpawnTroop(allUnitPrefabs[0], players[1], tile3, HexDirection.W);
-        Unit unit4 = SpawnTroop(allUnitPrefabs[2], players[1], tile4, HexDirection.W);
+        Unit unit2 = SpawnTroop(allUnitPrefabs[1], players[0], tile2, HexDirection.E);
+        Unit unit3 = SpawnTroop(allUnitPrefabs[2], players[1], tile3, HexDirection.W);
+        Unit unit4 = SpawnTroop(allUnitPrefabs[3], players[1], tile4, HexDirection.W);
         unit1.SetUnitColorMaterial(playerColors[0]);
         unit2.SetUnitColorMaterial(playerColors[0]);
         unit3.SetUnitColorMaterial(playerColors[1]);

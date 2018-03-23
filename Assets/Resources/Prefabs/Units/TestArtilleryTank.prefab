@@ -345,7 +345,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4428627569749090}
   - component: {fileID: 33077201780400744}
-  - component: {fileID: 135613243683609824}
   - component: {fileID: 23281502723154616}
   m_Layer: 13
   m_Name: ArtilleryTankMiniMapMarker
@@ -2000,15 +1999,3 @@ MonoBehaviour:
   damage: 6
   range: 5
   attackActionPointCost: 1
---- !u!135 &135613243683609824
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1701693839522414}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
