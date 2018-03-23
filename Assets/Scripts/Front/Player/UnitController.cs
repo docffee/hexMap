@@ -10,6 +10,8 @@ public class UnitController : MonoBehaviour, IReady
 {
     [SerializeField] private GameObject tileMovementPrefab;
     [SerializeField] private GameObject pathArrowPrefab;
+    
+    [Header ("UI elements")]
     [SerializeField] private GameObject unitTypeText;
     [SerializeField] private GameObject UnitMovementText;
     [SerializeField] private GameObject UnitDamageText;
@@ -17,13 +19,26 @@ public class UnitController : MonoBehaviour, IReady
     [SerializeField] private GameObject UnitActionCostText;
     [SerializeField] private GameObject UnitRangeText;
     [SerializeField] private GameObject UnitTurnCostText;
+    [SerializeField] private GameObject enemyUnitTypeText;
+    [SerializeField] private GameObject enemyUnitMovementText;
+    [SerializeField] private GameObject enemyUnitDamageText;
+    [SerializeField] private GameObject enemyUnitHealthText;
+    [SerializeField] private GameObject enemyUnitActionCostText;
+    [SerializeField] private GameObject enemyUnitRangeText;
+    [SerializeField] private GameObject enemyUnitTurnCostText;
     [SerializeField] private GameObject unitIcon;
     [SerializeField] private GameObject unitPanel;
+    [SerializeField] private GameObject enemyUnitPanel;
+    [SerializeField] private GameObject unitIconCamera;
+    [SerializeField] private GameObject enemyUnitIconCamera;
+    private UnitIconCamera unitIconCam = null;
+    private EnemyUnitIconCamera enemyUnitIconCam = null;
+
+    [Header ("Controller")]
     [SerializeField] private GameController gameController;
-
     private ITileControl<HexNode> hexControl;
-
     private Unit selectedUnit = null;
+    private Unit enemyUnit = null;
     private List<GameObject> highlightedTiles = new List<GameObject>();
     private List<GameObject> highlightedPath = new List<GameObject>();
     private ITile hoverOver;
@@ -31,17 +46,22 @@ public class UnitController : MonoBehaviour, IReady
 
     public void Initialize(ITileControl<HexNode> hexControl)
     {
+        enemyUnitPanel.gameObject.SetActive(false);
         unitPanel.gameObject.SetActive(false);
         this.hexControl = hexControl;
+        unitIconCam = unitIconCamera.GetComponent<UnitIconCamera>();
+        enemyUnitIconCam = enemyUnitIconCamera.GetComponent<EnemyUnitIconCamera>();
     }
 
     private void Update()   
     {
-        if (performingAction)
+        if (performingAction){
+            unitIconCam.CenterOn(selectedUnit.transform.position);
             return;
-
+        }
+            
         if(selectedUnit != null)
-        {
+        {    
             unitTextUpdate();
         }
 
@@ -111,9 +131,22 @@ public class UnitController : MonoBehaviour, IReady
         if (selectedUnit != null && !selectedUnit.PerformingAction() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
         {
             ITile hoverNow = hit.collider.gameObject.GetComponent<ITile>();
-
-            if (hoverNow.UnitOnTile != null)
-                return;
+            
+            if (hoverNow.UnitOnTile != null && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit")))
+            {        
+                enemyUnit = hit.collider.gameObject.GetComponent<Unit>();
+                
+                if (enemyUnit != selectedUnit)
+                {
+                    enemyUnitIconCam.CenterOn(enemyUnit.transform.position);
+                    enemyUnitTextUpdate();
+                    enemyUnitPanel.gameObject.SetActive(true);    
+                }
+                
+            }
+            else{
+                enemyUnitPanel.gameObject.SetActive(false);
+            }
             if (!selectedUnit.GetTerrainWalkability(hoverNow.Terrain).Passable)
                 return;
 
@@ -124,6 +157,7 @@ public class UnitController : MonoBehaviour, IReady
                 ClearGameObjectList(highlightedPath);
                 HighlightPath(path);
             }
+        
         }
     }
 
@@ -198,11 +232,9 @@ public class UnitController : MonoBehaviour, IReady
     public void SetSelectedUnit(Unit unit)
     {
         selectedUnit = unit;
-        unitTypeText.GetComponent<Text>().text = selectedUnit.UnitName;
-
+        unitIconCam.CenterOn(selectedUnit.transform.position);
         unitPanel.gameObject.SetActive(true);
         IEnumerable<IPathNode<HexNode>> reachable = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
-        unitIcon.GetComponent<Image>().sprite = selectedUnit.Icon;
         ClearGameObjectList(highlightedTiles);
         ClearGameObjectList(highlightedPath);
         HighlightTiles(reachable);
@@ -210,6 +242,8 @@ public class UnitController : MonoBehaviour, IReady
 
     private void unitTextUpdate()
     {
+        unitTypeText.GetComponent<Text>().text =
+            selectedUnit.UnitName;
         UnitMovementText.GetComponent<Text>().text =
             "Action points:	    " + selectedUnit.CurrentActionPoints + "/" + selectedUnit.MaxActionPoints;
         UnitDamageText.GetComponent<Text>().text =
@@ -223,4 +257,23 @@ public class UnitController : MonoBehaviour, IReady
         UnitTurnCostText.GetComponent<Text>().text =
             "Turn cost:                " + selectedUnit.RotateCost;
     }
+
+    private void enemyUnitTextUpdate()
+    {
+        enemyUnitTypeText.GetComponent<Text>().text =
+            enemyUnit.UnitName;
+        enemyUnitMovementText.GetComponent<Text>().text =
+            "Action points:	    " + enemyUnit.CurrentActionPoints + "/" + enemyUnit.MaxActionPoints;
+        enemyUnitDamageText.GetComponent<Text>().text =
+            "Damage:                 " + enemyUnit.Damage;
+        enemyUnitHealthText.GetComponent<Text>().text =
+            "Health:                 " + enemyUnit.CurrentHealth + "/" + enemyUnit.MaxHealth;
+        enemyUnitActionCostText.GetComponent<Text>().text =
+            "Attack cost:             " + enemyUnit.AttackActionPointCost;
+        enemyUnitRangeText.GetComponent<Text>().text =
+            "Attack Range:          " + enemyUnit.Range;
+        enemyUnitTurnCostText.GetComponent<Text>().text =
+            "Turn cost:                " + enemyUnit.RotateCost;
+    }
+
 }

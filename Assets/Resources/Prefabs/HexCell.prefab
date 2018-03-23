@@ -37,7 +37,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4479224902049726}
   - component: {fileID: 212729133304600536}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: tile_outline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
