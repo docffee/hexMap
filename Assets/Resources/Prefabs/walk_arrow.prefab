@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4852652443058594}
   - component: {fileID: 212961679157086124}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: walk_arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
