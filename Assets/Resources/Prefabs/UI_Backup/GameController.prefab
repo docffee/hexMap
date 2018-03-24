@@ -57,6 +57,33 @@ MonoBehaviour:
   numberOfPlayers: 2
   startMoney: 500
   unitCamera: {fileID: 0}
+  unitTypeTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  unitPlayerTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  unitQueuePanels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   playerColors:
   - {fileID: 2100000, guid: dff3f97ad3564314589310c2932713d4, type: 2}
   - {fileID: 2100000, guid: 8cbcae591056e634285d65ca73af7f98, type: 2}

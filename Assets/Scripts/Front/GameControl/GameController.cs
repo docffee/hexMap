@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.HexImpl;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 ///     Controls the game flow, from start to end as well
@@ -13,6 +15,9 @@ public class GameController : MonoBehaviour
     [SerializeField] private int numberOfPlayers;
     [SerializeField] private int startMoney;
     [SerializeField] private GameObject unitCamera;
+    [SerializeField] private GameObject[] unitTypeTexts;
+    [SerializeField] private GameObject[] unitPlayerTexts;
+    [SerializeField] private GameObject[] unitQueuePanels;
     [SerializeField] private Material[] playerColors;
 
     [Header ("This is only temporary")]
@@ -30,6 +35,8 @@ public class GameController : MonoBehaviour
         hexControl = new HexControl(grid.SizeX, grid.SizeZ, grid);
         players = new List<IPlayer>();
         units = new List<Unit>();
+
+        unitQueueHide();
 
         unitController.Initialize(hexControl);
 
@@ -67,6 +74,8 @@ public class GameController : MonoBehaviour
         }
 
         units.Sort();
+        
+        unitQueueUIUpdate();
 
         Debug.Log("Sorted: \n");
         foreach (Unit u in units)
@@ -93,11 +102,12 @@ public class GameController : MonoBehaviour
     }
 
     public void EndUnitTurn()
-    {
+    {   
+        currentUnit.CurrentActionPoints = 0;
         turnPointer--;
         if (turnPointer < 0)
         {
-            units.Sort();
+            units.Sort();   
             turnPointer = units.Count - 1;
         }
 
@@ -109,6 +119,8 @@ public class GameController : MonoBehaviour
         {
             Debug.LogError("Something went wrong with the turn order!");
         }
+        unitQueueHide();
+        unitQueueUIUpdate();
     }
 
     private void SwitchToUnit()
@@ -129,6 +141,8 @@ public class GameController : MonoBehaviour
         if (index > -1)
         {
             units.RemoveAt(index);
+            unitQueueHide();
+            unitQueueUIUpdate();
             if (index < turnPointer)
                 turnPointer--;
         }
@@ -139,6 +153,28 @@ public class GameController : MonoBehaviour
         get
         {
             return currentUnit;
+        }
+    }
+
+    private void unitQueueUIUpdate()
+    {
+        units.RemoveAll(unit => unit == null);
+        for (int i = 0; i < units.Count; i++)
+        {   
+            List<Unit> unitsSorted = units.OrderBy(unit => unit.CurrentActionPoints).ToList();
+            unitsSorted.Reverse();
+
+            if(unitsSorted[i] != null){
+                unitQueuePanels[i].SetActive(true);
+                unitPlayerTexts[i].GetComponent<Text>().text = unitsSorted[i].Controller.Team.ToString();
+                unitTypeTexts[i].GetComponent<Text>().text = unitsSorted[i].UnitName;
+            }
+        }
+    }
+    private void unitQueueHide(){
+        foreach (GameObject unitQueuePanel in unitQueuePanels)
+        {
+            unitQueuePanel.SetActive(false);
         }
     }
 }
