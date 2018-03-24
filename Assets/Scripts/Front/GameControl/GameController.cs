@@ -31,6 +31,7 @@ public class GameController : MonoBehaviour
     private Unit thisUnit;
     private int turnPointer;
     private List<Unit> unitsSorted;
+    private int unitQueueLimit = 8;
 
     private void Start()
     {
@@ -53,37 +54,72 @@ public class GameController : MonoBehaviour
         ITile tile2 = hexControl.GetTile(19, 12);
         ITile tile3 = hexControl.GetTile(23, 12);
         ITile tile4 = hexControl.GetTile(21, 12);
+        ITile tile5 = hexControl.GetTile(17, 13);
+        ITile tile6 = hexControl.GetTile(19, 13);
+        ITile tile7 = hexControl.GetTile(23, 13);
+        ITile tile8 = hexControl.GetTile(21, 13);
+        ITile tile9= hexControl.GetTile(17, 14);
+        ITile tile10 = hexControl.GetTile(19, 14);
+        ITile tile11 = hexControl.GetTile(23, 14);
+        ITile tile12 = hexControl.GetTile(21, 14);
 
         Unit unit1 = SpawnTroop(allUnitPrefabs[0], players[0], tile, HexDirection.E);
         Unit unit2 = SpawnTroop(allUnitPrefabs[1], players[0], tile2, HexDirection.E);
         Unit unit3 = SpawnTroop(allUnitPrefabs[2], players[1], tile3, HexDirection.W);
         Unit unit4 = SpawnTroop(allUnitPrefabs[3], players[1], tile4, HexDirection.W);
+        Unit unit5 = SpawnTroop(allUnitPrefabs[0], players[0], tile5, HexDirection.E);
+        Unit unit6 = SpawnTroop(allUnitPrefabs[1], players[0], tile6, HexDirection.E);
+        Unit unit7 = SpawnTroop(allUnitPrefabs[2], players[1], tile7, HexDirection.W);
+        Unit unit8 = SpawnTroop(allUnitPrefabs[3], players[1], tile8, HexDirection.W);
+        Unit unit9 = SpawnTroop(allUnitPrefabs[0], players[0], tile9, HexDirection.E);
+        Unit unit10 = SpawnTroop(allUnitPrefabs[1], players[0], tile10, HexDirection.E);
+        Unit unit11 = SpawnTroop(allUnitPrefabs[2], players[1], tile11, HexDirection.W);
+        Unit unit12 = SpawnTroop(allUnitPrefabs[3], players[1], tile12, HexDirection.W);
+
         unit1.SetUnitColorMaterial(playerColors[0]);
         unit2.SetUnitColorMaterial(playerColors[0]);
         unit3.SetUnitColorMaterial(playerColors[1]);
         unit4.SetUnitColorMaterial(playerColors[1]);
+        unit5.SetUnitColorMaterial(playerColors[0]);
+        unit6.SetUnitColorMaterial(playerColors[0]);
+        unit7.SetUnitColorMaterial(playerColors[1]);
+        unit8.SetUnitColorMaterial(playerColors[1]);
+        unit9.SetUnitColorMaterial(playerColors[0]);
+        unit10.SetUnitColorMaterial(playerColors[0]);
+        unit11.SetUnitColorMaterial(playerColors[1]);
+        unit12.SetUnitColorMaterial(playerColors[1]);
+
         units.Add(unit1);
         units.Add(unit2);
         units.Add(unit3);
         units.Add(unit4);
+        units.Add(unit5);
+        units.Add(unit6);
+        units.Add(unit7);
+        units.Add(unit8);
+        units.Add(unit9);
+        units.Add(unit10);
+        units.Add(unit11);
+        units.Add(unit12);
         //////////////////////////////////
-
+        /* 
         Debug.Log("Unsorted: \n");
         foreach (Unit u in units)
         {
             Debug.Log(u);
         }
+        */
 
         units.Sort();
-        
         unitQueueUIUpdate();
 
+        /* 
         Debug.Log("Sorted: \n");
         foreach (Unit u in units)
         {
             Debug.Log(u);
         }
-
+        */
         turnPointer = units.Count - 1;
         SwitchToUnit();
     }
@@ -170,7 +206,7 @@ public class GameController : MonoBehaviour
         unitsSorted.Reverse(); 
         for (int i = 0; i < unitsSorted.Count; i++)
         {   
-            if(unitsSorted[i] != null)
+            if(unitsSorted[i] != null && i < unitQueueLimit)
             {
                 unitQueuePanels[i].SetActive(true);
                 unitPlayerTexts[i].GetComponent<Text>().text = unitsSorted[i].Controller.Team.ToString();
@@ -188,7 +224,7 @@ public class GameController : MonoBehaviour
         unitsSorted.Insert(0,thisUnit);
         for (int i = 0; i < unitsSorted.Count; i++)
         {   
-            if(unitsSorted[i] != null)
+            if(unitsSorted[i] != null && i < unitQueueLimit)
             {
                 unitQueuePanels[i].SetActive(true);
                 unitPlayerTexts[i].GetComponent<Text>().text = unitsSorted[i].Controller.Team.ToString();
