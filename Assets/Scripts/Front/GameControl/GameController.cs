@@ -167,19 +167,19 @@ public class GameController : MonoBehaviour
     }
 
     private void SwitchToUnit()
-    {
-        currentUnit = units[turnPointer];
-        currentUnit.CurrentActionPoints = currentUnit.MaxActionPoints;
-        unitController.SetSelectedUnit(currentUnit);
-
-        CameraController cam = Camera.main.GetComponent<CameraController>();
-        UnitCameraController unitCam = unitCamera.GetComponent<UnitCameraController>();
-        cam.CenterOn(currentUnit.transform.position);
-        unitCam.CenterOn(currentUnit.transform.position);
+    { 
+            currentUnit = units[turnPointer];
+            currentUnit.CurrentActionPoints = currentUnit.MaxActionPoints;
+            unitController.SetSelectedUnit(currentUnit);
+            CameraController cam = Camera.main.GetComponent<CameraController>();
+            UnitCameraController unitCam = unitCamera.GetComponent<UnitCameraController>();
+            cam.CenterOn(currentUnit.transform.position);
+            unitCam.CenterOn(currentUnit.transform.position);
     }
 
     public void RemoveUnit(Unit unit)
     {
+        
         int index = units.IndexOf(unit);
         if (index > -1)
         {
@@ -188,6 +188,9 @@ public class GameController : MonoBehaviour
             unitOnDeathQueueUIUpdate();
             if (index < turnPointer)
                 turnPointer--;
+        }
+        if(unit == currentUnit){
+            Invoke("SwitchToUnit", 0.8f);
         }
     }
 

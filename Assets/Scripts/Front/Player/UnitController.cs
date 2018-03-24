@@ -58,7 +58,7 @@ public class UnitController : MonoBehaviour, IReady
 
     private void Update()   
     {
-        if (performingAction){
+        if (performingAction && selectedUnit != null){
             unitIconCam.CenterOn(selectedUnit.transform.position);
 
             return;
