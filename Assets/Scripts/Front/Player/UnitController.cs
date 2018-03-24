@@ -265,7 +265,7 @@ public class UnitController : MonoBehaviour, IReady
         enemyUnitTypeText.GetComponent<Text>().text =
             enemyUnit.UnitName;
         enemyUnitMovementText.GetComponent<Text>().text =
-            "Action points:\t\t" + Math.Round(selectedUnit.CurrentActionPoints, 1) + "/" + enemyUnit.MaxActionPoints;
+            "Action points:\t\t" + Math.Round(enemyUnit.CurrentActionPoints, 1) + "/" + enemyUnit.MaxActionPoints;
         enemyUnitDamageText.GetComponent<Text>().text =
             "Damage:\t\t\t\t" + enemyUnit.Damage;
         enemyUnitHealthText.GetComponent<Text>().text =

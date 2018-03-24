@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.HexImpl;
 using System.Collections.Generic;
+using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,6 +29,7 @@ public class GameController : MonoBehaviour
     private List<Unit> units;
     private Unit currentUnit;
     private int turnPointer;
+    private List<Unit> unitsSorted;
 
     private void Start()
     {
@@ -109,18 +111,24 @@ public class GameController : MonoBehaviour
         {
             units.Sort();   
             turnPointer = units.Count - 1;
+            foreach (Unit unit in units)
+            {
+                unit.CurrentActionPoints = unit.MaxActionPoints;
+            }
+            unitQueueUIUpdate();
         }
 
         if (turnPointer < units.Count)
         {
             SwitchToUnit();
+            unitQueueUIUpdate();
         }
         else
         {
             Debug.LogError("Something went wrong with the turn order!");
         }
-        unitQueueHide();
-        unitQueueUIUpdate();
+        
+        
     }
 
     private void SwitchToUnit()
@@ -142,7 +150,7 @@ public class GameController : MonoBehaviour
         {
             units.RemoveAt(index);
             unitQueueHide();
-            unitQueueUIUpdate();
+            unitOnDeathQueueUIUpdate();
             if (index < turnPointer)
                 turnPointer--;
         }
@@ -158,16 +166,30 @@ public class GameController : MonoBehaviour
 
     private void unitQueueUIUpdate()
     {
-        units.RemoveAll(unit => unit == null);
+        //units.RemoveAll(unit => unit == null);
         for (int i = 0; i < units.Count; i++)
         {   
-            List<Unit> unitsSorted = units.OrderBy(unit => unit.CurrentActionPoints).ToList();
+            
+            unitsSorted = units.OrderBy(unit => unit.CurrentActionPoints).ThenBy(unit => unit.MaxActionPoints).ToList();
             unitsSorted.Reverse();
-
+            Shift(unitsSorted);
             if(unitsSorted[i] != null){
                 unitQueuePanels[i].SetActive(true);
                 unitPlayerTexts[i].GetComponent<Text>().text = unitsSorted[i].Controller.Team.ToString();
                 unitTypeTexts[i].GetComponent<Text>().text = unitsSorted[i].UnitName;
+            }
+        }
+    }
+    private void unitOnDeathQueueUIUpdate()
+    {
+        for (int i = 0; i < units.Count; i++)
+        {   
+            unitsSorted = units.OrderBy(unit => unit.CurrentActionPoints).ThenBy(unit => unit.MaxActionPoints).ToList();
+            unitsSorted.Reverse();
+            if(unitsSorted[i] != null ){
+                unitQueuePanels[i].SetActive(true);
+                unitPlayerTexts[i+1].GetComponent<Text>().text = unitsSorted[i].Controller.Team.ToString();
+                unitTypeTexts[i+1].GetComponent<Text>().text = unitsSorted[i].UnitName;
             }
         }
     }
@@ -176,5 +198,15 @@ public class GameController : MonoBehaviour
         {
             unitQueuePanel.SetActive(false);
         }
+    }
+
+    private List<Unit> Shift(List<Unit> units)
+    {
+        Unit[] unitsArray = units.ToArray();
+        Unit[] tArray = new Unit[unitsArray.Length];
+        Array.Copy(unitsArray, 1, tArray, 0, unitsArray.Length - 1);
+        tArray[tArray.Length - 1] = currentUnit;
+        List<Unit> tList = tArray.ToList();
+        return tList;
     }
 }
