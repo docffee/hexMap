@@ -28,6 +28,7 @@ public class GameController : MonoBehaviour
     private List<IPlayer> players;
     private List<Unit> units;
     private Unit currentUnit;
+    private Unit thisUnit;
     private int turnPointer;
     private List<Unit> unitsSorted;
 
@@ -37,8 +38,6 @@ public class GameController : MonoBehaviour
         hexControl = new HexControl(grid.SizeX, grid.SizeZ, grid);
         players = new List<IPlayer>();
         units = new List<Unit>();
-
-        unitQueueHide();
 
         unitController.Initialize(hexControl);
 
@@ -149,7 +148,7 @@ public class GameController : MonoBehaviour
         if (index > -1)
         {
             units.RemoveAt(index);
-            unitQueueHide();
+            unitsSorted.RemoveAt(index);
             unitOnDeathQueueUIUpdate();
             if (index < turnPointer)
                 turnPointer--;
@@ -165,15 +164,14 @@ public class GameController : MonoBehaviour
     }
 
     private void unitQueueUIUpdate()
-    {
-        //units.RemoveAll(unit => unit == null);
-        for (int i = 0; i < units.Count; i++)
+    {   
+        unitQueueHide();
+        unitsSorted = units.OrderBy(unit => unit.CurrentActionPoints).ThenBy(unit => unit.MaxActionPoints).ToList();
+        unitsSorted.Reverse(); 
+        for (int i = 0; i < unitsSorted.Count; i++)
         {   
-            
-            unitsSorted = units.OrderBy(unit => unit.CurrentActionPoints).ThenBy(unit => unit.MaxActionPoints).ToList();
-            unitsSorted.Reverse();
-            Shift(unitsSorted);
-            if(unitsSorted[i] != null){
+            if(unitsSorted[i] != null)
+            {
                 unitQueuePanels[i].SetActive(true);
                 unitPlayerTexts[i].GetComponent<Text>().text = unitsSorted[i].Controller.Team.ToString();
                 unitTypeTexts[i].GetComponent<Text>().text = unitsSorted[i].UnitName;
@@ -182,14 +180,19 @@ public class GameController : MonoBehaviour
     }
     private void unitOnDeathQueueUIUpdate()
     {
-        for (int i = 0; i < units.Count; i++)
+        unitQueueHide();
+        unitsSorted = units.OrderBy(unit => unit.CurrentActionPoints).ThenBy(unit => unit.MaxActionPoints).ToList();
+        unitsSorted.Reverse();
+        thisUnit = currentUnit;
+        unitsSorted.Remove(currentUnit);
+        unitsSorted.Insert(0,thisUnit);
+        for (int i = 0; i < unitsSorted.Count; i++)
         {   
-            unitsSorted = units.OrderBy(unit => unit.CurrentActionPoints).ThenBy(unit => unit.MaxActionPoints).ToList();
-            unitsSorted.Reverse();
-            if(unitsSorted[i] != null ){
+            if(unitsSorted[i] != null)
+            {
                 unitQueuePanels[i].SetActive(true);
-                unitPlayerTexts[i+1].GetComponent<Text>().text = unitsSorted[i].Controller.Team.ToString();
-                unitTypeTexts[i+1].GetComponent<Text>().text = unitsSorted[i].UnitName;
+                unitPlayerTexts[i].GetComponent<Text>().text = unitsSorted[i].Controller.Team.ToString();
+                unitTypeTexts[i].GetComponent<Text>().text = unitsSorted[i].UnitName;
             }
         }
     }
@@ -200,7 +203,7 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private List<Unit> Shift(List<Unit> units)
+    /*private List<Unit> Shift(List<Unit> units)
     {
         Unit[] unitsArray = units.ToArray();
         Unit[] tArray = new Unit[unitsArray.Length];
@@ -208,5 +211,5 @@ public class GameController : MonoBehaviour
         tArray[tArray.Length - 1] = currentUnit;
         List<Unit> tList = tArray.ToList();
         return tList;
-    }
+    }*/
 }
