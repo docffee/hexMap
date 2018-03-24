@@ -167,7 +167,7 @@ Prefab:
     - target: {fileID: 224269967663061444, guid: 511105edc2e42164d993074efcf7ab01,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 659
+      value: 556.5
       objectReference: {fileID: 0}
     - target: {fileID: 224269967663061444, guid: 511105edc2e42164d993074efcf7ab01,
         type: 2}
@@ -456,6 +456,12 @@ Prefab:
       propertyPath: gameController
       value: 
       objectReference: {fileID: 2105524159}
+    - target: {fileID: 114546187418576860, guid: d50bfd867847f69418dc0e7e9dd2f0a5,
+        type: 2}
+      propertyPath: currentTilePrefab
+      value: 
+      objectReference: {fileID: 1418689452029138, guid: bac6b4a135e3ac546947bb11d996b231,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d50bfd867847f69418dc0e7e9dd2f0a5, type: 2}
   m_IsPrefabParent: 0

@@ -11,6 +11,7 @@ public class UnitController : MonoBehaviour, IReady
 {
     [SerializeField] private GameObject tileMovementPrefab;
     [SerializeField] private GameObject pathArrowPrefab;
+    [SerializeField] private GameObject currentTilePrefab;
     
     [Header ("UI elements")]
     [SerializeField] private GameObject unitTypeText;
@@ -42,6 +43,7 @@ public class UnitController : MonoBehaviour, IReady
     private Unit enemyUnit = null;
     private List<GameObject> highlightedTiles = new List<GameObject>();
     private List<GameObject> highlightedPath = new List<GameObject>();
+    private GameObject currentTile;
     private ITile hoverOver;
     private bool performingAction;
 
@@ -90,7 +92,7 @@ public class UnitController : MonoBehaviour, IReady
                     }
                 }
             }
-            else if (selectedUnit != null && !EventSystem.current.IsPointerOverGameObject()
+            if (selectedUnit != null && !EventSystem.current.IsPointerOverGameObject()
                 && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
             {
                 HexCell cell = hit.collider.gameObject.GetComponent<HexCell>();
@@ -134,7 +136,7 @@ public class UnitController : MonoBehaviour, IReady
         {
             ITile hoverNow = hit.collider.gameObject.GetComponent<ITile>();
             
-            if (hoverNow.UnitOnTile != null && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit")))
+            if ((hoverNow.UnitOnTile != null || hoverNow.AirUnitOnTile != null) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit")))
             {        
                 enemyUnit = hit.collider.gameObject.GetComponent<Unit>();
                 
@@ -167,7 +169,7 @@ public class UnitController : MonoBehaviour, IReady
     {
         if (highlightedTiles.Count > 0)
             return;
-
+        
         // Fix until selection of direction is implemented //
         Dictionary<ITile, bool> tiles = new Dictionary<ITile, bool>();
 
@@ -181,9 +183,13 @@ public class UnitController : MonoBehaviour, IReady
             tiles.Add(tile, true);
             Vector3 position = new Vector3(tile.PosX, tile.PosY + 0.05f, tile.PosZ);
 
-            GameObject highlight = Instantiate(tileMovementPrefab, position, tileMovementPrefab.transform.rotation, transform);
+            GameObject highlight = Instantiate(tileMovementPrefab, position, tileMovementPrefab.transform.rotation, transform);    
             highlightedTiles.Add(highlight);
         }
+        
+        Vector3 currentTilePosition = new Vector3(selectedUnit.Tile.PosX, selectedUnit.Tile.PosY+0.10f, selectedUnit.Tile.PosZ);
+        currentTile = Instantiate(currentTilePrefab, currentTilePosition, currentTilePrefab.transform.rotation, transform);
+        highlightedTiles.Add(currentTile);
     }
 
     private void HighlightPath(IEnumerable<IPathNode<HexNode>> path)

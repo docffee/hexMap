@@ -23,6 +23,10 @@ public class FireFight : IFireFight
             damage = CalculateDefenderDamage(defender);
             defender.OnAttack(attacker);
             attacker.CurrentHealth -= damage;
+            if(attacker.CurrentHealth <= 0)
+            {
+                attacker.OnDeath();
+            }
         }
     }
 
