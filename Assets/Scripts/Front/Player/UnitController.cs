@@ -92,7 +92,7 @@ public class UnitController : MonoBehaviour, IReady
                     }
                 }
             }
-            if (selectedUnit != null && !EventSystem.current.IsPointerOverGameObject()
+            else if (selectedUnit != null && !EventSystem.current.IsPointerOverGameObject()
                 && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
             {
                 HexCell cell = hit.collider.gameObject.GetComponent<HexCell>();

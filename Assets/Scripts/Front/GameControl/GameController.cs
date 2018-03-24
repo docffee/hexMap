@@ -190,7 +190,7 @@ public class GameController : MonoBehaviour
                 turnPointer--;
         }
         if(unit == currentUnit){
-            Invoke("SwitchToUnit", 0.8f);
+            SwitchToUnit();
         }
     }
 
