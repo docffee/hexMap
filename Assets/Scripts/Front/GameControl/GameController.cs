@@ -20,6 +20,12 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject[] unitPlayerTexts;
     [SerializeField] private GameObject[] unitQueuePanels;
     [SerializeField] private Material[] playerColors;
+    [SerializeField] private GameObject[] unitPanels;
+    [SerializeField] private GameObject miniMapPanel;
+    [SerializeField] private GameObject queuePanel;
+    [SerializeField] private GameObject commandPanel;
+    [SerializeField] private RectTransform uiControlPanel;
+
 
     [Header ("This is only temporary")]
     [SerializeField] private Unit[] allUnitPrefabs;
@@ -31,10 +37,12 @@ public class GameController : MonoBehaviour
     private Unit thisUnit;
     private int turnPointer;
     private List<Unit> unitsSorted;
+    private Vector3 oldControlPanelPosition;
     private int unitQueueLimit = 8;
 
     private void Start()
     {
+        oldControlPanelPosition = uiControlPanel.localPosition;
         HexGrid grid = FindObjectOfType<HexGrid>();
         hexControl = new HexControl(grid.SizeX, grid.SizeZ, grid);
         players = new List<IPlayer>();
@@ -239,6 +247,47 @@ public class GameController : MonoBehaviour
         foreach (GameObject unitQueuePanel in unitQueuePanels)
         {
             unitQueuePanel.SetActive(false);
+        }
+    }
+
+    public void hideQueuePanel(){
+        if(queuePanel.activeSelf == true){
+            queuePanel.SetActive(false);
+        }
+        else{
+            queuePanel.SetActive(true);
+        }
+    }
+    public void hideUnitPanels(){
+        foreach (GameObject unitPanel in unitPanels)
+        {
+            if(unitPanel.activeSelf == true){
+            unitPanel.SetActive(false);
+        }
+        else{
+            unitPanel.SetActive(true);
+        }
+        }
+       
+    }
+    public void hideMiniMapPanel(){
+        
+        if(miniMapPanel.activeSelf == true){
+            miniMapPanel.SetActive(false);
+            uiControlPanel.localPosition = miniMapPanel.GetComponent<RectTransform>().localPosition;
+        }
+        else{
+
+            miniMapPanel.SetActive(true);
+            uiControlPanel.localPosition = oldControlPanelPosition;
+        }
+    }
+    public void hideCommandPanel(){
+        if(commandPanel.activeSelf == true){
+            commandPanel.SetActive(false);
+        }
+        else{
+            commandPanel.SetActive(true);
         }
     }
 
