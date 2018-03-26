@@ -87,11 +87,8 @@ public class UnitController : MonoBehaviour, IReady
         {
             ITile hoverNow = hit.collider.gameObject.GetComponent<ITile>();
             
-            if (hoverNow.Equals(hoverOver))
+            if (!hoverNow.Equals(hoverOver))
             {
-                return;
-            }
-            else{
                 hoverOver = hoverNow;
                 IEnumerable<IPathNode<HexNode>> path = hexControl.GetShortestPath(selectedUnit, selectedUnit.Tile, hoverNow);
                 ClearGameObjectList(highlightedPath);
@@ -115,9 +112,6 @@ public class UnitController : MonoBehaviour, IReady
             }
             if (!selectedUnit.GetTerrainWalkability(hoverNow.Terrain).Passable)
                 return;
-
-        
-            //Debug.Log(hoverNow);
         }
     }
 
