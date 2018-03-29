@@ -60,33 +60,76 @@ public class UnitController : MonoBehaviour, IReady
     {
         if (performingAction && selectedUnit != null){
             unitIconCam.CenterOn(selectedUnit.transform.position);
-
             return;
         }
             
-        if(selectedUnit != null)
-        {    
+        if(selectedUnit != null)    
             unitTextUpdate();
+        
+        RaycastHit tileHit;
+        RaycastHit unitHit;
+        
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), 
+            out tileHit, 200.0f, LayerMask.GetMask("Tile"));
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), 
+            out unitHit, 200.0f, LayerMask.GetMask("Unit"));
+        
+        if (Input.GetMouseButtonDown(0))
+            mouseClickEvent0(tileHit, unitHit);
+        else
+            mouseHover(tileHit, unitHit);
+    }
+
+    private void mouseHover(RaycastHit tileHit, RaycastHit unitHit)
+    {
+        if(hoverUnit(unitHit))
+            return;
+        if(hoverTile(tileHit))
+            return;
+    }
+
+    private bool hoverTile(RaycastHit tileHit)
+    {
+        ITile hoverNow = 
+            (
+                (tileHit.collider != null) ?
+                tileHit.collider.gameObject.GetComponent<ITile>() :
+                null
+            );
+
+        if(tileHit.collider != null)
+        {
+            Vector3 hit = tileHit.point;
+            Vector3 tile = tileHit.collider.gameObject.transform.position;
+            float dist = Vector3.Distance(tile, hit);
+            float centerR = 1;
+            int dir;
+
+
+            if(dist <= centerR)
+            {
+                dir = 0;
+            }
+            else
+            {
+                Vector3 temp = hit - tile;
+                Vector3 helperPos = new Vector3(0, 0, 1);
+                float angle = 
+                    (
+                        (temp.x > 0) ?
+                        Vector3.Angle(helperPos, temp) :
+                        180 + (Math.Abs(Vector3.Angle(helperPos, temp) - 180))
+                    );
+                dir = ((int)angle / 60) + 1;
+            }
+            
+            Debug.Log(dir);
         }
 
-
-        if (Input.GetMouseButtonDown(0))
-            mouseClickEvent0();
-
-        //if (Input.GetMouseButtonDown(1) && selectedUnit != null)
-        //{
-        //    unitPanel.gameObject.SetActive(false);
-        //    selectedUnit = null;
-        //    ClearGameObjectList(highlightedTiles);
-        //    ClearGameObjectList(highlightedPath);
-        //}
-        
-        RaycastHit hit;
-
-        if (selectedUnit != null && !selectedUnit.PerformingAction() && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
+        if (selectedUnit != null && !selectedUnit.PerformingAction() && hoverNow != null)
         {
-            ITile hoverNow = hit.collider.gameObject.GetComponent<ITile>();
-            
+            if (!selectedUnit.GetTerrainWalkability(hoverNow.Terrain).Passable)
+                return false; 
             if (!hoverNow.Equals(hoverOver))
             {
                 hoverOver = hoverNow;
@@ -94,36 +137,50 @@ public class UnitController : MonoBehaviour, IReady
                 ClearGameObjectList(highlightedPath);
                 HighlightPath(path);
             }
-            
-            if ((hoverNow.UnitOnTile != null || hoverNow.AirUnitOnTile != null) && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit")))
-            {        
-                enemyUnit = hit.collider.gameObject.GetComponent<Unit>();
-                
-                if (enemyUnit != selectedUnit)
-                {
-                    enemyUnitIconCam.CenterOn(enemyUnit.transform.position);
-                    enemyUnitTextUpdate();
-                    enemyUnitPanel.gameObject.SetActive(true);    
-                }
-                
-            }
-            else{
-                enemyUnitPanel.gameObject.SetActive(false);
-            }
-            if (!selectedUnit.GetTerrainWalkability(hoverNow.Terrain).Passable)
-                return;
+            return true;
         }
+        else 
+            return false;
     }
 
-    private void mouseClickEvent0()
+    private bool hoverUnit(RaycastHit unitHit)
     {
-        RaycastHit hit;
-        if (selectedUnit != null && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit"))
-                && hit.collider.GetComponent<Unit>().Controller.Team != selectedUnit.Controller.Team)
+        enemyUnit = 
+            (
+                (unitHit.collider != null) ?
+                unitHit.collider.gameObject.GetComponent<Unit>() :
+                null
+            );
+    
+
+        if (unitHit.collider != null)
+        {        
+            ClearGameObjectList(highlightedPath);
+            hoverOver = null;
+            if (enemyUnit != selectedUnit)
+            {
+                enemyUnitIconCam.CenterOn(enemyUnit.transform.position);
+                enemyUnitTextUpdate();
+                enemyUnitPanel.gameObject.SetActive(true);    
+            }
+            return true;    
+        }
+        else
+        {
+            enemyUnitPanel.gameObject.SetActive(false);
+            return false;
+        }
+            
+    }
+
+    private void mouseClickEvent0(RaycastHit tileHit, RaycastHit unitHit)
+    {
+        if (selectedUnit != null && unitHit.collider != null 
+        && unitHit.collider.GetComponent<Unit>().Controller.Team != selectedUnit.Controller.Team)
             {
                 if (selectedUnit.CurrentActionPoints >= selectedUnit.AttackActionPointCost)
                 {
-                    Unit other = hit.collider.gameObject.GetComponent<Unit>();
+                    Unit other = unitHit.collider.gameObject.GetComponent<Unit>();
 
                     int dist = HexHeuristic.MinDistTile(selectedUnit.Tile, other.Tile);
                     if (dist <= selectedUnit.Range)
@@ -137,10 +194,9 @@ public class UnitController : MonoBehaviour, IReady
                     }
                 }
             }
-            else if (selectedUnit != null && !EventSystem.current.IsPointerOverGameObject()
-                && Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Tile")))
+            else if (selectedUnit != null && !EventSystem.current.IsPointerOverGameObject() && tileHit.collider != null)
             {
-                HexCell cell = hit.collider.gameObject.GetComponent<HexCell>();
+                HexCell cell = tileHit.collider.gameObject.GetComponent<HexCell>();
 
                 IEnumerable<IPathNode<HexNode>> path = hexControl.GetShortestPath(selectedUnit, selectedUnit.Tile, cell);
                 if (path != null)
@@ -151,22 +207,6 @@ public class UnitController : MonoBehaviour, IReady
                     ClearGameObjectList(highlightedPath);
                 }
             }
-            //else if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, 200.0f, LayerMask.GetMask("Unit")))
-            //{
-            //    Unit current = hit.collider.gameObject.GetComponent<Unit>();
-            //    if (gameController.CurrentUnit.Equals(current))
-            //    {
-            //        selectedUnit = current;
-            //        unitTypeText.GetComponent<Text>().text = selectedUnit.UnitName;
-
-            //        unitPanel.gameObject.SetActive(true);
-            //        IEnumerable<IPathNode<HexNode>> reachable = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
-            //        unitIcon.GetComponent<Image>().sprite = selectedUnit.Icon;
-            //        ClearGameObjectList(highlightedTiles);
-            //        ClearGameObjectList(highlightedPath);
-            //        HighlightTiles(reachable);
-            //    }
-            //}
     }
 
     private void HighlightTiles(IEnumerable<IPathNode<HexNode>> reachable)
@@ -228,9 +268,8 @@ public class UnitController : MonoBehaviour, IReady
     private void ClearGameObjectList(List<GameObject> list)
     {
         foreach (GameObject obj in list)
-        {
             Destroy(obj);
-        }
+
         list.Clear();
     }
 
