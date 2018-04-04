@@ -68,6 +68,8 @@ MonoBehaviour:
     type: 2}
   pathArrowPrefab: {fileID: 1362063277278330, guid: 00edc65b09277ec4bb6e9a2d5ef7a724,
     type: 2}
+  currentTilePrefab: {fileID: 1418689452029138, guid: bac6b4a135e3ac546947bb11d996b231,
+    type: 2}
   unitTypeText: {fileID: 0}
   UnitMovementText: {fileID: 0}
   UnitDamageText: {fileID: 0}

@@ -34,14 +34,12 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
 
     protected ITile tile;
     protected HexDirection orientation;
-    protected bool performingAction = false;
     protected IPlayer controller;
     protected ITileControl<HexNode> hexControl;
     protected GameController gameController;
 
     public abstract IWalkable GetTerrainWalkability(ITerrain terrain);
     public abstract void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller);
-    public abstract bool PerformingAction();
     public abstract bool CanRetaliate();
 
     public void Initialize(IPlayer controller, ITileControl<HexNode> hexControl, GameController gameController)
@@ -89,7 +87,6 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
             Debug.Log("Can't find path!!");
             yield break;
         }
-        performingAction = true;
 
         IEnumerator<IPathNode<HexNode>> enumerator = path.GetEnumerator();
         enumerator.MoveNext(); // Skips first;
@@ -110,7 +107,6 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
         currentActionPoints -= lastNode.GetCost();
 
         controller.Ready();
-        performingAction = false;
     }
 
     private IEnumerator Step(IPathNode<HexNode> pathNode)
@@ -162,6 +158,14 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
 
         orientation = node.Direction;
         transform.rotation = end;
+    }
+
+    public bool IsTilePassable(ITile tile)
+    {
+        if (flying)
+            return tile.AirUnitOnTile == null;
+
+        return tile.UnitOnTile == null;
     }
 
     public int CompareTo(Unit other)

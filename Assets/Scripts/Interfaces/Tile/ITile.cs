@@ -1,5 +1,4 @@
-﻿using GraphAlgorithms;
-
+﻿
 public interface ITile
 {
     int X { get; }
@@ -13,4 +12,5 @@ public interface ITile
     ITerrain Terrain { get; }
     IUnit UnitOnTile { get; set; }
     IUnit AirUnitOnTile { get; set; }
+    IResource resourceOnTile { get; }
 }

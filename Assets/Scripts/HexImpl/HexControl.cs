@@ -58,6 +58,15 @@ namespace Assets.Scripts.HexImpl
             return path;
         }
 
+        public IEnumerable<IPathNode<HexNode>> GetShortestPath(IUnit unit, ITile startTile, ITile endTile, int endDirection)
+        {
+            HexNode start = new HexNode((HexDirection)unit.Direction, startTile, unit, this);
+            HexNode end = new HexNode((HexDirection) endDirection, endTile, unit, this);
+            IEnumerable<IPathNode<HexNode>> path = pathfinder.GetShortestPath(start, end, new HexHeuristic());
+
+            return path;
+        }
+
         public bool PlaceUnit(IUnit unit, int x, int z)
         {
             ITile tile = GetTile(x, z);

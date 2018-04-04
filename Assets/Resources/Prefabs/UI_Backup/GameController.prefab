@@ -57,11 +57,45 @@ MonoBehaviour:
   numberOfPlayers: 2
   startMoney: 500
   unitCamera: {fileID: 0}
+  unitTypeTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  unitPlayerTexts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  unitQueuePanels:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   playerColors:
   - {fileID: 2100000, guid: dff3f97ad3564314589310c2932713d4, type: 2}
   - {fileID: 2100000, guid: 8cbcae591056e634285d65ca73af7f98, type: 2}
   - {fileID: 2100000, guid: d4df8baf035c48c43bb4132eaa8dfa55, type: 2}
   - {fileID: 2100000, guid: 6bf5da719781943428aef5327fee025f, type: 2}
+  unitPanels:
+  - {fileID: 0}
+  - {fileID: 0}
+  miniMapPanel: {fileID: 0}
+  queuePanel: {fileID: 0}
+  commandPanel: {fileID: 0}
+  uiControlPanel: {fileID: 0}
   allUnitPrefabs:
   - {fileID: 114770602291090484, guid: bc5aac420f00145479338d20ed956c9e, type: 2}
   - {fileID: 114448148453318858, guid: 68da09084d9f8f14ca5b26d59bea7e0e, type: 2}
