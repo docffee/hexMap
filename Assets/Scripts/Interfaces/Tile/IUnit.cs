@@ -9,6 +9,7 @@ public interface IUnit
 
     float RotateCost { get; }
     IWalkable GetTerrainWalkability(ITerrain terrain);
+    bool IsTilePassable(ITile tile);
 
     float PosX { get; }
     float PosY { get; }

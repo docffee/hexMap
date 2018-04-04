@@ -43,7 +43,7 @@ namespace Assets.Scripts.HexImpl
                 {
                     edges.Add(new HexEdge(cost, forward));
                 }
-                else if (forward.Tile.UnitOnTile == null && walkable.Passable)
+                else if (!movingUnit.Flying && forward.Tile.UnitOnTile == null && walkable.Passable)
                 {
                     edges.Add(new HexEdge(cost, forward));
                 }
@@ -56,7 +56,7 @@ namespace Assets.Scripts.HexImpl
                 {
                     edges.Add(new HexEdge(cost, back));
                 }
-                else if (back.Tile.UnitOnTile == null && walkable.Passable)
+                else if (!movingUnit.Flying && back.Tile.UnitOnTile == null && walkable.Passable)
                 {
                     edges.Add(new HexEdge(cost, back));
                 }

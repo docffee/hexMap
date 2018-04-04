@@ -43,8 +43,10 @@ public class UnitController : MonoBehaviour, IReady
     private Unit enemyUnit = null;
     private List<GameObject> highlightedTiles = new List<GameObject>();
     private List<GameObject> highlightedPath = new List<GameObject>();
-    private GameObject currentTile;
+
     private ITile hoverOver;
+    private int hoverDirection;
+    private Quaternion lastPathArrowRotation;
     private bool performingAction;
 
     public void Initialize(ITileControl<HexNode> hexControl)
@@ -64,7 +66,7 @@ public class UnitController : MonoBehaviour, IReady
         }
             
         if(selectedUnit != null)    
-            unitTextUpdate();
+            UnitTextUpdate();
         
         RaycastHit tileHit;
         RaycastHit unitHit;
@@ -75,20 +77,20 @@ public class UnitController : MonoBehaviour, IReady
             out unitHit, 200.0f, LayerMask.GetMask("Unit"));
         
         if (Input.GetMouseButtonDown(0))
-            mouseClickEvent0(tileHit, unitHit);
+            MouseClickEvent0(tileHit, unitHit);
         else
-            mouseHover(tileHit, unitHit);
+            MouseOver(tileHit, unitHit);
     }
 
-    private void mouseHover(RaycastHit tileHit, RaycastHit unitHit)
+    private void MouseOver(RaycastHit tileHit, RaycastHit unitHit)
     {
-        if(hoverUnit(unitHit))
+        if(HoverUnit(unitHit))
             return;
-        if(hoverTile(tileHit))
+        if(HoverTile(tileHit))
             return;
     }
 
-    private bool hoverTile(RaycastHit tileHit)
+    private bool HoverTile(RaycastHit tileHit)
     {
         ITile hoverNow = 
             (
@@ -97,53 +99,44 @@ public class UnitController : MonoBehaviour, IReady
                 null
             );
 
-        if(tileHit.collider != null)
-        {
-            Vector3 hit = tileHit.point;
-            Vector3 tile = tileHit.collider.gameObject.transform.position;
-            float dist = Vector3.Distance(tile, hit);
-            float centerR = 1;
-            int dir;
+        int dir = GetTileDirection(tileHit);
 
-
-            if(dist <= centerR)
-            {
-                dir = 0;
-            }
-            else
-            {
-                Vector3 temp = hit - tile;
-                Vector3 helperPos = new Vector3(0, 0, 1);
-                float angle = 
-                    (
-                        (temp.x > 0) ?
-                        Vector3.Angle(helperPos, temp) :
-                        180 + (Math.Abs(Vector3.Angle(helperPos, temp) - 180))
-                    );
-                dir = ((int)angle / 60) + 1;
-            }
-            
-            Debug.Log(dir);
-        }
-
-        if (selectedUnit != null && !selectedUnit.PerformingAction() && hoverNow != null)
+        if (selectedUnit != null && hoverNow != null && selectedUnit.IsTilePassable(hoverNow))
         {
             if (!selectedUnit.GetTerrainWalkability(hoverNow.Terrain).Passable)
-                return false; 
-            if (!hoverNow.Equals(hoverOver))
+                return false;
+
+            if (hoverDirection != dir)
+            {
+                hoverDirection = dir;
+                int pathCount = highlightedPath.Count;
+                if (pathCount > 0)
+                {
+                    // Changes the last arrow in the path's rotation so that the whole path does not need to be re-calculated //
+                    if (dir == 6)
+                        highlightedPath[pathCount - 1].transform.rotation = lastPathArrowRotation;
+                    else
+                        highlightedPath[pathCount - 1].transform.rotation =
+                            Quaternion.Euler(90, HexUtil.DirectionRotation((HexDirection) dir) - 90, 0);
+                }
+            }
+
+            if (!hoverNow.Equals(hoverOver)) // Calculates shortest path and shows it.
             {
                 hoverOver = hoverNow;
-                IEnumerable<IPathNode<HexNode>> path = hexControl.GetShortestPath(selectedUnit, selectedUnit.Tile, hoverNow);
+                IEnumerable<IPathNode<HexNode>> path = hexControl.GetShortestPath(selectedUnit, selectedUnit.Tile, hoverNow, hoverDirection);
                 ClearGameObjectList(highlightedPath);
                 HighlightPath(path);
             }
             return true;
         }
-        else 
+        else
+        {
             return false;
+        }
     }
 
-    private bool hoverUnit(RaycastHit unitHit)
+    private bool HoverUnit(RaycastHit unitHit)
     {
         enemyUnit = 
             (
@@ -160,7 +153,7 @@ public class UnitController : MonoBehaviour, IReady
             if (enemyUnit != selectedUnit)
             {
                 enemyUnitIconCam.CenterOn(enemyUnit.transform.position);
-                enemyUnitTextUpdate();
+                EnemyUnitTextUpdate();
                 enemyUnitPanel.gameObject.SetActive(true);    
             }
             return true;    
@@ -173,7 +166,7 @@ public class UnitController : MonoBehaviour, IReady
             
     }
 
-    private void mouseClickEvent0(RaycastHit tileHit, RaycastHit unitHit)
+    private void MouseClickEvent0(RaycastHit tileHit, RaycastHit unitHit)
     {
         if (selectedUnit != null && unitHit.collider != null 
         && unitHit.collider.GetComponent<Unit>().Controller.Team != selectedUnit.Controller.Team)
@@ -198,7 +191,7 @@ public class UnitController : MonoBehaviour, IReady
             {
                 HexCell cell = tileHit.collider.gameObject.GetComponent<HexCell>();
 
-                IEnumerable<IPathNode<HexNode>> path = hexControl.GetShortestPath(selectedUnit, selectedUnit.Tile, cell);
+                IEnumerable<IPathNode<HexNode>> path = hexControl.GetShortestPath(selectedUnit, selectedUnit.Tile, cell, hoverDirection);
                 if (path != null)
                 {
                     performingAction = true;
@@ -232,7 +225,7 @@ public class UnitController : MonoBehaviour, IReady
         }
         
         Vector3 currentTilePosition = new Vector3(selectedUnit.Tile.PosX, selectedUnit.Tile.PosY+0.10f, selectedUnit.Tile.PosZ);
-        currentTile = Instantiate(currentTilePrefab, currentTilePosition, currentTilePrefab.transform.rotation, transform);
+        GameObject currentTile = Instantiate(currentTilePrefab, currentTilePosition, currentTilePrefab.transform.rotation, transform);
         highlightedTiles.Add(currentTile);
     }
 
@@ -262,6 +255,7 @@ public class UnitController : MonoBehaviour, IReady
 
             GameObject highlight = Instantiate(pathArrowPrefab, position, rotation, transform);
             highlightedPath.Add(highlight);
+            lastPathArrowRotation = rotation;
         }
     }
 
@@ -291,7 +285,7 @@ public class UnitController : MonoBehaviour, IReady
         HighlightTiles(reachable);
     }
     
-    private void unitTextUpdate()
+    private void UnitTextUpdate()
     {
         unitTypeText.GetComponent<Text>().text =
             selectedUnit.UnitName;
@@ -309,7 +303,7 @@ public class UnitController : MonoBehaviour, IReady
             "Turn cost:\t\t\t\t" + selectedUnit.RotateCost;
     }
 
-    private void enemyUnitTextUpdate()
+    private void EnemyUnitTextUpdate()
     {
         enemyUnitTypeText.GetComponent<Text>().text =
             enemyUnit.UnitName;
@@ -327,4 +321,35 @@ public class UnitController : MonoBehaviour, IReady
             "Turn cost:\t\t\t\t" + enemyUnit.RotateCost;
     }
 
+    private int GetTileDirection(RaycastHit tileHit)
+    {
+        int dir = 6;
+        if (tileHit.collider != null)
+        {
+            Vector3 hit = tileHit.point;
+            Vector3 tile = tileHit.collider.gameObject.transform.position;
+            float dist = Vector3.Distance(tile, hit);
+            float centerR = 1;
+
+
+            if (dist <= centerR)
+            {
+                dir = 6;
+            }
+            else
+            {
+                Vector3 temp = hit - tile;
+                Vector3 helperPos = new Vector3(0, 0, 1);
+                float angle =
+                    (
+                        (temp.x > 0) ?
+                        Vector3.Angle(helperPos, temp) :
+                        180 + (Math.Abs(Vector3.Angle(helperPos, temp) - 180))
+                    );
+                dir = ((int)angle / 60);
+            }
+        }
+
+        return dir;
+    }
 }

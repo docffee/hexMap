@@ -81,5 +81,13 @@ namespace Assets.Scripts.HexImpl
                 
             }
         }
+
+        public IResource resourceOnTile
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }

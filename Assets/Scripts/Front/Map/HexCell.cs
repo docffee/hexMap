@@ -1,5 +1,4 @@
 ﻿using System;
-using Assets.Scripts.HexImpl;
 using UnityEngine;
 
 public class HexCell : MonoBehaviour, ITile
@@ -13,6 +12,7 @@ public class HexCell : MonoBehaviour, ITile
     private ITerrain terrain;
     private IUnit unit;
     private IUnit airUnit;
+    private IResource resource;
 
     public void Initialize(int x, int z, ITerrain terrain)
     {
@@ -20,6 +20,12 @@ public class HexCell : MonoBehaviour, ITile
         this.x = x;
         this.z = z;
         this.terrain = terrain;
+    }
+
+    public void Initialize(int x, int z, ITerrain terrain, IResource resource)
+    {
+        Initialize(x, z, terrain);
+        this.resource = resource;
     }
 
     public void SetNeighbourBiDirectional(HexCell cell, HexDirection dir)
@@ -144,6 +150,14 @@ public class HexCell : MonoBehaviour, ITile
         set
         {
             airUnit = value;
+        }
+    }
+
+    public IResource resourceOnTile
+    {
+        get
+        {
+            return resource;
         }
     }
 }

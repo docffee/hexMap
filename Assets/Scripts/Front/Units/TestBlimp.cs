@@ -45,11 +45,6 @@ public class TestBlimp : Unit
         StartCoroutine(MoveWaiter(path, controller));
     }
 
-    public override bool PerformingAction()
-    {
-        return performingAction;
-    }
-
     public override IWalkable GetTerrainWalkability(ITerrain terrain)
     {
         switch (terrain.Name)
