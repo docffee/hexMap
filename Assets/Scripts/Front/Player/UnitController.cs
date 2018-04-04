@@ -106,27 +106,20 @@ public class UnitController : MonoBehaviour, IReady
             if (!selectedUnit.GetTerrainWalkability(hoverNow.Terrain).Passable)
                 return false;
 
-            if (hoverDirection != dir)
+            if (!hoverNow.Equals(hoverOver) || hoverDirection != dir) // Calculates shortest path and shows it.
             {
                 hoverDirection = dir;
-                int pathCount = highlightedPath.Count;
-                if (pathCount > 0)
-                {
-                    // Changes the last arrow in the path's rotation so that the whole path does not need to be re-calculated //
-                    if (dir == 6)
-                        highlightedPath[pathCount - 1].transform.rotation = lastPathArrowRotation;
-                    else
-                        highlightedPath[pathCount - 1].transform.rotation =
-                            Quaternion.Euler(90, HexUtil.DirectionRotation((HexDirection) dir) - 90, 0);
-                }
-            }
-
-            if (!hoverNow.Equals(hoverOver)) // Calculates shortest path and shows it.
-            {
                 hoverOver = hoverNow;
                 IEnumerable<IPathNode<HexNode>> path = hexControl.GetShortestPath(selectedUnit, selectedUnit.Tile, hoverNow, hoverDirection);
                 ClearGameObjectList(highlightedPath);
                 HighlightPath(path);
+
+                int pathCount = highlightedPath.Count;
+                if (dir == 6)
+                    highlightedPath[pathCount - 1].transform.rotation = lastPathArrowRotation;
+                else
+                    highlightedPath[pathCount - 1].transform.rotation =
+                        Quaternion.Euler(90, HexUtil.DirectionRotation((HexDirection)dir) - 90, 0);
             }
             return true;
         }
