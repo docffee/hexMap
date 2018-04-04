@@ -5,20 +5,26 @@ public class Projectile2 : MonoBehaviour
 {
     [SerializeField] private float speed = 1;
 
+    public static float elapsedTime;
+
     public void Initialize(Vector3 targetPos)
     {
+        float dist = Vector3.Distance(transform.position, targetPos);
+        elapsedTime = dist/speed;
         StartCoroutine(MoveTowards(targetPos));
     }
 
     private IEnumerator MoveTowards(Vector3 targetPos)
     {
+        
         Vector3 dir = VectorDirection(transform.position, targetPos);
+        
         while (!ArrivedAtTarget(targetPos, dir))
         {
             transform.position += dir * speed * Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
-
+        elapsedTime = 0;
         yield return new WaitForEndOfFrame();
         Destroy(gameObject);
     }

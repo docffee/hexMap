@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Assets.Scripts;
 
 public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>, IComparable<Unit>
 {
@@ -68,8 +69,11 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
             tile.UnitOnTile = null;
 
         gameController.RemoveUnit(this);
+        Invoke("InstantiateExplosion", Projectile2.elapsedTime);
+        Destroy(gameObject, Projectile2.elapsedTime);
+    }
+    public void InstantiateExplosion(){
         Instantiate(explosion, transform.position, transform.rotation);
-        Destroy(gameObject);
     }
 
     public void SetUnitColorMaterial(Material color)
