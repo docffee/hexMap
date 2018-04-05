@@ -3,6 +3,7 @@
 public interface IPlayer : IEquatable<IPlayer>
 {
     int Id { get; }
-    int Money { get; set; }
     int Team { get; }
+    int GetResource(ResourceType type);
+    void SetResource(ResourceType type, int amount);
 }
