@@ -171,11 +171,11 @@ public class UnitController : MonoBehaviour, IReady
                     int dist = HexHeuristic.MinDistTile(selectedUnit.Tile, other.Tile);
                     if (dist <= selectedUnit.Range)
                     {
-                        IFireFight fireFight = new FireFight();
+                        IFireFight fireFight = new FireFightNoRetaliation();
                         fireFight.Fight(selectedUnit, other);
                         ClearGameObjectList(highlightedTiles);
-                        IEnumerable<IPathNode<HexNode>> path = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
-                        HighlightTiles(path);
+                        IEnumerable<IPathNode<HexNode>> reachable = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
+                        HighlightTiles(reachable);
                         Debug.Log("Fighting!");
                     }
                 }
@@ -322,7 +322,7 @@ public class UnitController : MonoBehaviour, IReady
             Vector3 hit = tileHit.point;
             Vector3 tile = tileHit.collider.gameObject.transform.position;
             float dist = Vector3.Distance(tile, hit);
-            float centerR = 1;
+            const float centerR = 3f;
 
 
             if (dist <= centerR)

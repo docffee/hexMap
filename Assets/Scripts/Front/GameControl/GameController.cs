@@ -194,7 +194,7 @@ public class GameController : MonoBehaviour
             units.RemoveAt(index);
             unitsSorted.RemoveAt(index);
             unitOnDeathQueueUIUpdate();
-            if (index < turnPointer)
+            if (index <= turnPointer)
                 turnPointer--;
         }
         if(unit == currentUnit){
