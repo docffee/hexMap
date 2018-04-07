@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using Assets.Scripts.Front.Buildings;
 
 /// <summary>
 ///     Controls the game flow, from start to end as well
@@ -29,10 +30,12 @@ public class GameController : MonoBehaviour
 
     [Header ("This is only temporary")]
     [SerializeField] private Unit[] allUnitPrefabs;
+    [SerializeField] private Building[] allBuildingPrefabs;
 
     HexControl hexControl;
     private List<IPlayer> players;
     private List<Unit> units;
+    private List<Building> buildings;
     private Unit currentUnit;
     private Unit thisUnit;
     private int turnPointer;
@@ -47,6 +50,7 @@ public class GameController : MonoBehaviour
         hexControl = new HexControl(grid.SizeX, grid.SizeZ, grid);
         players = new List<IPlayer>();
         units = new List<Unit>();
+        buildings = new List<Building>();
 
         unitController.Initialize(hexControl);
 
@@ -71,6 +75,8 @@ public class GameController : MonoBehaviour
         ITile tile11 = hexControl.GetTile(23, 14);
         ITile tile12 = hexControl.GetTile(21, 14);
 
+        ITile tile13 = hexControl.GetTile(20, 20);
+
         Unit unit1 = SpawnTroop(allUnitPrefabs[0], players[0], tile, HexDirection.E);
         Unit unit2 = SpawnTroop(allUnitPrefabs[1], players[0], tile2, HexDirection.E);
         Unit unit3 = SpawnTroop(allUnitPrefabs[2], players[1], tile3, HexDirection.W);
@@ -83,6 +89,8 @@ public class GameController : MonoBehaviour
         Unit unit10 = SpawnTroop(allUnitPrefabs[1], players[0], tile10, HexDirection.E);
         Unit unit11 = SpawnTroop(allUnitPrefabs[2], players[1], tile11, HexDirection.W);
         Unit unit12 = SpawnTroop(allUnitPrefabs[3], players[1], tile12, HexDirection.W);
+
+        Building building1 = SpawnBuilding(allBuildingPrefabs[0], players[0], tile13);
 
         unit1.SetUnitColorMaterial(playerColors[0]);
         unit2.SetUnitColorMaterial(playerColors[0]);
@@ -109,6 +117,8 @@ public class GameController : MonoBehaviour
         units.Add(unit10);
         units.Add(unit11);
         units.Add(unit12);
+
+        buildings.Add(building1);
         //////////////////////////////////
         /* 
         Debug.Log("Unsorted: \n");
@@ -144,6 +154,15 @@ public class GameController : MonoBehaviour
         hexControl.PlaceUnit(unit, tile.X, tile.Z);
         unit.Initialize(controller, hexControl, this);
         return unit;
+    }
+
+    public Building SpawnBuilding(Building structure, IPlayer controller, ITile tile)
+    {
+        Building building = Instantiate(structure);
+        Vector3 tilePosition = new Vector3(tile.PosX, tile.PosY, tile.PosZ);
+        hexControl.PlaceBuilding(building, tile.X, tile.Z);
+        building.Initialize(controller, hexControl, this);
+        return building;
     }
 
     public void EndUnitTurn()

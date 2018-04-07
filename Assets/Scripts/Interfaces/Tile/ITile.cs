@@ -13,4 +13,5 @@ public interface ITile
     IUnit UnitOnTile { get; set; }
     IUnit AirUnitOnTile { get; set; }
     IResource resourceOnTile { get; }
+    IBuilding BuildingOnTile { get; set; }
 }

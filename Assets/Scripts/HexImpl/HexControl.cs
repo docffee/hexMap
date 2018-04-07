@@ -89,6 +89,16 @@ namespace Assets.Scripts.HexImpl
             return true;
         }
 
+        public bool PlaceBuilding(IBuilding building, int x, int z)
+        {
+            ITile tile = GetTile(x, z);
+            if (tile.BuildingOnTile != null)
+                return false;
+            building.Tile = tile;
+            tile.BuildingOnTile = building;
+            return true;
+        }
+
         public bool MoveUnit(IUnit unit, int lastX, int lastZ, int newX, int newZ)
         {
             ITile endTile = GetTile(newX, newZ);

@@ -12,6 +12,7 @@ public class HexCell : MonoBehaviour, ITile
     private ITerrain terrain;
     private IUnit unit;
     private IUnit airUnit;
+    private IBuilding building;
     private IResource resource;
 
     public void Initialize(int x, int z, ITerrain terrain)
@@ -158,6 +159,19 @@ public class HexCell : MonoBehaviour, ITile
         get
         {
             return resource;
+        }
+    }
+
+    public IBuilding BuildingOnTile
+    {
+        get
+        {
+            return building;
+        }
+
+        set
+        {
+            building = value;
         }
     }
 }

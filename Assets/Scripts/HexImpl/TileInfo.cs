@@ -89,5 +89,18 @@ namespace Assets.Scripts.HexImpl
                 throw new NotImplementedException();
             }
         }
+
+        public IBuilding BuildingOnTile
+        {
+            get
+            {
+                return null;
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
     }
 }
