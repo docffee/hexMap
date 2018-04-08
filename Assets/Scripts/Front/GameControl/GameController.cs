@@ -119,7 +119,7 @@ public class GameController : MonoBehaviour
         */
 
         units.Sort();
-        unitQueueUIUpdate();
+        UnitQueueUIUpdate();
 
         /* 
         Debug.Log("Sorted: \n");
@@ -130,6 +130,7 @@ public class GameController : MonoBehaviour
         */
         turnPointer = units.Count - 1;
         SwitchToUnit();
+        SetLayer(currentUnit.gameObject, 15);
     }
 
     public Unit SpawnTroop(Unit troop, IPlayer controller, ITile tile, HexDirection orientation)
@@ -158,13 +159,14 @@ public class GameController : MonoBehaviour
             {
                 unit.CurrentActionPoints = unit.MaxActionPoints;
             }
-            unitQueueUIUpdate();
+            UnitQueueUIUpdate();
         }
 
         if (turnPointer < units.Count)
         {
+            SetLayer(currentUnit.gameObject, 8);
             SwitchToUnit();
-            unitQueueUIUpdate();
+            UnitQueueUIUpdate();
         }
         else
         {
@@ -179,6 +181,7 @@ public class GameController : MonoBehaviour
             currentUnit = units[turnPointer];
             currentUnit.CurrentActionPoints = currentUnit.MaxActionPoints;
             unitController.SetSelectedUnit(currentUnit);
+            SetLayer(currentUnit.gameObject, 15);
             CameraController cam = Camera.main.GetComponent<CameraController>();
             UnitCameraController unitCam = unitCamera.GetComponent<UnitCameraController>();
             cam.CenterOn(currentUnit.transform.position);
@@ -193,11 +196,12 @@ public class GameController : MonoBehaviour
         {
             units.RemoveAt(index);
             unitsSorted.RemoveAt(index);
-            unitOnDeathQueueUIUpdate();
+            UnitOnDeathQueueUIUpdate();
             if (index <= turnPointer)
                 turnPointer--;
         }
         if(unit == currentUnit){
+            SetLayer(currentUnit.gameObject, 8);
             SwitchToUnit();
         }
     }
@@ -210,9 +214,9 @@ public class GameController : MonoBehaviour
         }
     }
 
-    private void unitQueueUIUpdate()
+    private void UnitQueueUIUpdate()
     {   
-        unitQueueHide();
+        UnitQueueHide();
         unitsSorted = units.OrderBy(unit => unit.CurrentActionPoints).ThenBy(unit => unit.MaxActionPoints).ToList();
         unitsSorted.Reverse(); 
         for (int i = 0; i < unitsSorted.Count; i++)
@@ -225,9 +229,9 @@ public class GameController : MonoBehaviour
             }
         }
     }
-    private void unitOnDeathQueueUIUpdate()
+    private void UnitOnDeathQueueUIUpdate()
     {
-        unitQueueHide();
+        UnitQueueHide();
         unitsSorted = units.OrderBy(unit => unit.CurrentActionPoints).ThenBy(unit => unit.MaxActionPoints).ToList();
         unitsSorted.Reverse();
         thisUnit = currentUnit;
@@ -243,14 +247,14 @@ public class GameController : MonoBehaviour
             }
         }
     }
-    private void unitQueueHide(){
+    private void UnitQueueHide(){
         foreach (GameObject unitQueuePanel in unitQueuePanels)
         {
             unitQueuePanel.SetActive(false);
         }
     }
 
-    public void hideQueuePanel(){
+    public void HideQueuePanel(){
         if(queuePanel.activeSelf == true){
             queuePanel.SetActive(false);
         }
@@ -258,7 +262,7 @@ public class GameController : MonoBehaviour
             queuePanel.SetActive(true);
         }
     }
-    public void hideUnitPanels(){
+    public void HideUnitPanels(){
         foreach (GameObject unitPanel in unitPanels)
         {
             if(unitPanel.activeSelf == true){
@@ -270,7 +274,7 @@ public class GameController : MonoBehaviour
         }
        
     }
-    public void hideMiniMapPanel(){
+    public void HideMiniMapPanel(){
         
         if(miniMapPanel.activeSelf == true){
             miniMapPanel.SetActive(false);
@@ -282,7 +286,7 @@ public class GameController : MonoBehaviour
             uiControlPanel.localPosition = oldControlPanelPosition;
         }
     }
-    public void hideCommandPanel(){
+    public void HideCommandPanel(){
         if(commandPanel.activeSelf == true){
             commandPanel.SetActive(false);
         }
@@ -300,4 +304,13 @@ public class GameController : MonoBehaviour
         List<Unit> tList = tArray.ToList();
         return tList;
     }*/
+
+    private void SetLayer(GameObject unit, int layerNumber)
+    {
+        foreach (Transform trans in unit.GetComponentsInChildren<Transform>(true))
+        {
+            if(trans.gameObject.layer != 13)
+            trans.gameObject.layer = layerNumber;
+        }
+    }
 }

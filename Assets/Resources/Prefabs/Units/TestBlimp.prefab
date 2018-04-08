@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4641896560394538}
   - component: {fileID: 33171078878428222}
   - component: {fileID: 23489554238742982}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: tip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 4644986322122330}
   - component: {fileID: 33477608071081240}
   - component: {fileID: 23768959248918642}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wing_right
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 4060642207476522}
   - component: {fileID: 33186440117038524}
   - component: {fileID: 23312433723060032}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: cabin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4035767272094050}
   - component: {fileID: 33374007687268154}
   - component: {fileID: 23294441669563826}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wing_left
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +125,7 @@ GameObject:
   - component: {fileID: 4450785798254330}
   - component: {fileID: 33266482431177030}
   - component: {fileID: 23934519380856652}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wing_top
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -172,12 +172,12 @@ Prefab:
     - target: {fileID: 224269967663061444, guid: 511105edc2e42164d993074efcf7ab01,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 460.5
+      value: 608.5
       objectReference: {fileID: 0}
     - target: {fileID: 224269967663061444, guid: 511105edc2e42164d993074efcf7ab01,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 259
+      value: 279
       objectReference: {fileID: 0}
     - target: {fileID: 224269967663061444, guid: 511105edc2e42164d993074efcf7ab01,
         type: 2}
@@ -457,6 +457,16 @@ Prefab:
     - target: {fileID: 1086755000594050, guid: 511105edc2e42164d993074efcf7ab01, type: 2}
       propertyPath: m_Name
       value: AbillityPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 20479524092324832, guid: 511105edc2e42164d993074efcf7ab01,
+        type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294935263
+      objectReference: {fileID: 0}
+    - target: {fileID: 20870859899836450, guid: 511105edc2e42164d993074efcf7ab01,
+        type: 2}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294903775
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 511105edc2e42164d993074efcf7ab01, type: 2}
