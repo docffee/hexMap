@@ -12,7 +12,6 @@ namespace Assets.Scripts.Interfaces
         IEnumerable<IPathNode<N>> GetShortestPath(IUnit unit, ITile startTile, ITile endTile);
         IEnumerable<IPathNode<N>> GetShortestPath(IUnit unit, ITile startTile, ITile endTile, int endDirection);
         IEnumerable<IPathNode<N>> GetReachable(IUnit unit, ITile startTile);
-        IEnumerable<IPathNode<N>> GetReachable(ITile startTile, float maxCost);
         bool PlaceUnit(IUnit unit, int x, int z);
         bool MoveUnit(IUnit unit, int lastX, int lastZ, int newX, int newZ);
     }

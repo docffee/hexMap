@@ -51,7 +51,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
         this.gameController = gameController;
         currentActionPoints = maxActionPoints;
 
-        actions = new IAction[] { new Attack(this, hexControl) };
+        actions = new IAction[] { new AttackAction(this) };
     }
 
     public virtual void OnAttack(ICombatable target)
