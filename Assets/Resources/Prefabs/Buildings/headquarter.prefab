@@ -108,3 +108,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displacementY: 1
+  mainBodyRenderers:
+  - {fileID: 23214147618967312}

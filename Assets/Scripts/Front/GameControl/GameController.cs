@@ -4,7 +4,6 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
-using Assets.Scripts.Front.Buildings;
 
 /// <summary>
 ///     Controls the game flow, from start to end as well
