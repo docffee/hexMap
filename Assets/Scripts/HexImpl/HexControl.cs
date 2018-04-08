@@ -49,6 +49,11 @@ namespace Assets.Scripts.HexImpl
             return pathfinder.GetReachableNodes(node, unit.CurrentActionPoints);
         }
 
+        public IEnumerable<IPathNode<HexNode>> GetReachable(ITile startTile, float maxCost)
+        {
+            throw new NotImplementedException();
+        }
+
         public IEnumerable<IPathNode<HexNode>> GetShortestPath(IUnit unit, ITile startTile, ITile endTile)
         {
             HexNode start = new HexNode((HexDirection) unit.Direction, startTile, unit, this);

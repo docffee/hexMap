@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class Projectile2 : MonoBehaviour
+public class Projectile : MonoBehaviour
 {
     [SerializeField] private float speed = 1;
 
@@ -16,7 +16,6 @@ public class Projectile2 : MonoBehaviour
 
     private IEnumerator MoveTowards(Vector3 targetPos)
     {
-        
         Vector3 dir = VectorDirection(transform.position, targetPos);
         
         while (!ArrivedAtTarget(targetPos, dir))

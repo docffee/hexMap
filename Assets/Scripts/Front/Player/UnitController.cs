@@ -33,21 +33,26 @@ public class UnitController : MonoBehaviour, IReady
     [SerializeField] private GameObject enemyUnitPanel;
     [SerializeField] private GameObject unitIconCamera;
     [SerializeField] private GameObject enemyUnitIconCamera;
+    [SerializeField] private GameObject abillityPanel;
     private UnitIconCamera unitIconCam = null;
     private EnemyUnitIconCamera enemyUnitIconCam = null;
 
     [Header ("Controller")]
     [SerializeField] private GameController gameController;
-    private ITileControl<HexNode> hexControl;
+
+    private ITileControl<HexNode> hexControl = null;
     private Unit selectedUnit = null;
     private Unit enemyUnit = null;
+    private IAction selectedAction;
+
     private List<GameObject> highlightedTiles = new List<GameObject>();
     private List<GameObject> highlightedPath = new List<GameObject>();
-
     private ITile hoverOver;
     private int hoverDirection;
     private Quaternion lastPathArrowRotation;
     private bool performingAction;
+
+    private static UnitController singleton;
 
     public void Initialize(ITileControl<HexNode> hexControl)
     {
@@ -56,28 +61,36 @@ public class UnitController : MonoBehaviour, IReady
         this.hexControl = hexControl;
         unitIconCam = unitIconCamera.GetComponent<UnitIconCamera>();
         enemyUnitIconCam = enemyUnitIconCamera.GetComponent<EnemyUnitIconCamera>();
+        singleton = this;
     }
 
     private void Update()   
     {
-        if (performingAction && selectedUnit != null){
+        if (performingAction && selectedUnit != null)
+        {
             unitIconCam.CenterOn(selectedUnit.transform.position);
             return;
         }
-            
+        
         if(selectedUnit != null)    
             UnitTextUpdate();
-        
+
+        if (Input.GetMouseButtonDown(1) && selectedAction != null)
+            StopAction();
+
+        if (selectedAction != null && selectedAction.HasControl)
+            return;
+
         RaycastHit tileHit;
         RaycastHit unitHit;
-        
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), 
+
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),
             out tileHit, 200.0f, LayerMask.GetMask("Tile"));
-        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), 
+        Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition),
             out unitHit, 200.0f, LayerMask.GetMask("Unit"));
-        
+
         if (Input.GetMouseButtonDown(0))
-            MouseClickEvent0(tileHit, unitHit);
+            MouseClickEvent0(tileHit);
         else
             MouseOver(tileHit, unitHit);
     }
@@ -159,40 +172,21 @@ public class UnitController : MonoBehaviour, IReady
             
     }
 
-    private void MouseClickEvent0(RaycastHit tileHit, RaycastHit unitHit)
+    private void MouseClickEvent0(RaycastHit tileHit)
     {
-        if (selectedUnit != null && unitHit.collider != null 
-        && unitHit.collider.GetComponent<Unit>().Controller.Team != selectedUnit.Controller.Team)
-            {
-                if (selectedUnit.CurrentActionPoints >= selectedUnit.AttackActionPointCost)
-                {
-                    Unit other = unitHit.collider.gameObject.GetComponent<Unit>();
+        if (selectedUnit != null && !EventSystem.current.IsPointerOverGameObject() && tileHit.collider != null)
+        {
+            HexCell cell = tileHit.collider.gameObject.GetComponent<HexCell>();
 
-                    int dist = HexHeuristic.MinDistTile(selectedUnit.Tile, other.Tile);
-                    if (dist <= selectedUnit.Range)
-                    {
-                        IFireFight fireFight = new FireFightNoRetaliation();
-                        fireFight.Fight(selectedUnit, other);
-                        ClearGameObjectList(highlightedTiles);
-                        IEnumerable<IPathNode<HexNode>> reachable = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
-                        HighlightTiles(reachable);
-                        Debug.Log("Fighting!");
-                    }
-                }
-            }
-            else if (selectedUnit != null && !EventSystem.current.IsPointerOverGameObject() && tileHit.collider != null)
+            IEnumerable<IPathNode<HexNode>> path = hexControl.GetShortestPath(selectedUnit, selectedUnit.Tile, cell, hoverDirection);
+            if (path != null)
             {
-                HexCell cell = tileHit.collider.gameObject.GetComponent<HexCell>();
-
-                IEnumerable<IPathNode<HexNode>> path = hexControl.GetShortestPath(selectedUnit, selectedUnit.Tile, cell, hoverDirection);
-                if (path != null)
-                {
-                    performingAction = true;
-                    selectedUnit.Move(path, this);
-                    ClearGameObjectList(highlightedTiles);
-                    ClearGameObjectList(highlightedPath);
-                }
+                performingAction = true;
+                selectedUnit.Move(path, this);
+                ClearGameObjectList(highlightedTiles);
+                ClearGameObjectList(highlightedPath);
             }
+        }
     }
 
     private void HighlightTiles(IEnumerable<IPathNode<HexNode>> reachable)
@@ -276,6 +270,19 @@ public class UnitController : MonoBehaviour, IReady
         ClearGameObjectList(highlightedTiles);
         ClearGameObjectList(highlightedPath);
         HighlightTiles(reachable);
+
+        Button[] abillityButtons = abillityPanel.GetComponentsInChildren<Button>();
+        IAction[] actions = selectedUnit.Actions;
+
+        for (int i = 0; i < actions.Length; i++)
+        {
+            IAction action = actions[i];
+            Button button = abillityButtons[i];
+
+            button.onClick.RemoveAllListeners();
+            button.onClick.AddListener(() => action.TakeControl());
+            button.GetComponentInChildren<Text>().text = action.ActionName;
+        }
     }
     
     private void UnitTextUpdate()
@@ -344,5 +351,28 @@ public class UnitController : MonoBehaviour, IReady
         }
 
         return dir;
+    }
+    
+    public void SetAction(IAction action)
+    {
+        ClearGameObjectList(highlightedTiles);
+        ClearGameObjectList(highlightedPath);
+        selectedAction = action;
+    }
+
+    public void StopAction()
+    {
+        selectedAction.HasControl = false;
+        selectedAction = null;
+        IEnumerable<IPathNode<HexNode>> reachable = hexControl.GetReachable(selectedUnit, selectedUnit.Tile);
+        HighlightTiles(reachable);
+    }
+
+    public static UnitController Singleton
+    {
+        get
+        {
+            return singleton;
+        }
     }
 }

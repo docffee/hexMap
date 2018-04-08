@@ -16,4 +16,5 @@ public interface IUnit
     float PosZ { get; }
 
     ITile Tile { get; set; }
+    IAction[] Actions { get; }
 }

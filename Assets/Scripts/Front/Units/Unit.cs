@@ -5,7 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Assets.Scripts;
+using Assets.Scripts.Front.Actions;
 
 public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>, IComparable<Unit>
 {
@@ -16,7 +16,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
     [SerializeField] private float rotateTime = 0.2f;
     [SerializeField] private float displacementY = 1;
     [SerializeField] private GameObject explosion;
-    [SerializeField] private Projectile2 projectilePrefab;
+    [SerializeField] private Projectile projectilePrefab;
     [SerializeField] private MeshRenderer[] mainBodyRenderers;
 
     [Header ("---Pathfinding and Actions---")]
@@ -38,6 +38,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
     protected IPlayer controller;
     protected ITileControl<HexNode> hexControl;
     protected GameController gameController;
+    protected IAction[] actions;
 
     public abstract IWalkable GetTerrainWalkability(ITerrain terrain);
     public abstract void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller);
@@ -49,13 +50,15 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
         this.hexControl = hexControl;
         this.gameController = gameController;
         currentActionPoints = maxActionPoints;
+
+        actions = new IAction[] { new Attack(this, hexControl) };
     }
 
     public virtual void OnAttack(ICombatable target)
     {
         if (projectilePrefab != null)
         {
-            Projectile2 instance = Instantiate(projectilePrefab, transform.position, transform.rotation);
+            Projectile instance = Instantiate(projectilePrefab, transform.position, transform.rotation);
             Vector3 targetPos = new Vector3(target.PosX, target.PosY, target.PosZ);
             instance.Initialize(targetPos);
         }
@@ -69,8 +72,8 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
             tile.UnitOnTile = null;
 
         gameController.RemoveUnit(this);
-        Invoke("InstantiateExplosion", Projectile2.elapsedTime);
-        Destroy(gameObject, Projectile2.elapsedTime);
+        Invoke("InstantiateExplosion", Projectile.elapsedTime);
+        Destroy(gameObject, Projectile.elapsedTime);
     }
     public void InstantiateExplosion(){
         Instantiate(explosion, transform.position, transform.rotation);
@@ -330,6 +333,14 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
         get
         {
             return transform.position.z; ;
+        }
+    }
+
+    public IAction[] Actions
+    {
+        get
+        {
+            return actions;
         }
     }
 }
