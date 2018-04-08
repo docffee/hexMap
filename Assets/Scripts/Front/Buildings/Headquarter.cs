@@ -5,8 +5,7 @@ using System.Text;
 
 namespace Assets.Scripts.Front.Buildings
 {
-    class Headquarters : Building
+    public class Headquarter : Building
     {
-        
     }
 }

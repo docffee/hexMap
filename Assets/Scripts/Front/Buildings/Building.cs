@@ -10,6 +10,9 @@ namespace Assets.Scripts.Front.Buildings
         private int maxHealth = 1;
         private int currentHealth = 1;
 
+        [SerializeField] private float displacementY = 1;
+        [SerializeField] private MeshRenderer[] mainBodyRenderers;
+
         protected ITile tile;
         protected IPlayer controller;
         protected ITileControl<HexNode> hexControl;
@@ -77,6 +80,19 @@ namespace Assets.Scripts.Front.Buildings
             get
             {
                 return transform.position.z; ;
+            }
+        }
+
+        public float DisplacementY
+        {
+            get { return displacementY; }
+        }
+
+        public void SetBuildingColorMaterial(Material color)
+        {
+            foreach (MeshRenderer rend in mainBodyRenderers)
+            {
+                rend.material = color;
             }
         }
     }

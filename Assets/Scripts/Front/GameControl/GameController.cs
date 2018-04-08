@@ -75,7 +75,7 @@ public class GameController : MonoBehaviour
         ITile tile11 = hexControl.GetTile(23, 14);
         ITile tile12 = hexControl.GetTile(21, 14);
 
-        ITile tile13 = hexControl.GetTile(20, 20);
+        ITile tile13 = hexControl.GetTile(25, 14);
 
         Unit unit1 = SpawnTroop(allUnitPrefabs[0], players[0], tile, HexDirection.E);
         Unit unit2 = SpawnTroop(allUnitPrefabs[1], players[0], tile2, HexDirection.E);
@@ -104,6 +104,8 @@ public class GameController : MonoBehaviour
         unit10.SetUnitColorMaterial(playerColors[0]);
         unit11.SetUnitColorMaterial(playerColors[1]);
         unit12.SetUnitColorMaterial(playerColors[1]);
+
+        building1.SetBuildingColorMaterial(playerColors[1]);
 
         units.Add(unit1);
         units.Add(unit2);
@@ -160,6 +162,8 @@ public class GameController : MonoBehaviour
     {
         Building building = Instantiate(structure);
         Vector3 tilePosition = new Vector3(tile.PosX, tile.PosY, tile.PosZ);
+        building.transform.position = tilePosition + Vector3.up * building.DisplacementY;
+
         hexControl.PlaceBuilding(building, tile.X, tile.Z);
         building.Initialize(controller, hexControl, this);
         return building;
