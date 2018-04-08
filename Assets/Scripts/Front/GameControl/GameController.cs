@@ -66,7 +66,7 @@ public class GameController : MonoBehaviour
         ITile tile6 = hexControl.GetTile(19, 13);
         ITile tile7 = hexControl.GetTile(23, 13);
         ITile tile8 = hexControl.GetTile(21, 13);
-        ITile tile9= hexControl.GetTile(17, 14);
+        ITile tile9= hexControl.GetTile(17, 10);
         ITile tile10 = hexControl.GetTile(19, 14);
         ITile tile11 = hexControl.GetTile(23, 14);
         ITile tile12 = hexControl.GetTile(21, 14);
