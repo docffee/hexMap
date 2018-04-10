@@ -170,7 +170,15 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
     public bool IsTilePassable(ITile tile)
     {
         if (flying)
-            return tile.AirUnitOnTile == null;
+        {
+            if (tile.AirUnitOnTile != null)
+                return Equals(tile.AirUnitOnTile);
+
+            return true; 
+        }
+
+        if (tile.UnitOnTile != null)
+            return Equals(tile.UnitOnTile);  
 
         return tile.UnitOnTile == null;
     }

@@ -97,10 +97,12 @@ public class UnitController : MonoBehaviour, IReady
 
     private void MouseOver(RaycastHit tileHit, RaycastHit unitHit)
     {
-        if(HoverUnit(unitHit))
-            return;
-        if(HoverTile(tileHit))
-            return;
+        //if(HoverUnit(unitHit))
+        //    return;
+        //if(HoverTile(tileHit))
+        //    return;
+        HoverUnit(unitHit);
+        HoverTile(tileHit);
     }
 
     private bool HoverTile(RaycastHit tileHit)
@@ -128,11 +130,14 @@ public class UnitController : MonoBehaviour, IReady
                 HighlightPath(path);
 
                 int pathCount = highlightedPath.Count;
-                if (dir == 6)
-                    highlightedPath[pathCount - 1].transform.rotation = lastPathArrowRotation;
-                else
-                    highlightedPath[pathCount - 1].transform.rotation =
-                        Quaternion.Euler(90, HexUtil.DirectionRotation((HexDirection)dir) - 90, 0);
+                if (pathCount > 0)
+                {
+                    if (dir == 6)
+                        highlightedPath[pathCount - 1].transform.rotation = lastPathArrowRotation;
+                    else
+                        highlightedPath[pathCount - 1].transform.rotation =
+                            Quaternion.Euler(90, HexUtil.DirectionRotation((HexDirection)dir) - 90, 0);
+                }
             }
             return true;
         }
@@ -224,8 +229,8 @@ public class UnitController : MonoBehaviour, IReady
         Dictionary<ITile, bool> tiles = new Dictionary<ITile, bool>();
 
         IEnumerator<IPathNode<HexNode>> enumerator = path.GetEnumerator();
-        enumerator.MoveNext(); // Skips first //
-        tiles.Add(enumerator.Current.GetNode().Tile, true);
+        //enumerator.MoveNext(); // Skips first //
+        //tiles.Add(enumerator.Current.GetNode().Tile, true);
 
         while (enumerator.MoveNext())
         {
