@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject queuePanel;
     [SerializeField] private GameObject commandPanel;
     [SerializeField] private RectTransform uiControlPanel;
-
+    [SerializeField] private GameObject[] economyPanelTexts;
 
     [Header ("This is only temporary")]
     [SerializeField] private Unit[] allUnitPrefabs;
@@ -179,6 +179,7 @@ public class GameController : MonoBehaviour
     private void SwitchToUnit()
     { 
             currentUnit = units[turnPointer];
+            UpdateEconomyPanel(players, units, currentUnit);
             currentUnit.CurrentActionPoints = currentUnit.MaxActionPoints;
             unitController.SetSelectedUnit(currentUnit);
             SetLayer(currentUnit.gameObject, 15);
@@ -311,6 +312,27 @@ public class GameController : MonoBehaviour
         {
             if(trans.gameObject.layer != 13)
             trans.gameObject.layer = layerNumber;
+        }
+    }
+
+    private void UpdateEconomyPanel(List<IPlayer> players, List<Unit> units, Unit selectedUnit){
+        foreach (Player player in players)
+        {
+            if(selectedUnit.Controller.Team == player.Team){
+                economyPanelTexts[0].GetComponent<Text>().text = "Money:    " + player.GetResource(ResourceType.Money).ToString();
+                economyPanelTexts[1].GetComponent<Text>().text = "Oil:    " + player.GetResource(ResourceType.Oil).ToString();
+                economyPanelTexts[2].GetComponent<Text>().text = "Steel:    " + player.GetResource(ResourceType.Steel).ToString();
+
+                int playerUnitCount = 0;
+                foreach (Unit unit in units)
+                {
+                    if(player.Team == unit.Controller.Team){
+                        playerUnitCount++;
+                    }
+                }
+                economyPanelTexts[3].GetComponent<Text>().text = "Units:    " + playerUnitCount;
+                economyPanelTexts[4].GetComponent<Text>().text = "Player:    " + player.Team;
+            }
         }
     }
 }
