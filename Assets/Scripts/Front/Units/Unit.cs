@@ -40,6 +40,7 @@ public abstract class Unit : MonoBehaviour, IUnit, ICombatable, IEquatable<Unit>
     protected GameController gameController;
 
     public abstract IWalkable GetTerrainWalkability(ITerrain terrain);
+    public abstract bool HideInBuilding();
     public abstract void Move(IEnumerable<IPathNode<HexNode>> path, IReady controller);
     public abstract bool CanRetaliate();
 

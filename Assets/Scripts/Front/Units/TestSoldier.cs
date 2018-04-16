@@ -37,4 +37,8 @@ public class TestSoldier : Unit
     {
         return canRetaliate;
     }
+
+    public override bool HideInBuilding() {
+        return true;
+    }
 }

@@ -16,6 +16,10 @@ public abstract class Building : MonoBehaviour, IBuilding
     protected ITileControl<HexNode> hexControl;
     protected GameController gameController;
 
+    public abstract bool ContainsUnit();
+    public abstract bool PlaceUnit(Unit placement);
+    public abstract bool RemoveUnit();
+
     public void Initialize(IPlayer controller, ITileControl<HexNode> hexControl, GameController gameController)
     {
         this.controller = controller;

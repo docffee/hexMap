@@ -36,4 +36,8 @@ public class TestTank : Unit
     {
         return canRetaliate;
     }
+
+    public override bool HideInBuilding() {
+        return false;
+    }
 }

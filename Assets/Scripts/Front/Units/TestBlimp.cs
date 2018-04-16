@@ -68,4 +68,8 @@ public class TestBlimp : Unit
     {
         return canRetaliate;
     }
+
+    public override bool HideInBuilding() {
+        return false;
+    }
 }

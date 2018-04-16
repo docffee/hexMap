@@ -35,4 +35,8 @@ public class TestArtilleryTank : Unit
     {
         return canRetaliate;
     }
+
+    public override bool HideInBuilding() {
+        return false;
+    }
 }
